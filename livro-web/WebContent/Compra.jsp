@@ -15,47 +15,28 @@
 </head>
 <body>
 
-<%
-		Resultado resultado = (Resultado) session.getAttribute("resultado");
-		Item item = (Item)request.getAttribute("lista");
-	%>
-<TABLE BORDER="2"    WIDTH="20%"   CELLPADDING="2" CELLSPACING="1" class="table">
 
-   <TR class="carrinho">
-      <TH COLSPAN="40"><BR>
-      	<H3>Carrinho</H3>
-      </TH>
-   </TR>
-   
-   <TR>
- 
-   
-      
-      <TH>Titulo:</TH>
-      
-      <TH>Quantidade</TH>
-      
-      <TH>Preço</TH>
-      
-     
-      
-   </TR>
- <%
-   if (resultado != null) {
-		List<EntidadeDominio> entidades = resultado.getEntidades();
-		StringBuilder sbRegistro = new StringBuilder();
-		StringBuilder sbLink = new StringBuilder();
+<%
+Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaLivroCompra");
+session.removeAttribute("resultadoConsultaLivro");
+if(resultado == null)
+{
+	pageContext.forward("Home.jsp");
+}
+List<EntidadeDominio> entidades = resultado.getEntidades();
+Livros l = (Livros)entidades.get(0);
+
+		Livros livro = (Livros) request.getAttribute("livro");
+if (l != null)
+	out.print(l.getTitulo());
+else
+	out.print("Não achou livro");%>
+	
+	
+	
+
+		<input  type='submit' id='operacao' name='operacao' value='ADICIONAR' class='btn btn-primary'/>
 		
-		ArrayList<Livros> lista = new ArrayList<Livros>();
-		 lista = (ArrayList) session.getAttribute("lista");
-		 	Iterator i = lista.iterator();
-		 	while ( i.hasNext()){
-		 		out.println( i.next());
-		 	}
-   }
-		%>
-			</TABLE>
-			
-			<label value=""></label>
+				
 </body>
 </html>

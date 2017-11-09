@@ -53,8 +53,10 @@ public class Servlet extends HttpServlet {
     	commands.put("CONSULTAR", new ConsultarCommand());
     	commands.put("VISUALIZAR", new VisualizarCommand());
     	commands.put("ALTERAR", new AlterarCommand());
-    	commands.put("COMPRAR", new ComprarCommand());
+    	commands.put("COMPRAR", new ConsultarCommand());
+    	commands.put("VISUALIZARC", new VisualizarCommand());
     	commands.put("CONSULTARLIVRO", new ConsultarCommand());
+    	commands.put("ADICIONAR", new ComprarCommand());
 
     	
     	/* Utilizando o ViewHelper para tratar especificações de qualquer tela e indexando 
@@ -71,6 +73,7 @@ public class Servlet extends HttpServlet {
     	vhs.put("/livro-web/FormLivros", new LivroViewHelper());
     	vhs.put("/livro-web/FormLCliente", new LivroViewHelper());
     	vhs.put("/livro-web/Compra", new AdicionarItensCarrinho());
+    	
     	
     	//vhs.put("/les12015-web/SalvarProduto", new ProdutoViewHelper());
     	
@@ -91,15 +94,7 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException,
     		IOException {
     	doProcessRequest(request, response);
-    	String nomeLivro = request.getParameter("livro");  
-    	Item item = new Item();  
-    	item.getLivro().setTitulo(nomeLivro);
-    	HttpSession session = request.getSession(true);
-    	ArrayList retornoLista = (ArrayList)session.getAttribute("lista");  
-    	retornoLista = new AdicionarItensCarrinho().AdicionaItensCarrinho(item, retornoLista); 
-    	//HttpSession session = request.getSession(true);  
-    	session.setAttribute("lista", retornoLista);
-    	request.getSession().setAttribute("lista", retornoLista);
+    	
 
 
     }

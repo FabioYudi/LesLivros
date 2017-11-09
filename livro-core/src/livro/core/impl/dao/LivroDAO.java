@@ -170,7 +170,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 		sql.append(" a.peso, a.profundidade FROM livros a ");
 		sql.append(" WHERE 1=1 ");
 		if (livro.getId() != null && livro.getId() > 0) {
-			sql.append(" AND a.id ilike '%" + livro.getId() + "%'");
+			sql.append(" AND a.id =" + livro.getId() );
 		}
 		if (livro.getTitulo() != null && livro.getTitulo().length() > 0) {
 			sql.append(" AND a.titulo ilike '%" + livro.getTitulo() + "%'");

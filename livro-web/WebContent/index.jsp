@@ -136,15 +136,13 @@
 				
 			//	<a href="nome-do-lugar-a-ser-levado">descrição</a>
 				
-				sbRegistro.append("<TR ALIGN='CENTER'>");
 				
 				sbLink.append("<a href=Compra?");
 					sbLink.append("txtId=");
 					sbLink.append(l.getId());						
 					sbLink.append("&");
 					sbLink.append("operacao=");
-					sbLink.append("COMPRAR");
-					
+					sbLink.append("MOSTRAR");
 				sbLink.append(">");
 				
 				if(l.getStatus() == true){
@@ -153,6 +151,7 @@
 					sbRegistro.append("<a href='#'><img class='card-img-top' src='http://placehold.it/700x400' alt=''></a>");
 					sbRegistro.append("<div class='card-body'>");
 					sbRegistro.append("<h4 class='card-title'>");
+					sbRegistro.append(sbLink.toString());				
 					sbRegistro.append(l.getTitulo());
 					sbRegistro.append("</a>");	
 					sbRegistro.append("</h4>");
@@ -174,7 +173,6 @@
 				
 
 			
-				
 				
 				out.print(sbRegistro.toString());
 				

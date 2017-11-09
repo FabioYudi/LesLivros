@@ -56,7 +56,7 @@ public class LivroViewHelper implements IViewHelper {
 
 			livro.setLivroLog(log);
 			
-
+			
 			
 			
 			if (codigoLivro != null && !codigoLivro.trim().equals("")) {
@@ -129,9 +129,10 @@ public class LivroViewHelper implements IViewHelper {
 			}
 			if (id != null && !id.trim().equals("")) {
 				livro.setId(Integer.parseInt(id));
-				log.setId(Integer.parseInt(idLog));
+				//log.setId(Integer.parseInt(idLog));
 
 			}
+			
 			
 			
 		} else {
@@ -147,6 +148,8 @@ public class LivroViewHelper implements IViewHelper {
 		}
 			return livro;
 		}
+	
+	
 	
 
 	/**
@@ -186,7 +189,13 @@ public class LivroViewHelper implements IViewHelper {
 		if (resultado.getMsg() == null && operacao.equals("VISUALIZAR")) {
 
 			request.setAttribute("livro", resultado.getEntidades().get(0));
-			d = request.getRequestDispatcher("FormLivros.jsp");
+			d = request.getRequestDispatcher("Compra.jsp");
+		}
+		
+		if (resultado.getMsg() == null && operacao.equals("VISUALIZARC")) {
+
+			request.setAttribute("livro", resultado.getEntidades().get(0));
+			d = request.getRequestDispatcher("Compra.jsp");
 		}
 
 		if (resultado.getMsg() == null && operacao.equals("LOGAR")) {
@@ -198,6 +207,11 @@ public class LivroViewHelper implements IViewHelper {
 			//log.setUsuario(usu);
 			d = request.getRequestDispatcher("FormLivros.jsp");
 		}
+		
+		if(operacao.equals("COMPRAR")){
+			request.getSession().setAttribute("resultadoConsultaLivroCompra", resultado);
+			d= request.getRequestDispatcher("Compra.jsp");  
+		}		
 
 		if (resultado.getMsg() != null) {
 			if (operacao.equals("SALVAR") || operacao.equals("ALTERAR")) {
@@ -209,7 +223,6 @@ public class LivroViewHelper implements IViewHelper {
 		if(operacao.equals("CONSULTARLIVRO")){
 			request.getSession().setAttribute("resultadoConsultaLivro", resultado);
 			d= request.getRequestDispatcher("index.jsp");  
-			System.out.println("Passou pelo consultalivro");
 		}
 
 		d.forward(request, response);
