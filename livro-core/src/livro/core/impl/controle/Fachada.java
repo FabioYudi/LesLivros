@@ -188,7 +188,9 @@ public class Fachada implements IFachada {
 	}
 	
 	public Resultado comprar(EntidadeDominio entidade) {
-		System.out.println("Livro adicionado ao carrinho");
+		Resultado resultado = new Resultado();
+		String msg = executarRegras(entidade, "COMPRAR");
+		resultado.setMsg(msg);
 		return resultado;
 		
 	}

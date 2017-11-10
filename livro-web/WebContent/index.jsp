@@ -34,6 +34,8 @@
   			return;
   		}
   		
+  		
+  		
   		%>
 
 
@@ -137,7 +139,7 @@
 			//	<a href="nome-do-lugar-a-ser-levado">descrição</a>
 				
 				
-				sbLink.append("<a href=Compra?");
+				sbLink.append("<a href=Livro?");
 					sbLink.append("txtId=");
 					sbLink.append(l.getId());						
 					sbLink.append("&");
@@ -146,19 +148,21 @@
 				sbLink.append(">");
 				
 				if(l.getStatus() == true){
+					sbRegistro.append(sbLink.toString());				
 					sbRegistro.append("<div class='col-lg-4 col-md-6 mb-4'>");
 					sbRegistro.append("<div class='card h-100'>");	
-					sbRegistro.append("<a href='#'><img class='card-img-top' src='http://placehold.it/700x400' alt=''></a>");
+					sbRegistro.append("<img class='card-img-top'"); 
+					sbRegistro.append("src='https://images-na.ssl-images-amazon.com/images/I/51xPezkMNlL._SX331_BO1,204,203,200_.jpg'");
+					sbRegistro.append("alt=''>");
 					sbRegistro.append("<div class='card-body'>");
 					sbRegistro.append("<h4 class='card-title'>");
-					sbRegistro.append(sbLink.toString());				
 					sbRegistro.append(l.getTitulo());
 					sbRegistro.append("</a>");	
 					sbRegistro.append("</h4>");
 					sbRegistro.append("<h5>$24.99</h5>");
 					sbRegistro.append("<p class='card-text'></p>");
 					sbRegistro.append("<form  action='Compra' method='post' align='left'>");
-					sbRegistro.append("	<input  type='submit' id='operacao' name='operacao' value='COMPRAR' class='btn btn-primary'/>");
+					sbRegistro.append("	<input  type='submit' id='operacao' name='operacao' value='MOSTRAR' class='btn btn-primary'/>");
 					sbRegistro.append("</form>");
 					sbRegistro.append("</div>");
 					sbRegistro.append("<div class='card-footer'>");

@@ -189,14 +189,16 @@ public class LivroViewHelper implements IViewHelper {
 		if (resultado.getMsg() == null && operacao.equals("VISUALIZAR")) {
 
 			request.setAttribute("livro", resultado.getEntidades().get(0));
-			d = request.getRequestDispatcher("Compra.jsp");
+			d = request.getRequestDispatcher("FormLivros.jsp");
 		}
 		
-		if (resultado.getMsg() == null && operacao.equals("VISUALIZARC")) {
+		if (resultado.getMsg() == null && operacao.equals("MOSTRAR")) {
 
 			request.setAttribute("livro", resultado.getEntidades().get(0));
 			d = request.getRequestDispatcher("Compra.jsp");
 		}
+		
+	
 
 		if (resultado.getMsg() == null && operacao.equals("LOGAR")) {
 
@@ -208,9 +210,9 @@ public class LivroViewHelper implements IViewHelper {
 			d = request.getRequestDispatcher("FormLivros.jsp");
 		}
 		
-		if(operacao.equals("COMPRAR")){
+		if(operacao.equals("MOSTRAR")){
 			request.getSession().setAttribute("resultadoConsultaLivroCompra", resultado);
-			d= request.getRequestDispatcher("Compra.jsp");  
+			d= request.getRequestDispatcher("Livro.jsp");  
 		}		
 
 		if (resultado.getMsg() != null) {
