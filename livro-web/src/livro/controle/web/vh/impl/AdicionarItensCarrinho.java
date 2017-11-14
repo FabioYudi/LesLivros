@@ -21,29 +21,39 @@ public class AdicionarItensCarrinho implements IViewHelper {
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-		Livros l = (Livros) request.getSession().getAttribute("livro");
-		List<Item> carrinho = (List<Item>) request.getSession().getAttribute("carrinho");
-		List<Item> itens;
-		if (carrinho == null) {
-			itens = new ArrayList<Item>();
-			Item i = new Item();
-			i.setLivro(l);
-			itens.add(i);
-			request.getSession().setAttribute("carrinho", itens);
+	
 
-			return i;
-		} else {
-			Item i = new Item();
-			i.setLivro(l);
-			carrinho.add(i);
-			return i;
+
+			Livros l = (Livros) request.getSession().getAttribute("livro");
+			List<Item> carrinho = (List<Item>) request.getSession().getAttribute("carrinho");
+			List<Item> itens;
+			if (carrinho == null) {
+				itens = new ArrayList<Item>();
+				Item i = new Item();
+				i.setLivro(l);
+				itens.add(i);
+				request.getSession().setAttribute("carrinho", itens);
+
+				return i;
+			} else {
+				Item i = new Item();
+				i.setLivro(l);
+				carrinho.add(i);
+				return i;
+				
+			}
+			
+			
 		}
-	}
+
+		
+	
 
 	@Override
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
+		
 		RequestDispatcher d = null;
 		String operacao = request.getParameter("operacao");
 		if (operacao.equals("COMPRAR")) {

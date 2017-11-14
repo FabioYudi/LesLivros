@@ -192,11 +192,7 @@ public class LivroViewHelper implements IViewHelper {
 			d = request.getRequestDispatcher("FormLivros.jsp");
 		}
 		
-		if (resultado.getMsg() == null && operacao.equals("MOSTRAR")) {
-
-			request.setAttribute("livro", resultado.getEntidades().get(0));
-			d = request.getRequestDispatcher("Compra.jsp");
-		}
+		
 		
 	
 

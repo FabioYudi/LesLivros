@@ -6,6 +6,11 @@
 <html>
 	<%
 		List<Item> itensCarrinho = (List<Item>)request.getSession().getAttribute("carrinho");
+	
+	if(request.getSession().getAttribute("url") == "/livro-web/Carrinho") {
+		pageContext.forward("SalvarLivro?operacao=CONSULTARLIVRO");
+			return;
+	}
 	%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -17,13 +22,12 @@
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
 
     <!-- Custom styles for this template -->
     <link href="css/shop-item.css" rel="stylesheet">
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"  >
       <div class="container">
         <a class="navbar-brand" href="index.jsp">Les Livros</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +68,7 @@
 						<tr>
 							<td>Item</td>
 							<td>Preço</td>
-							<td>Quantidade</td>
+							<td align="center">Quantidade</td>
 							<td>Subtotal</td>
 						</tr>
 						<%
@@ -102,18 +106,14 @@
 								sb.append("<td>");
 								//sb.append(l.getPreco().toString());
 								sb.append("</td>");
-								sb.append("<td>");
-								sb.append("<form  action='Carrinho' method='post' align='center'>");
-								sb.append("<button type='button' class='btn btn-default'>");
-								sb.append("<span class='glyphicon glyphicon-plus' aria-hidden='true'></span>");
-								sb.append("</button>");         
-								sb.append("</form>");
+								sb.append("<td align='center'>");
+								sb.append("<button class='btn btn-primary' style='margin-left: 30px'><i class='material-icons'>remove</i></button>");
+								sb.append("<br");
+								sb.append("<h5 style='margin-left: 30px; border-color: #000000'>");
 								sb.append(map.get(l.getId()));
-								sb.append("<form  action='Carrinho' method='post' align='center'>");
-								sb.append("<button type='button' class='btn btn-default'>");
-								sb.append("<span class='glyphicon glyphicon-minus' aria-hidden='true'></span>");
-								sb.append("</button>");           
-								sb.append("</form>");
+								sb.append("</h5>");
+								sb.append("<button class='btn btn-primary' style='margin-left: 30px'><i class='material-icons' >add</i></button>");
+
 								sb.append("</td>");
 								sb.append("<td>");
 							//	sb.append(map.get(l.getId()) * l.getPreco());
@@ -126,7 +126,8 @@
 						{
 							out.print("<tr><td>Não há itens no seu carrinho</td></tr>");
 						}
-						%>																																				
+						%>	
+						<p>Used on a button:</p>
 					</tbody>
 				</table>
 			</div>

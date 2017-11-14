@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -116,6 +117,10 @@ public class Servlet extends HttpServlet {
 	
 		//Obtêm a uri que invocou esta servlet (O que foi definido no methdo do form html)
 		String uri = request.getRequestURI();
+		request.getSession().setAttribute("url", uri);
+		
+		
+
 		
 		//Obtêm a operação executada
 		String operacao = request.getParameter("operacao");
