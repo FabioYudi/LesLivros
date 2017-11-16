@@ -100,6 +100,7 @@
 				out.print("'" + livro.getEditora() + "'>");
 			else
 				out.print(">");%></input>
+				
 
 			<label for="txtEdicao">Edição:</label> <input type="text"
 				id="txtEdicao" name="txtEdicao" required="true"
@@ -121,6 +122,14 @@
 				out.print("'" + livro.getNumPg() + "'>");
 			else
 				out.print(">");%></input>
+				
+				<label for="txtEstoque">Qtd Estoque:</label> <input type="text"
+				id="txtEstoque" name="txtEstoque" required="true"
+				value=<%if (livro != null)
+				out.print("'" + livro.getEstoque() + "'>");
+			else
+				out.print(">");%></input>
+				
 
 
 		</div>
@@ -139,6 +148,13 @@
 				out.print(">")
 				;%>
 				</input>
+				
+				<label for="txtValor">Preço:</label> <input type="text"
+				id="txtValor" name="txtValor" required="true"
+				value=<%if (livro != null)
+				out.print("'" + livro.getValor() + "'>");
+			else
+				out.print(">");%></input>
 
 
 

@@ -16,6 +16,8 @@ public class Livros extends EntidadeDominio {
 	 	private double profundidade;
 	 	private LivroLog livroLog;
 	 	private Livros livro;
+	 	private double valor;
+	 	private int estoque;
 	 	
 	 	public String getCodigoLivro() {
 			return codigoLivro;
@@ -106,6 +108,18 @@ public class Livros extends EntidadeDominio {
 		}
 		public void setLivro(Livros livro) {
 			this.livro = livro;
+		}
+		public double getValor() {
+			return valor;
+		}
+		public void setValor(double valor) {
+			this.valor = valor;
+		}
+		public int getEstoque() {
+			return estoque;
+		}
+		public void setEstoque(int estoque) {
+			this.estoque = estoque;
 		}
 		
 

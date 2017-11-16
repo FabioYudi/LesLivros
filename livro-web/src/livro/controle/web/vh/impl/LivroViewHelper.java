@@ -46,6 +46,8 @@ public class LivroViewHelper implements IViewHelper {
 			String altura = request.getParameter("txtAltura");
 			String peso = request.getParameter("txtPeso");
 			String profundidade = request.getParameter("txtProfundidade");
+			String valor = request.getParameter("txtValor");
+			String estoque = request.getParameter("txtEstoque");
 			livro = new Livros();
 			log = new LivroLog();
 			lo = new Logar();
@@ -56,8 +58,7 @@ public class LivroViewHelper implements IViewHelper {
 
 			livro.setLivroLog(log);
 			
-			
-			
+		
 			
 			if (codigoLivro != null && !codigoLivro.trim().equals("")) {
 				livro.setCodigoLivro(codigoLivro);
@@ -130,6 +131,17 @@ public class LivroViewHelper implements IViewHelper {
 			if (id != null && !id.trim().equals("")) {
 				livro.setId(Integer.parseInt(id));
 				//log.setId(Integer.parseInt(idLog));
+
+			}
+			
+			
+			if (valor != null && !valor.trim().equals("")) {
+				livro.setValor(Double.parseDouble(valor));
+
+			}
+			
+			if (estoque != null && !estoque.trim().equals("")) {
+				livro.setEstoque(Integer.parseInt(estoque));
 
 			}
 			
