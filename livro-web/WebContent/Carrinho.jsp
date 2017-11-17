@@ -8,10 +8,7 @@
 	List<Livros> livros = (List<Livros>)request.getSession().getAttribute("livros");	
 	Map<Integer, Integer> map = (Map<Integer, Integer>) request.getSession().getAttribute("mapaCarrinho");
 	
-	if(request.getSession().getAttribute("url") == "/livro-web/Carrinho") {
-		pageContext.forward("SalvarLivro?operacao=CONSULTARLIVRO");
-			return;
-	}
+	
 	%>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -71,8 +68,22 @@
 							<td>Preço</td>
 							<td align="center">Quantidade</td>
 							<td>Subtotal</td>
+							<td></td>
+							
+							
+							
 						</tr>
+						<tr>
+						</tr>
+						
+						
+						
+						
 						<%
+						double subTotal = 0;
+						double desconto = 0;
+						double precoTotal = 0;
+						double precoFrete = 0;
 						if(livros!= null)
 						{
 							
@@ -81,43 +92,64 @@
 							{
 								sb.setLength(0);
 								Livros l = livros.get(i);
-								
-							
-								sb.append("<tr>");
+								Integer qtdeEstoque = l.getEstoque() - map.get(l.getId());
+								sb.append("<tr style='border-color:red'>");
 								sb.append("<td>");
 								sb.append(l.getTitulo());
 								sb.append("</td>");
+								
 								sb.append("<td>");
-								sb.append(l.getValor());
+								sb.append("R$" + String.format("%.2f", l.getValor()));
 								sb.append("</td>");
-								sb.append("<td align='center'>");
-								sb.append("</div><form action='Carrinho' method='POST'>");
-								sb.append("<button type='submit' name='operacao' value='SOMAR'  class='btn btn-primary' style='margin-left: 30px'><i class='material-icons'>add</i></button>");
-								sb.append("<br");
+								
+								//quantidade
+								
+								sb.append("<td style='padding-left:105px'>");
+								sb.append("<form action='Carrinho' method='POST'>");
+								sb.append("<div class='row'>");
+								sb.append("<button type='submit' name='operacao' value='SOMAR'  class='btn btn-primary' style='margin-left: 40px'><i class='material-icons'>add</i></button>");
+								sb.append("<input type='hidden' name='txtId' value='"+ l.getId() +"'>");     
 								sb.append("</form>");
-								sb.append("<h5 style='margin-left: 30px; border-color: #000000'>");
+								sb.append("<h5 style='padding-left: 30px; border-color: #000000'>");
 								sb.append(map.get(l.getId()));
 								sb.append("</h5>");
+								sb.append("<form action='Carrinho' method='POST'>");
+								sb.append("<input type='hidden' name='txtId' value='"+ l.getId() +"'>");     
 								sb.append("<button type='submit' name='operacao' value='SUBTRAIR' class='btn btn-primary' style='margin-left: 30px'><i class='material-icons' >remove</i></button>");
-								sb.append("</a>");
-								sb.append("<input type='hidden' name='txtId' value='"+ l.getId() +"'>");             
-								sb.append("</td>");
-								sb.append("<td>");
-							//	sb.append(map.get(l.getId()) * l.getPreco());
+								sb.append("</form>");	
+								sb.append("</a>");        
+								sb.append("</td>");	
+								sb.append("</div>");
+								//quantidade
+
+
+								
+								
+								sb.append("<td  id='subtotal" + i +"'>");
+								subTotal =  map.get(l.getId()) * l.getValor();
+								precoTotal = precoTotal + map.get(l.getId()) * l.getValor();
+								sb.append("R$" + String.format("%.2f", subTotal));
+
+								sb.append("<script>$('#subtotal" + i + "').html('" + String.format("%.2f" , map.get(l.getId()) * l.getValor()) + "R$');</script>");
+								
+								sb.append("<td><a href='Carrinho?operacao=REMOVER&id=" + l.getId() +"'>Remover</a></td>");
 								sb.append("</td>");
 								sb.append("</tr>");	
-								out.print(sb.toString());										
+								out.print(sb.toString());	
 							
 						}
 							request.getSession().setAttribute("mapaCarrinho", map);
+							precoTotal = precoTotal + precoFrete;
 						}
 						if(livros == null || livros.size() == 0)
 						{
-							double precoTotal = 0;
+							precoTotal = 0;
 							out.print("<tr><td>Não há itens no seu carrinho</td></tr>");
 						}
 						
 						%>	
+												<td><input type="text"></input> </td>
+						
 						<p>Used on a button:</p>
 					</tbody>
 				</table>

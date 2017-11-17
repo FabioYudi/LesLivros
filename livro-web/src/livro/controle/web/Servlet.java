@@ -60,7 +60,7 @@ public class Servlet extends HttpServlet {
     	commands.put("COMPRAR", new ComprarCommand());
     	commands.put("SOMAR", new ComprarCommand());
     	commands.put("SUBTRAIR", new ComprarCommand());
-    	
+    	commands.put("REMOVER", new ComprarCommand());
 
     	
     	/* Utilizando o ViewHelper para tratar especificações de qualquer tela e indexando 

@@ -71,6 +71,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 					}
 				}
 				
+				
 				if(m != null && operacao.equals("REMOVER"))
 				{
 					String txtId = request.getParameter("id");
