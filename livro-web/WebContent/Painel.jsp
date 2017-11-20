@@ -1,25 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-     <%@ page
+    <%@ page
 	import="livro.core.aplicacao.Resultado, livro.dominio.*, java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%
+	String usuario = (String)request.getSession().getAttribute("username");
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Faça Login</title>
-<link rel="stylesheet" type="text/css" href="resources/css/login.css">
-  
+ <script language="JavaScript" src="resources/js/teste.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
-  <script language="JavaScript" src="resources/js/teste.js"></script>
-  <%
-  	String usuario = (String)request.getSession().getAttribute("username");
-  %>
-  
-  
+
+    <!-- Bootstrap core CSS -->
+    <link type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
+
+    <!-- Custom styles for this template -->
+    <link type="text/css"  href="css/shop-homepage.css" rel="stylesheet">
+    
+<title>Área do cliente</title>
+
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -65,35 +71,52 @@
     </nav>
      <!-- Navigation -->
 
-  
 </head>
 <body>
-<div align="center" style="padding-top:5%"> 
-<h2> Faça Login</h2>
-</div>
 
-<form  action="Login" method="post" style="padding-left:20%">
-<div class="lo">
+
+
+ <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+ <!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h5 style="padding-right: 30px">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             
+            </div>
+            <div class="modal-body">
+                
+                <form  action="Login" method="post" style="padding-left:20%">
 		
-			
-		<div class="form-group">
-		<label for="username">Login:</label>
-		<input size="21" type="text" id="username" name="username" required="true" style="margin-right: 15px" />
+		<div class="form-group" >
+		<label for="username" >Usuario:</label>
+		<input size="21" type="text" id="username" name="username" required="true"/>
 		</div>
 		
 		<div class="form-group">
-		<label for="senha">Senha:</label>
-		<input size="21" type="text" id="senha" name="senha" required="true" style="margin-right: 10px" />
+		<label for="senha" style="padding-left:11px">Senha:</label>
+		<input size="21" type="password" id="senha" name="senha" required="true" style="margin-right: 10px" />
 		</div>
-					<input  type='submit' id='operacao' name='operacao' value='LOGAR' class='btn btn-primary' style="margin-left:80px"/>
+					<input  type='submit' id='operacao' name='operacao' value='LOGAR' class='btn btn-primary' style="margin-left:110px"/>
 		
 		</div>
 		
 	
 		
 </form>
+                <p class="bg-info" align="center"><small>Não possui cadastro? Cadastre-se <a href="FormCliente.jsp" style="color:red; font-size:15px">AQUI</a></small></p>
+            </div>
+            
+        </div>
+    </div>
+</div>
 
 
+<!-- Modal HTML -->
 
-</body>
 </html>

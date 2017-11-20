@@ -14,6 +14,7 @@ public class Livros extends EntidadeDominio {
 	 	private double altura;
 	 	private double peso;
 	 	private double profundidade;
+	 	private double largura;
 	 	private LivroLog livroLog;
 	 	private Livros livro;
 	 	private double valor;
@@ -121,6 +122,15 @@ public class Livros extends EntidadeDominio {
 		public void setEstoque(int estoque) {
 			this.estoque = estoque;
 		}
+<<<<<<< Upstream, based on origin/master
+=======
+		public double getLargura() {
+			return largura;
+		}
+		public void setLargura(double largura) {
+			this.largura = largura;
+		}
+>>>>>>> 07f8a07 Sistema de sessão de login e sair da conta implementados, carrinho terminado
 		
 
 }

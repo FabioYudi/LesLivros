@@ -6,6 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+   
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
   <script language="JavaScript" src="resources/js/teste.js"></script>
@@ -17,9 +18,12 @@
 
     <!-- Bootstrap core CSS -->
     <link type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    
 
     <!-- Custom styles for this template -->
     <link type="text/css"  href="css/shop-homepage.css" rel="stylesheet">
+    
+   
 
   </head>
 
@@ -27,6 +31,9 @@
 
    	<%
   		Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaLivro");
+    		String usuario = (String)request.getSession().getAttribute("username");
+    		StringBuilder sb = new StringBuilder();
+
     		
   		if(resultado == null)
   		{
@@ -45,7 +52,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Vendas</a>
+        <a class="navbar-brand" href="index.jsp">LES LIVROS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -55,23 +62,44 @@
               <a class="nav-link" href="index.jsp">Home
                 <span class="sr-only">(current)</span>
               </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="FormCliente.jsp">Cadastre-se</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="Login.jsp">Login</a>
-            </li>
+            </li>                  
+           
+          <%
+            	if(request.getSession().getAttribute("username") == null){
+            		out.print("<li class='nav-item'>");
+            		out.print(" <a class='nav-link' href='FormCliente.jsp'>Cadastre-se</a>");
+            		out.print(" </li>");
+            		out.print("<li class='nav-item'>");
+            		out.print(" <a class='nav-link' data-toggle='modal' href='#myModal'>Login</a>");
+            		out.print(" </li>");
+            	}else{
+            		out.print("<li class='nav-item'>");
+            		out.print(" <a class='nav-link' href='Painel.jsp'>Área do Cliente</a>");
+            		out.print(" </li>");
+            		out.print("<li class='nav-item'>");
+            		out.print(" <a class='nav-link' href='Login?operacao=SAIR'>Sair</a>");
+            		out.print(" </li>");
+            		out.print("<li class='nav-item' style='padding-left:50px; padding-top:10px'>");
+            		out.print("<h6 style='color:white'> Olá, ");
+            		out.print(" " + usuario + "</h6>");
+            		out.print("</li>");
+
+            	}
+            %>
+              
+           
           </ul>
         </div>
       </div>
     </nav>
+     <!-- Navigation -->
 
     <!-- Page Content -->
+ 
+
+
     <div class="container">
+    
 
       <div class="row">
 
@@ -119,7 +147,7 @@
           
 
           <div class="row">
-
+  
     
    
    <% 
@@ -138,7 +166,6 @@
 				
 			//	<a href="nome-do-lugar-a-ser-levado">descrição</a>
 				
-				
 				sbLink.append("<a href=Livro?");
 					sbLink.append("txtId=");
 					sbLink.append(l.getId());						
@@ -152,14 +179,16 @@
 					sbRegistro.append("<div class='col-lg-4 col-md-6 mb-4'>");
 					sbRegistro.append("<div class='card h-100'>");	
 					sbRegistro.append("<img class='card-img-top'"); 
-					sbRegistro.append("src='https://images-na.ssl-images-amazon.com/images/I/51xPezkMNlL._SX331_BO1,204,203,200_.jpg'");
+					sbRegistro.append("src='https://images-submarino.b2w.io/produtos/01/00/item/123806/5/123806573_1GG.jpg'");
 					sbRegistro.append("alt=''>");
 					sbRegistro.append("<div class='card-body'>");
 					sbRegistro.append("<h4 class='card-title'>");
 					sbRegistro.append(l.getTitulo());
 					sbRegistro.append("</a>");	
 					sbRegistro.append("</h4>");
-					sbRegistro.append("<h5>$24.99</h5>");
+					sbRegistro.append("<h5>");
+					sbRegistro.append("R$" + String.format("%.2f", l.getValor()));
+					sbRegistro.append("</h5>");
 					sbRegistro.append("<p class='card-text'></p>");
 					sbRegistro.append("<form  action='Compra' method='post' align='left'>");
 					sbRegistro.append("	<input  type='submit' id='operacao' name='operacao' value='MOSTRAR' class='btn btn-primary'/>");
@@ -215,7 +244,50 @@
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    
+    
+   
 
   </body>
+  
+  <!-- Modal HTML -->
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h5 style="padding-right: 30px">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             
+            </div>
+            <div class="modal-body">
+                
+                <form  action="Login" method="post" style="padding-left:20%">
+		
+		<div class="form-group" >
+		<label for="username" >Usuario:</label>
+		<input size="21" type="text" id="username" name="username" required="true"/>
+		</div>
+		
+		<div class="form-group">
+		<label for="senha" style="padding-left:11px">Senha:</label>
+		<input size="21" type="password" id="senha" name="senha" required="true" style="margin-right: 10px" />
+		</div>
+					<input  type='submit' id='operacao' name='operacao' value='LOGAR' class='btn btn-primary' style="margin-left:110px"/>
+		
+		</div>
+		
+	
+		
+</form>
+                <p class="bg-info" align="center"><small>Não possui cadastro? Cadastre-se <a href="FormCliente.jsp" style="color:red; font-size:15px">AQUI</a></small></p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal HTML -->
 
 </html>

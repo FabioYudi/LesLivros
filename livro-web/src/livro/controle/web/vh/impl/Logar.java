@@ -34,20 +34,27 @@ public class Logar implements IViewHelper {
 	@Override
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
+		 RequestDispatcher d = null;
+		String operacao = request.getParameter("operacao");
+
 		// TODO Auto-generated method stub
-		Logar lo = new Logar();
-	     
-			 HttpSession sessao = request.getSession();
-			 RequestDispatcher d = null;
-		sessao.setAttribute("username",request.getParameter("username"));
-			String teste = "";
-			teste = (String)sessao.getAttribute("username");
-			System.out.println(teste);
+		if(operacao.equals("LOGAR")){
+			HttpSession sessao = request.getSession();
+			sessao.setAttribute("username",request.getParameter("username"));
 
-			d = request.getRequestDispatcher("FormLivros.jsp");
+
+			d = request.getRequestDispatcher("index.jsp");
+		}		
+		if(operacao.equals("SAIR")){
+			request.getSession().removeAttribute("username");
+			d = request.getRequestDispatcher("index.jsp");
+
+			
+		}
+		
+			 
 			d.forward(request, response);
-
-
 
 		
 	}

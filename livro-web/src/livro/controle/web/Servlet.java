@@ -61,6 +61,12 @@ public class Servlet extends HttpServlet {
     	commands.put("SOMAR", new ComprarCommand());
     	commands.put("SUBTRAIR", new ComprarCommand());
     	commands.put("REMOVER", new ComprarCommand());
+<<<<<<< Upstream, based on origin/master
+=======
+    	commands.put("CALCULAR", new ComprarCommand());
+    	commands.put("SAIR", new LogarCommand());
+
+>>>>>>> 07f8a07 Sistema de sessÃ£o de login e sair da conta implementados, carrinho terminado
 
     	
     	/* Utilizando o ViewHelper para tratar especificações de qualquer tela e indexando 

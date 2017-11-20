@@ -53,18 +53,7 @@ public class ClienteViewHelper implements IViewHelper {
 			String tipoTel = request.getParameter("txtTipo");
 			String codigo = request.getParameter("txtCodigo");
 			String idTel = request.getParameter("txtIdTel");
-			String logradouro = request.getParameter("txtLogradouro");
-			String bairro = request.getParameter("txtBairro");
-			String cep = request.getParameter("txtCep");
-			String numero = request.getParameter("txtNumero");
-			String complemento = request.getParameter("txtComplemento");
-			String nomeRua = request.getParameter("txtNomeRua");
-			String tpRes = request.getParameter("txtTpRes");
-			String tpLog = request.getParameter("txtTpLog");
-			String cidade = request.getParameter("txtCidade");
-			String estado = request.getParameter("txtEstado");
-			String pais = request.getParameter("txtPais");
-			String idRua = request.getParameter("txtIdRU");
+			
 			String nascimento = request.getParameter("txtDtNasc");
 			String titular = request.getParameter("txtTitular");
 			String numeroCar = request.getParameter("txtNumCar");
@@ -83,7 +72,6 @@ public class ClienteViewHelper implements IViewHelper {
 			if (id != null && !id.trim().equals("")) {
 				cliente.setId(Integer.parseInt(id));
 				cliente.getTelefone().setId(Integer.parseInt(idTel));
-				cliente.getEndereco().setId(Integer.parseInt(idRua));
 				cliente.getCartao().setId(Integer.parseInt(idCartao));
 			}
 			
@@ -144,21 +132,7 @@ public class ClienteViewHelper implements IViewHelper {
 				cliente.setTelefone(new Telefone());
 				cliente.getTelefone().setNumero(numTelefone);
 				cliente.getTelefone().setCodArea(codigo);
-				cliente.setEndereco(new Endereco());
-				cliente.getEndereco().setCidade(new Cidade());
-				cliente.getEndereco().getCidade().setEstado(new Estado());
-				cliente.getEndereco().getCidade().getEstado().setPais(new Pais());
-				cliente.getEndereco().setLogradouro(logradouro);
-				cliente.getEndereco().setBairro(bairro);
-				cliente.getEndereco().setCep(cep);
-				cliente.getEndereco().setNumero(numero);
-				cliente.getEndereco().setComplemento(complemento);
-				cliente.getEndereco().setNome(nomeRua);
-				cliente.getEndereco().setTipoResidencia(tpRes);
-				cliente.getEndereco().setTipoLogradouro(tpLog);
-				cliente.getEndereco().getCidade().setNome(cidade);
-				cliente.getEndereco().getCidade().getEstado().setNome(estado);
-				cliente.getEndereco().getCidade().getEstado().getPais().setNome(pais);
+				
 				cliente.setCartao(car);
 				cliente.setCartao(new Cartao());
 				cliente.getCartao().setNumero(numeroCar);

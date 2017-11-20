@@ -13,6 +13,7 @@ import org.apache.catalina.manager.util.SessionUtils;
 
 import livro.controle.web.vh.IViewHelper;
 import livro.core.aplicacao.Resultado;
+import livro.dominio.Cliente;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.LivroLog;
 import livro.dominio.Livros;
@@ -48,10 +49,13 @@ public class LivroViewHelper implements IViewHelper {
 			String profundidade = request.getParameter("txtProfundidade");
 			String valor = request.getParameter("txtValor");
 			String estoque = request.getParameter("txtEstoque");
+<<<<<<< Upstream, based on origin/master
+=======
+
+>>>>>>> 07f8a07 Sistema de sessão de login e sair da conta implementados, carrinho terminado
 			livro = new Livros();
 			log = new LivroLog();
-			lo = new Logar();
-			u = new Usuario();
+		
 			 HttpSession sessao = request.getSession();
 			String teste = "";
 			teste = (String)sessao.getAttribute("username");
