@@ -40,16 +40,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 					return new Item();
 				}
 				
-<<<<<<< Upstream, based on origin/master
 
-=======
-				if(m != null && operacao.equals("CALCULAR"))
-				{
-					double frete;
-					frete = l.getAltura() * l.getPeso() * l.getProfundidade();
-					request.getSession().setAttribute("frete", frete);
-				}
->>>>>>> 07f8a07 Sistema de sessão de login e sair da conta implementados, carrinho terminado
 				
 				if(m != null && operacao.equals("SOMAR"))
 				{

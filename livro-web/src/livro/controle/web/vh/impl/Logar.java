@@ -16,7 +16,7 @@ import livro.dominio.LivroLog;
 
 public class Logar implements IViewHelper {
 	
-	private String usuario;
+private String usuario;
 	
 	public String Cadastro() {
 		

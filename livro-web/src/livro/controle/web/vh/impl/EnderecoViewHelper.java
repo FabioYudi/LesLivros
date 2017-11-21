@@ -15,7 +15,6 @@ import livro.dominio.Endereco;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.Estado;
 import livro.dominio.Pais;
-import livro.dominio.Telefone;
 
 public class EnderecoViewHelper implements IViewHelper {
 
@@ -55,6 +54,11 @@ public class EnderecoViewHelper implements IViewHelper {
 
 			if (bairro != null && !bairro.trim().equals("")) {
 				cliente.getEndereco().setBairro(bairro);
+
+			}
+			
+			if (logradouro != null && !logradouro.trim().equals("")) {
+				cliente.getEndereco().setLogradouro(logradouro);
 
 			}
 
