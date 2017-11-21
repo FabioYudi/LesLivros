@@ -2,6 +2,8 @@ package livro.controle.web.vh.impl;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -172,13 +174,20 @@ public class ClienteViewHelper implements IViewHelper {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		RequestDispatcher d = null;
-		request.getSession().setAttribute("resultado", null);
+		request.getSession().setAttribute("resultado", resultado);
 		request.getSession().setAttribute("cliente", resultado);
 		request.getSession().setAttribute("telefone", resultado);
 		request.getSession().setAttribute("endereco", resultado);
 		request.getSession().setAttribute("cartao", resultado);
 		String operacao = request.getParameter("operacao");
+		
+		
+		if(resultado.getMsg() == null && operacao.equals("SAIR")){
+			request.getSession().removeAttribute("username");
+			d = request.getRequestDispatcher("index.jsp");
 
+			
+		}
 		if (resultado.getMsg() == null) {
 			if (operacao.equals("SALVAR")) {
 				resultado.setMsg("Cliente cadastrado com sucesso!");
@@ -187,6 +196,37 @@ public class ClienteViewHelper implements IViewHelper {
 			request.getSession().setAttribute("resultado", resultado);
 			d = request.getRequestDispatcher("FormConsultaCliente.jsp");
 		}
+		
+		if(operacao.equals("LOGAR")) {
+			List<EntidadeDominio> entidades = resultado.getEntidades();
+			for (int i = 0; i < entidades.size(); i++) {
+				Cliente c = (Cliente) entidades.get(i);
+				System.out.println(c.getEmail());
+				System.out.println(entidades.size());
+
+				if(request.getParameter("username").trim().equals(c.getEmail().trim()))
+				{
+					System.out.println("Usuario CORRETO");
+					System.out.println(c.getEmail());
+
+					HttpSession sessao = request.getSession();
+					sessao.setAttribute("username",request.getParameter("username"));
+
+					
+					d = request.getRequestDispatcher("index.jsp");
+					break;
+				}else {
+					System.out.println("Usuario incorreto");
+					d = request.getRequestDispatcher("Login.jsp");
+
+
+				}
+				
+				
+			}
+		}
+		
+		
 
 		if (resultado.getMsg() == null && operacao.equals("ALTERAR")) {
 

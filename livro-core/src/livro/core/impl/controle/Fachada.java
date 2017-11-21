@@ -91,6 +91,7 @@ public class Fachada implements IFachada {
 	}
 	public Resultado logar(EntidadeDominio entidade) {
 		
+		
 	return resultado;
 		
 	}

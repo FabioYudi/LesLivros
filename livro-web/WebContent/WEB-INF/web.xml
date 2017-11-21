@@ -26,6 +26,11 @@
   
   <servlet-mapping>
     <servlet-name>Servlet</servlet-name>
+    <url-pattern>/Sair</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Servlet</servlet-name>
     <url-pattern>/FormCliente</url-pattern>
   </servlet-mapping>
   

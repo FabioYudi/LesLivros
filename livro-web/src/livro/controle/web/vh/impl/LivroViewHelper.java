@@ -183,6 +183,7 @@ public class LivroViewHelper implements IViewHelper {
 		request.getSession().setAttribute("livro", resultado);
 		String operacao = request.getParameter("operacao");
 		
+		
 
 		if (resultado.getMsg() == null) {
 			if (operacao.equals("SALVAR")) {
@@ -208,15 +209,6 @@ public class LivroViewHelper implements IViewHelper {
 		
 	
 
-		if (resultado.getMsg() == null && operacao.equals("LOGAR")) {
-
-			//HttpSession se = request.getSession();
-			request.getSession().setAttribute("resultado", resultado);
-			//String usu = (String) se.getAttribute("txtUsuario").toString();
-			//LivroLog log = new LivroLog();
-			//log.setUsuario(usu);
-			d = request.getRequestDispatcher("FormLivros.jsp");
-		}
 		
 		if(operacao.equals("MOSTRAR")){
 			request.getSession().setAttribute("resultadoConsultaLivroCompra", resultado);

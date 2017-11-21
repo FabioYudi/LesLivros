@@ -32,7 +32,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append("INSERT INTO livros(codigo_livro, autor, ano, status, titulo, editora, edicao, isbn,"
-					+ "num_paginas, sinopse, altura, peso, profundidade, valor, estoque) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					+ "num_paginas, sinopse, altura, peso, profundidade, valor, estoque, largura) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 			pst = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 
@@ -51,6 +51,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 			pst.setDouble(13, livro.getProfundidade());
 			pst.setDouble(14, livro.getValor());
 			pst.setInt(15, livro.getEstoque());
+			pst.setDouble(16, livro.getLargura());
 			pst.executeUpdate();
 			ResultSet rs = pst.getGeneratedKeys();
 			int id=0;
@@ -90,7 +91,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 			connection.setAutoCommit(false);
 			StringBuilder sb = new StringBuilder();
 			sb.append("UPDATE livros SET codigo_livro=?, autor=?, ano=?, status=?, titulo=?, editora=?, edicao=?, isbn=?, num_paginas=?, sinopse=?, altura=?,"
-					+ " peso=?, profundidade=?, valor=?, estoque=? WHERE id=?");
+					+ " peso=?, profundidade=?, valor=?, estoque=?, largura=? WHERE id=?");
 			pst = connection.prepareStatement(sb.toString());
 			pst.setString(1, livro.getCodigoLivro());
 			pst.setString(2, livro.getAutor());
@@ -108,6 +109,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 			pst.setInt(14, livro.getId());
 			pst.setDouble(14, livro.getValor());
 			pst.setInt(15, livro.getEstoque());
+			pst.setDouble(16, livro.getLargura());
 			pst.executeUpdate();
 			
 			connection.commit();
@@ -172,7 +174,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 
 		sql.append(
 				"SELECT DISTINCT  a.id, a.codigo_livro, a.autor, a.ano, a.status, a.titulo, a.editora, a.edicao, a.isbn, a.num_paginas, a.sinopse, a.altura,");
-		sql.append(" a.peso, a.profundidade, a.valor, a.estoque FROM livros a ");
+		sql.append(" a.peso, a.profundidade, a.valor, a.estoque, a.largura FROM livros a ");
 		sql.append(" WHERE 1=1 ");
 		if (livro.getId() != null && livro.getId() > 0) {
 			sql.append(" AND a.id =" + livro.getId() );
@@ -240,6 +242,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 				l.setProfundidade(rs.getDouble("profundidade"));
 				l.setValor(rs.getDouble("valor"));
 				l.setEstoque(rs.getInt("estoque"));
+				l.setLargura(rs.getDouble("largura"));
 				
 				livros.add(l);
 

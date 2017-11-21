@@ -49,7 +49,7 @@ public class Servlet extends HttpServlet {
     	
     	
     	commands.put("SALVAR", new SalvarCommand());
-    	commands.put("LOGAR", new LogarCommand());
+    	commands.put("LOGAR", new ConsultarCommand());
     	commands.put("EXCLUIR", new ExcluirCommand());
     	commands.put("CONSULTAR", new ConsultarCommand());
     	commands.put("VISUALIZAR", new VisualizarCommand());
@@ -74,7 +74,8 @@ public class Servlet extends HttpServlet {
     	 * está configurado no web.xml e sendo utilizada no action do html
     	 */
     	vhs.put("/livro-web/SalvarLivro", new LivroViewHelper());
-    	vhs.put("/livro-web/Login", new Logar());
+    	vhs.put("/livro-web/Sair", new Logar());
+    	vhs.put("/livro-web/Login", new ClienteViewHelper());
     	vhs.put("/livro-web/SalvarCliente", new ClienteViewHelper());
     	vhs.put("/livro-web/FormLivros", new LivroViewHelper());
     	vhs.put("/livro-web/FormLCliente", new LivroViewHelper());

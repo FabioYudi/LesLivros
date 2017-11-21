@@ -121,8 +121,13 @@ public class AdicionarItensCarrinho implements IViewHelper {
 		RequestDispatcher d = null;
 		String operacao = request.getParameter("operacao");
 		if(operacao.equals("COMPRAR")){
+			if(request.getSession().getAttribute("username") == null) {
+				d= request.getRequestDispatcher("Login.jsp");  
+
+			}else {
 			request.getSession().setAttribute("resultadoLivro", resultado);
 			d= request.getRequestDispatcher("Carrinho.jsp");  
+			}
 		}			
 		
 		if(operacao.equals("SOMAR"))

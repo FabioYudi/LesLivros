@@ -18,6 +18,7 @@ public class Livros extends EntidadeDominio {
 	 	private Livros livro;
 	 	private double valor;
 	 	private int estoque;
+	 	private double largura;
 	 	
 	 	public String getCodigoLivro() {
 			return codigoLivro;
@@ -120,6 +121,12 @@ public class Livros extends EntidadeDominio {
 		}
 		public void setEstoque(int estoque) {
 			this.estoque = estoque;
+		}
+		public double getLargura() {
+			return largura;
+		}
+		public void setLargura(double largura) {
+			this.largura = largura;
 		}
 		
 

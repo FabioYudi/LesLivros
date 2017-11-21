@@ -54,7 +54,7 @@
             		out.print(" <a class='nav-link' href='Painel.jsp'>Área do Cliente</a>");
             		out.print(" </li>");
             		out.print("<li class='nav-item'>");
-            		out.print(" <a class='nav-link' href='Login?operacao=SAIR'>Sair</a>");
+            		out.print(" <a class='nav-link' href='Sair?operacao=SAIR'>Sair</a>");
             		out.print(" </li>");
             		out.print("<li class='nav-item' style='padding-left:50px; padding-top:10px'>");
             		out.print("<h6 style='color:white'> Olá, ");
