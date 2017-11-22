@@ -16,9 +16,11 @@ import livro.core.aplicacao.Resultado;
 import livro.core.impl.dao.ClienteDAO;
 import livro.core.impl.dao.LivroDAO;
 import livro.core.impl.dao.TelefoneDAO;
+import livro.core.impl.negocio.ValidarEstoqueCarrinho;
 import livro.core.impl.negocio.vrDadosObrigatoriosLivro;
 import livro.dominio.Cliente;
 import livro.dominio.EntidadeDominio;
+import livro.dominio.Item;
 import livro.dominio.Livros;
 import livro.dominio.Telefone;
 
@@ -50,37 +52,47 @@ public class Fachada implements IFachada {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		TelefoneDAO telDAO = new TelefoneDAO();
 		
+		
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		daos.put(Livros.class.getName(), livroDAO);
 		daos.put(Cliente.class.getName(), clienteDAO);
 		daos.put(Telefone.class.getName(), telDAO);
 		
+		
 		/* Criando instâncias de regras de negócio a serem utilizados*/
 		vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();
+		ValidarEstoqueCarrinho vQtdeEstoque = new ValidarEstoqueCarrinho();
 		
 		/* Criando uma lista para conter as regras de negócio de livros
 		 * quando a operação for salvar
 		 */
 		List<IStrategy> rnsSalvarLivro = new ArrayList<IStrategy>();
 		List<IStrategy> rnsSalvarCliente = new ArrayList<IStrategy>();
+		List<IStrategy> rnsValidarCarrinho = new ArrayList<IStrategy>();
 		/* Adicionando as regras a serem utilizadas na operação salvar do fornecedor*/
 		rnsSalvarLivro.add(vrDadosObrigatorioLivro);
-	
+		
+		/* Adicionando as regras a serem utilizadas na operação de validar quantidade carrinho */
+		rnsValidarCarrinho.add(vQtdeEstoque);
+
 		/* Cria o mapa que poderá conter todas as listas de regras de negócio específica 
 		 * por operação  do livro
 		 */
 		
 		Map<String, List<IStrategy>> rnsLivro = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCliente = new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsCarrinho= new HashMap<String, List<IStrategy>>();
+
 		/*
 		 * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista criada na linha 70)
 		 */
 		rnsLivro.put("SALVAR", rnsSalvarLivro);	
 		rnsCliente.put("SALVAR", rnsSalvarCliente);
-		
+		rnsLivro.put("COMPRAR", rnsValidarCarrinho);	
+
 		
 		/*
-		 * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista criada na linha 70)
+		 * Adiciona a listra de regras na operação Alterar no mapa do livro (lista criada na linha 70)
 		 */
 		rnsLivro.put("ALTERAR", rnsSalvarLivro);	
 		
@@ -88,6 +100,7 @@ public class Fachada implements IFachada {
 		 * pelo nome da entidade
 		 */
 		rns.put(Livros.class.getName(), rnsLivro);
+		rns.put(Item.class.getName(),rnsCarrinho);
 	}
 	public Resultado logar(EntidadeDominio entidade) {
 		
@@ -189,12 +202,36 @@ public class Fachada implements IFachada {
 	}
 	
 	public Resultado comprar(EntidadeDominio entidade) {
+		System.out.println("OI LUMAS");
 		Resultado resultado = new Resultado();
-		String msg = executarRegras(entidade, "COMPRAR");
-		resultado.setMsg(msg);
+		Item itemCarrinho = (Item)entidade;
+		Livros livroCarrinho = itemCarrinho.getLivro();
+		if(livroCarrinho != null)
+		{
+			System.out.println("OI LUMAS to no fi");
+
+			LivroDAO dao = new LivroDAO();
+			List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);
+			
+			Livros l = (Livros)entidadeLivro.get(0);
+			itemCarrinho.setLivro(l);
+			
+			List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
+			itens.add(itemCarrinho);
+			
+			resultado.setEntidades(itens);
+			
+			String msg = executarRegras(itemCarrinho, "COMPRAR");
+			
+			resultado.setMsg(msg);
+			if(resultado.getMsg() != null)
+			{
+				itemCarrinho.setQuantidade(l.getEstoque());
+			}			
+		}	
 		return resultado;
-		
 	}
+	
 
 	@Override
 	public Resultado alterar(EntidadeDominio entidade) {

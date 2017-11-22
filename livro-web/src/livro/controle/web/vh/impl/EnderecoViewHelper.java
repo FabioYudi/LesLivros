@@ -41,8 +41,9 @@ public class EnderecoViewHelper implements IViewHelper {
 			String pais = request.getParameter("txtPais");
 			String idRua = request.getParameter("txtIdRU");
 			String id = request.getParameter("txtId");
-			cliente = new Cliente();
 			endereco = new Endereco();
+			
+			
 
 			cliente.setEndereco(new Endereco());
 			cliente.getEndereco().setCidade(new Cidade());
@@ -50,7 +51,7 @@ public class EnderecoViewHelper implements IViewHelper {
 			cliente.getEndereco().getCidade().getEstado().setPais(new Pais());
 
 
-				cliente.getEndereco().setId(Integer.parseInt(idRua));
+				//cliente.getEndereco().setId(Integer.parseInt(idRua));
 				cliente.getEndereco().setBairro(bairro);
 				cliente.getEndereco().setLogradouro(logradouro);
 				cliente.getEndereco().setCep(cep);
@@ -66,7 +67,7 @@ public class EnderecoViewHelper implements IViewHelper {
 				
 				
 
-			
+			return cliente;
 
 			
 		} 

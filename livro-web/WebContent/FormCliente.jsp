@@ -333,8 +333,7 @@
 		
 	</form>
 	
-	<form>
-		<!-- ENDEREÇO -->	
+<form  action="SalvarEndereco" method="post" align="center">		<!-- ENDEREÇO -->	
 		<div class="container">
 <li class="aba" id="aba-3">
      <a>Endereço</a> 

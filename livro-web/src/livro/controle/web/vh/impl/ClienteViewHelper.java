@@ -201,16 +201,16 @@ public class ClienteViewHelper implements IViewHelper {
 			List<EntidadeDominio> entidades = resultado.getEntidades();
 			for (int i = 0; i < entidades.size(); i++) {
 				Cliente c = (Cliente) entidades.get(i);
-				System.out.println(c.getEmail());
-				System.out.println(entidades.size());
+				
 
 				if(request.getParameter("username").trim().equals(c.getEmail().trim()))
 				{
-					System.out.println("Usuario CORRETO");
 					System.out.println(c.getEmail());
 
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("username",request.getParameter("username"));
+					sessao.setAttribute("usuarioID", c.getId());
+					
 
 					
 					d = request.getRequestDispatcher("index.jsp");
