@@ -237,6 +237,103 @@
 		</div>
 				
 	<br> <br> <br>
+	
+	</div>
+	<!-- Cartão -->
+	
+	
+	<li class="aba" id="aba-3">
+     <a>Cartão</a> 
+     <br> <br>
+     <section class="conteudo">
+     
+     <div class="form-group">
+     
+     <label for="txtTitular">Titular:</label>
+		<input type="text" id="txtTitular" name="txtTitular" maxlength="40" required="true" style="margin-bottom: 20px" value=
+		
+		
+		<%		
+			if(cliente != null)
+				out.print("'"+cliente.getCartao().getTitular()+"'>"); 
+			else
+				out.print(">"); 		
+		%>
+		
+		</input>
+		
+		 <label for="txtNumCar">Número no cartão:</label>
+		<input type="text" id="txtNumCar" name="txtNumCar" maxlength="40" required="true" style="margin-bottom: 20px" value=
+		
+		
+		<%		
+			if(cliente != null)
+				out.print("'"+cliente.getCartao().getNumero()+"'>"); 
+			else
+				out.print(">"); 		
+		%>
+		
+		</input>
+		
+		 <label for="txtCodigoCar">ccv:</label>
+		<input type="text" id="txtCodigoCar" name="txtCodigoCar" maxlength="3" size="4" required="true" style="margin-bottom: 20px" value=
+		
+		
+		<%		
+			if(cliente != null)
+				out.print("'"+cliente.getCartao().getCodigo()+"'>"); 
+			else
+				out.print(">"); 		
+		%>
+		
+		</input>
+		
+		 <label for="txtValidade">validade:</label>
+		<input type="text" id="txtValidade" name="txtValidade" maxlength="10"  required="true" style="margin-bottom: 20px" value=
+		
+		
+		<%		
+			if(cliente != null)
+				out.print("'"+cliente.getCartao().getValidade()+"'>"); 
+			else
+				out.print(">"); 		
+		%>
+		
+		</input>
+		
+		 <label for="txtBandeira">Bandeira:</label>
+		<input type="text" id="txtBandeira" name="txtBandeira" maxlength="20" required="true" style="margin-bottom: 20px" value=
+		
+		
+		<%		
+			if(cliente != null)
+				out.print("'"+cliente.getCartao().getBandeira()+"'>"); 
+			else
+				out.print(">"); 		
+		%>
+		
+		</input>
+     
+     
+     
+     
+     </div>
+     <div align="center">
+     <%		
+			if(cliente != null) {
+				out.print("<input type='submit' id='operacao' name='operacao' value='ALTERAR'  class='btn btn-primary'/>");	
+			}else{
+				out.print("<input onsubmit='senha()' type='submit' id='operacao' name='operacao' value='SALVAR' class='btn btn-primary'/>");
+			}
+				
+		%>		
+		</div>
+		</li>
+		</section>
+		
+	</form>
+	
+	<form>
 		<!-- ENDEREÇO -->	
 		<div class="container">
 <li class="aba" id="aba-3">
@@ -417,89 +514,7 @@
 		
 			
 		</li>
-	</section>	
-	
-	</div>
-	<!-- Cartão -->
-	
-	
-	<li class="aba" id="aba-3">
-     <a>Cartão</a> 
-     <br> <br>
-     <section class="conteudo">
-     
-     <div class="form-group">
-     
-     <label for="txtTitular">Titular:</label>
-		<input type="text" id="txtTitular" name="txtTitular" maxlength="40" required="true" style="margin-bottom: 20px" value=
-		
-		
-		<%		
-			if(cliente != null)
-				out.print("'"+cliente.getCartao().getTitular()+"'>"); 
-			else
-				out.print(">"); 		
-		%>
-		
-		</input>
-		
-		 <label for="txtNumCar">Número no cartão:</label>
-		<input type="text" id="txtNumCar" name="txtNumCar" maxlength="40" required="true" style="margin-bottom: 20px" value=
-		
-		
-		<%		
-			if(cliente != null)
-				out.print("'"+cliente.getCartao().getNumero()+"'>"); 
-			else
-				out.print(">"); 		
-		%>
-		
-		</input>
-		
-		 <label for="txtCodigoCar">ccv:</label>
-		<input type="text" id="txtCodigoCar" name="txtCodigoCar" maxlength="3" size="4" required="true" style="margin-bottom: 20px" value=
-		
-		
-		<%		
-			if(cliente != null)
-				out.print("'"+cliente.getCartao().getCodigo()+"'>"); 
-			else
-				out.print(">"); 		
-		%>
-		
-		</input>
-		
-		 <label for="txtValidade">validade:</label>
-		<input type="text" id="txtValidade" name="txtValidade" maxlength="10"  required="true" style="margin-bottom: 20px" value=
-		
-		
-		<%		
-			if(cliente != null)
-				out.print("'"+cliente.getCartao().getValidade()+"'>"); 
-			else
-				out.print(">"); 		
-		%>
-		
-		</input>
-		
-		 <label for="txtBandeira">Bandeira:</label>
-		<input type="text" id="txtBandeira" name="txtBandeira" maxlength="20" required="true" style="margin-bottom: 20px" value=
-		
-		
-		<%		
-			if(cliente != null)
-				out.print("'"+cliente.getCartao().getBandeira()+"'>"); 
-			else
-				out.print(">"); 		
-		%>
-		
-		</input>
-     
-     
-     
-     
-     </div>
-     <div align="center">
+	<div align="center">
      <%		
 			if(cliente != null) {
 				out.print("<input type='submit' id='operacao' name='operacao' value='ALTERAR'  class='btn btn-primary'/>");	
@@ -513,6 +528,8 @@
 		</section>
 		
 	</form>
+	
+	
 </div>
 
 

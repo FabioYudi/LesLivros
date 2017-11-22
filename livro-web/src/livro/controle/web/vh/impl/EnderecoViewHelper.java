@@ -2,6 +2,7 @@ package livro.controle.web.vh.impl;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +27,7 @@ public class EnderecoViewHelper implements IViewHelper {
 		Endereco endereco = null;
 		Cliente cliente = null;
 
-		if (!operacao.equals("VISUALIZAR")) {
+		if (operacao.equals("SALVAR")) {
 			String logradouro = request.getParameter("txtLogradouro");
 			String bairro = request.getParameter("txtBairro");
 			String cep = request.getParameter("txtCep");
@@ -39,6 +40,7 @@ public class EnderecoViewHelper implements IViewHelper {
 			String estado = request.getParameter("txtEstado");
 			String pais = request.getParameter("txtPais");
 			String idRua = request.getParameter("txtIdRU");
+			String id = request.getParameter("txtId");
 			cliente = new Cliente();
 			endereco = new Endereco();
 
@@ -47,92 +49,51 @@ public class EnderecoViewHelper implements IViewHelper {
 			cliente.getEndereco().getCidade().setEstado(new Estado());
 			cliente.getEndereco().getCidade().getEstado().setPais(new Pais());
 
-			if (idRua != null && !idRua.trim().equals("")) {
 
 				cliente.getEndereco().setId(Integer.parseInt(idRua));
-			}
-
-			if (bairro != null && !bairro.trim().equals("")) {
 				cliente.getEndereco().setBairro(bairro);
-
-			}
-			
-			if (logradouro != null && !logradouro.trim().equals("")) {
 				cliente.getEndereco().setLogradouro(logradouro);
-
-			}
-
-			if (cep != null && !cep.trim().equals("")) {
 				cliente.getEndereco().setCep(cep);
-
-			}
-
-			if (numero != null && !numero.trim().equals("")) {
 				cliente.getEndereco().setNumero(numero);
-
-			}
-
-			if (complemento != null && !complemento.trim().equals("")) {
 				cliente.getEndereco().setComplemento(complemento);
-
-			}
-
-			if (nomeRua != null && !nomeRua.trim().equals("")) {
 				cliente.getEndereco().setNome(nomeRua);
-
-			}
-			
-			if (tpRes != null && !tpRes.trim().equals("")) {
 				cliente.getEndereco().setTipoResidencia(tpRes);
-
-			}
-			
-			if (tpLog != null && !tpLog.trim().equals("")) {
 				cliente.getEndereco().setTipoLogradouro(tpLog);
-
-			}
-			
-			if (tpLog != null && !tpLog.trim().equals("")) {
 				cliente.getEndereco().setTipoLogradouro(tpLog);
-
-			}
-			
-			if (cidade != null && !cidade.trim().equals("")) {
 				cliente.getEndereco().getCidade().setNome(cidade);
-
-			}
-			
-			if (estado != null && !pais.trim().equals("")) {
 				cliente.getEndereco().getCidade().getEstado().setNome(estado);
-
-			}
-			
-			if (cidade != null && !cidade.trim().equals("")) {
 				cliente.getEndereco().getCidade().getEstado().getPais().setNome(pais);
-
-			}
+				
+				
 
 			
-		} else{
-			HttpSession session = request.getSession();
-			Resultado resultado = (Resultado) session.getAttribute("resultado");
-			int txtId = Integer.parseInt(request.getParameter("txtIdRU"));
 
-			for (EntidadeDominio e : resultado.getEntidades()) {
-				if (e.getId() == txtId) {
-					endereco = (Endereco) e;
-				}
-			}
-
-		}
-		return endereco;
+			
+		} 
+		return null;
 	}
 
 	@Override
 	public void setView(Resultado resultado, HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
+		
+RequestDispatcher d=null;
+		
+		String operacao = request.getParameter("operacao");
+
+		if(operacao.equals("SALVAR"))
+		{
+			
+				request.getSession().setAttribute("resultado", resultado);
+				d = request.getRequestDispatcher("index.jsp"); 							
+			
+
+		}
+		
+		d.forward(request,response);
+	}
 
 	}
 
-}
+

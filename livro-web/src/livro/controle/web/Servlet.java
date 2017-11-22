@@ -23,6 +23,7 @@ import livro.controle.web.command.impl.VisualizarCommand;
 import livro.controle.web.vh.IViewHelper;
 import livro.controle.web.vh.impl.AdicionarItensCarrinho;
 import livro.controle.web.vh.impl.ClienteViewHelper;
+import livro.controle.web.vh.impl.EnderecoViewHelper;
 import livro.controle.web.vh.impl.LivroViewHelper;
 import livro.controle.web.vh.impl.Logar;
 import livro.core.aplicacao.Resultado;
@@ -74,6 +75,7 @@ public class Servlet extends HttpServlet {
     	 * está configurado no web.xml e sendo utilizada no action do html
     	 */
     	vhs.put("/livro-web/SalvarLivro", new LivroViewHelper());
+    	vhs.put("/livro-web/SalvarEndereco", new EnderecoViewHelper());
     	vhs.put("/livro-web/Sair", new Logar());
     	vhs.put("/livro-web/Login", new ClienteViewHelper());
     	vhs.put("/livro-web/SalvarCliente", new ClienteViewHelper());
