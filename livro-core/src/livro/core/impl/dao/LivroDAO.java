@@ -177,45 +177,12 @@ public class LivroDAO extends AbstractJdbcDAO {
 		sql.append(" a.peso, a.profundidade, a.valor, a.estoque, a.largura FROM livros a ");
 		sql.append(" WHERE 1=1 ");
 		if (livro.getId() != null && livro.getId() > 0) {
-			sql.append(" AND a.id =" + livro.getId() );
-		}
-		if (livro.getTitulo() != null && livro.getTitulo().length() > 0) {
-			sql.append(" AND a.titulo ilike '%" + livro.getTitulo() + "%'");
-		}
-		if (livro.getCodigoLivro() != null && livro.getCodigoLivro().length() > 0) {
-			sql.append(" AND a.codigo_livro ilike '%" + livro.getCodigoLivro() + "%'");
-		}
-		if (livro.getAutor() != null && livro.getAutor().length() > 0) {
-			sql.append(" AND a.autor ilike '%" + livro.getAutor() + "%'");
-		}
-		if (livro.getEdicao() != null && livro.getEdicao().length() > 0) {
-			sql.append(" AND a.edicao ilike '%" + livro.getEdicao() + "%'");
-		}
-		if (livro.getIsbn() != null && livro.getIsbn().length() > 0) {
-			sql.append(" AND a.isbn ilike '%" + livro.getIsbn() + "%'");
+			sql.append(" AND a.id = '" + livro.getId() + "'" );
 		}
 		
-		if (livro.getSinopse() != null && livro.getSinopse().length() > 0) {
-			sql.append(" AND a.sinopse ilike '%" + livro.getSinopse() + "%'");
-		}
-		if (livro.getAno() != null && livro.getAno().length() > 0) {
-			sql.append(" and a.ano ilike '%" + livro.getAno() + "%'");
-		}
-		if (livro.getNumPg() != null && livro.getNumPg().length() > 0) {
-			sql.append(" and a.npaginas = " + livro.getNumPg());
-		}
+			
 		
-		if(livro.getStatus() != null){
-		 sql.append(" and a.status = " + livro.getStatus());
-		 }
-		if (livro.getEditora() != null && livro.getEditora().length() > 0) {
-			sql.append(" and a.editora ilike '%" + livro.getEditora() + "%'");
-		}
-		// if(livro.getGrupoPrecificacao().getId() != null){
-		// sql.append(" and a.id_grupo_precificacao = " +
-		// livro.getGrupoPrecificacao().getId());
-		// }
-
+			System.out.println(sql.toString());
 		try {
 			openConnection();
 			pst = connection.prepareStatement(sql.toString());
@@ -253,4 +220,5 @@ public class LivroDAO extends AbstractJdbcDAO {
 		}
 		return null;
 	}
+	
 }

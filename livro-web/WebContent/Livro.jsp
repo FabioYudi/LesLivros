@@ -107,17 +107,26 @@ Livros l = (Livros)entidades.get(0);
           <div class="card mt-4">
             <img class="card-img-top img-fluid" src="http://placehold.it/900x400" alt="">
             <div class="card-body">
-              <h3 class="card-title"><%out.print(l.getTitulo());%></h3>
+              <h3 class="card-title"><%out.print(l.getTitulo());%>/</h3>
               <h4>$24.99</h4>
               <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente dicta fugit fugiat hic aliquam itaque facere, soluta. Totam id dolores, sint aperiam sequi pariatur praesentium animi perspiciatis molestias iure, ducimus!</p>
               <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+              
               4.0 stars
             </div>
           </div>
           <!-- /.card -->	
-	<form action="Carrinho" method="post" align="center">
-        		<input  type='submit' id='operacao' name='operacao' value='COMPRAR' class='btn btn-primary'/>
-</form>
+	  <%
+	  /* 	if(l.getEstoque() == 0)
+              	{
+              		out.print("<a href='' class='btn btn-danger' disabled>Esgotado</a>");
+              	}
+              	else
+              	{
+              		out.print("<a href='Carrinho?operacao=COMPRAR' class='btn btn-danger'>Comprar</a>");
+              	}
+	  */
+	  out.print("<a href='Carrinho?operacao=COMPRAR' class='btn btn-danger'>Comprar</a>");%>
         </div>
         <!-- /.col-lg-9 -->
 

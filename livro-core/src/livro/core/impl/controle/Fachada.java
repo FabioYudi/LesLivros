@@ -88,7 +88,7 @@ public class Fachada implements IFachada {
 		 */
 		rnsLivro.put("SALVAR", rnsSalvarLivro);	
 		rnsCliente.put("SALVAR", rnsSalvarCliente);
-		rnsLivro.put("COMPRAR", rnsValidarCarrinho);	
+		rnsCarrinho.put("COMPRAR", rnsValidarCarrinho);	
 
 		
 		/*
@@ -214,6 +214,7 @@ public class Fachada implements IFachada {
 			List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);
 			
 			Livros l = (Livros)entidadeLivro.get(0);
+			System.out.println(l.getId());
 			itemCarrinho.setLivro(l);
 			
 			List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
