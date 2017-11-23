@@ -152,7 +152,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 						}
 						else {
 							if(p.getItem().get(indice).getQuantidade() ==  estoque) {
-								System.out.println("O LUCAS VOA");
+								resultado.setMsg("Não existem mais unidades disponiveis");
 								
 							}else {
 								p.getItem().get(indice).setQuantidade(p.getItem().get(indice).getQuantidade() + 1);

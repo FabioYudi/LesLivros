@@ -116,9 +116,10 @@
 								<td></td>
 								<%
 									if (res != null) {
-										if (res.getMsg() != null) {
+										if (res.getMsg() == null) {
 											out.print("<td> </td>");
-										}
+										}else
+											out.print(res.getMsg());
 									}
 
 									System.out.println(res.getMsg());
