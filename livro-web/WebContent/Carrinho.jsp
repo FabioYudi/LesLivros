@@ -5,9 +5,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%
+	Cliente c = (Cliente)request.getSession().getAttribute("cli");
+
+	
 	String stringId = (String) request.getSession().getAttribute("usuarioID");
 	if (stringId != null) {
 		if (!stringId.trim().equals("0")) {
+			
 			if (request.getSession().getAttribute("usuariodeslogado") != null) {
 				Map<Integer, Pedido> mapaUsuarios = (Map<Integer, Pedido>) request.getSession()
 						.getAttribute("mapaUsuarios");
@@ -16,6 +20,8 @@
 				mapaUsuarios.remove(0);
 				request.getSession().removeAttribute("usuariodeslogado");
 				request.getSession().setAttribute("mapaUsuarios", mapaUsuarios);
+				
+				
 			}
 		}
 	}
@@ -117,12 +123,11 @@
 								<%
 									if (res != null) {
 										if (res.getMsg() == null) {
-											out.print("<td> </td>");
+											out.print("");
 										}else
-											out.print(res.getMsg());
+											out.print("<h5 class='text-warning'>" + res.getMsg() + "</h5>" );
 									}
 
-									System.out.println(res.getMsg());
 								%>
 
 
@@ -195,7 +200,8 @@
 											sb.append("<script>$('#subtotal" + i + "').html('" + String.format("%.2f", subTotal)
 													+ "R$');</script>");
 
-											sb.append("<td><a href='Carrinho?operacao=REMOVER&id=" + l.getId() + "'>Remover</a></td>");
+											sb.append("<td><a href='Carrinho?operacao=REMOVER&id=" + l.getId() + "'>Remover</a>");
+											sb.append("</td>");
 											sb.append("</td>");
 											sb.append("</tr>");
 											out.print(sb.toString());
@@ -209,21 +215,40 @@
 								if (map == null || map.size() == 0 || item.size() == 0) {
 									out.print("<tr><td>Não há itens no seu carrinho</td></tr>");
 								}
+							
+								
 							%>
-							<%
-								StringBuilder sb = new StringBuilder();
-								System.out.println("usu" + usuario);
-								if (usuario == null) {
-									sb.append("<td><h5>Faça login para calcular o frete e finalizar a compra</h5></td>");
-								} else {
-									sb.append("<td><a href='Carrinho?operacao=ENDERECO&id=");
-									sb.append(stringId);
-									sb.append(">");
-									sb.append("<button>Selecione um endereço para entrega</button></a></td>");
-								}
-							%>
+							
+							
 						</tbody>
-					</table>
+						</table>
+						<div class="table-responsive">
+							<table class="table table-striped">
+								<thead>
+									<th><h5>Endeço de entrega</h5></th>
+								</thead>
+						
+						<%
+							if (usuario == null) {
+								out.print("<td><h5 style='color:red'>Faça login para calcular o frete e finalizar a compra</h5>");
+								out.print("<a class='nav-link' data-toggle='modal' href='#myModal'>Fazer Login</a></td>");
+							} else {
+								
+								out.print("<tr><td>");
+								out.print("<a class='nav-link' data-toggle='modal' href='#endereco'>");
+								out.print("<button class='btn btn-danger'>Selecione um endereço para entrega</button>");
+							//	out.print(
+							//			"<button type='submit' name='operacao' value='SOMAR' class='btn btn-primary' style='margin-left: 30px'><span>Selecione um endereço ara </i></button>");
+								
+								out.print("</td></tr>");
+								System.out.println("Email no carrinho: " + c.getEmail());
+								//out.print("<button class='btn btn-danger'>Selecione um endereço para entrega</button></a></td></tr>");
+							}
+							
+						%>
+								</table>
+							</div>
+						<tbody>
 				</div>
 			</div>
 		</div>
@@ -233,7 +258,7 @@
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 
-<!-- Modal HTML -->
+<!-- Modal LOGIN -->
 <div id="myModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -275,5 +300,68 @@
 </div>
 
 
-<!-- Modal HTML -->
+<!-- Modal LOGIN -->
+
+
+
+
+<!-- Modal ENDERECO -->
+<div id="endereco" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 style="padding-right: 30px">Endereço de entrega</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+
+			</div>
+			<div class="modal-body">
+			<%
+
+    		
+  		
+  			if(!stringId.trim().equals("0")){
+				boolean cadastrar = false;
+				if(cadastrar == false){
+					out.print("<address>");
+					out.print(c.getNome() + "<br>");
+					out.print(c.getEndereco().getTipoLogradouro() +
+							" " + c.getEndereco().getLogradouro() + ", " + c.getEndereco().getNumero() + "<br>");
+					out.print(c.getEndereco().getBairro() + "-" + c.getEndereco().getCidade().getNome() + 
+							"-" + c.getEndereco().getCidade().getEstado().getNome() + "<br>");
+					out.print(c.getEndereco().getCep());
+				}
+  			}
+				/*<form action="Login" method="post" style="padding-left: 20%">
+
+					<div class="form-group">
+						<label for="username">Usuario:</label> <input size="21"
+							type="text" id="username" name="username" required="true" />
+					</div>
+
+					<div class="form-group">
+						<label for="senha" style="padding-left: 11px">Senha:</label> <input
+							size="21" type="password" id="senha" name="senha" required="true"
+							style="margin-right: 10px" />
+					</div>
+					<input type='submit' id='operacao' name='operacao' value='LOGAR'
+						class='btn btn-primary' style="margin-left: 110px" />
+			</div>
+
+
+
+			</form>*/
+			%>
+			<p class="bg-info" align="center">
+				<small>Não possui cadastro? Cadastre-se <a
+					href="FormCliente.jsp" style="color: red; font-size: 15px">AQUI</a></small>
+			</p>
+		</div>
+
+	</div>
+</div>
+</div>
+
+
+<!-- Modal ENDERECO -->
 </html>

@@ -205,13 +205,12 @@ public class ClienteViewHelper implements IViewHelper {
 
 				if(request.getParameter("username").trim().equals(c.getEmail().trim()))
 				{
-					System.out.println(c.getEmail());
-					System.out.println(c.getId());
+					
 
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("username",request.getParameter("username"));
 					sessao.setAttribute("usuarioID", c.getId().toString());
-					
+					sessao.setAttribute("cli", c);
 
 					
 					d = request.getRequestDispatcher("index.jsp");
@@ -239,6 +238,8 @@ public class ClienteViewHelper implements IViewHelper {
 			request.setAttribute("cliente", resultado.getEntidades().get(0));
 			d = request.getRequestDispatcher("FormCliente.jsp");
 		}
+		
+
 
 		if (resultado.getMsg() == null && operacao.equals("EXCLUIR")) {
 

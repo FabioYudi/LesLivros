@@ -216,10 +216,11 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				c.setSenha(rs.getString("senha"));
 				c.setStatus(rs.getBoolean("status"));
 				c.setTelefone(t);
-				c.getTelefone().setNumero(rs.getString("numero"));
+				c.getTelefone().setNumero(rs.getString("num_tel"));
 				c.getTelefone().setTp(rs.getInt("tipo"));
 				c.getTelefone().setCodArea(rs.getString("codigo"));
 				c.setEndereco(e);
+				c.getEndereco().setId(rs.getInt("id"));
 				c.getEndereco().setLogradouro(rs.getString("logradouro"));
 				c.getEndereco().setBairro(rs.getString("bairro"));
 				c.getEndereco().setCep(rs.getString("cep"));

@@ -34,6 +34,8 @@ public class AdicionarItensCarrinho implements IViewHelper {
 			request.getSession().setAttribute("usuariodeslogado", true);
 			stringId = "0";
 		}
+			
+		
 
 		if (mapaUsuarios == null) {
 			mapaUsuarios = new HashMap<Integer, Pedido>();
@@ -94,13 +96,13 @@ public class AdicionarItensCarrinho implements IViewHelper {
 			strId = "0";
 		}
 		if (!strId.trim().equals("0")) {
-			System.out.println("ID não é 0");
 			if (request.getSession().getAttribute("usuariodeslogado") != null) {
 				Map<Integer, Pedido> mapaUsuarios = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 				Pedido p = mapaUsuarios.get(0);
 				mapaUsuarios.put(Integer.parseInt(strId), p);
 				request.getSession().removeAttribute("usuariodeslogado");
 				request.getSession().setAttribute("mapaUsuarios", mapaUsuarios);
+				
 			}
 		}
 
