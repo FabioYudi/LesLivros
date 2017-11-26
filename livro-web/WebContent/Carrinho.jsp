@@ -4,6 +4,8 @@
 	import="livro.core.aplicacao.Resultado, livro.dominio.*, java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+<link type="text/css"  href="resources/estilo.css" rel="stylesheet">
+
 <%
 	Cliente c = (Cliente) request.getSession().getAttribute("cli");
 
@@ -99,6 +101,7 @@
 	</div>
 </div>
 </nav>
+</head>
 <!-- Navigation -->
 <body>
 
@@ -421,7 +424,7 @@
 						
 					</table>
 					<div align="center">
-						<a class='nav-link' data-toggle='modal' href="#CadastroEndereco"><button class="btn btn-danger">Cadastrar novo endereço</button></a>
+						<a  href="FormEndereco.jsp"><button class="btn btn-danger">Cadastrar novo endereço</button></a>
 					</div>
 
 				</div>
@@ -436,80 +439,7 @@
 	
 	
 	
-	<!-- Modal CADASTRO DE ENDEREÇO -->
-		<div id="CadastroEndereco" class="modal fade" >
-	<div class="modal-dialog" >
-		<div class="modal-content" style="height:10%; width:200%" >
-			<div class="modal-header">
-				<h5 style="padding-right: 30px">Endereço de entrega</h5>
-				<button type="button" class="close" data-dismiss="modal"
-					aria-hidden="true">&times;</button>
-
-			</div>
-
-
-			<div class="modal-body" > 
-			
-			<form  action="SalvarEndereco" method="post" align="center">		<!-- ENDEREÇO -->	
-		<div class="container">
-     
-		<div class="form-group" align="center">
-		
-		<label for="txtNomeRua">Nome Do Endereço (Ex: Entrega, cobrança)</label>
-		<input type="text" id="txtNomeRua" name="txtNomeRua" maxlength="9" required="true" style="margin-bottom: 20px" >
-		
-    	<div class="form-group" align="center">
-     
-		<label for="txtTpLog">Tipo Logradouro:</label>
-		<input type="text" id="txtTpLog" name="txtTpLog" maxlength="9" required="true" size="2" style="margin-bottom: 20px">
-		
-		<label for="txtLogradouro">Logradouro:</label>
-		<input type="text" id="txtLogradouro" name="txtLogradouro" maxlength="40" required="true" style="margin-bottom: 20px" >
-		
-		<label for="txtNumero">Número:</label>
-		<input type="text" id="txtNumero" name="txtNumero" maxlength="4" required="true" style="margin-bottom: 20px" >
-		
-		</div>
-		
-		<div class="form-group" align="center">
-		<label for="txtCep">CEP:</label>
-		<input type="text" id="txtCep" name="txtCep" maxlength="8" size="10px" required="true" style="margin-bottom: 20px">
-		
-		<label for="txtBairro">Bairro:</label>
-		<input type="text" id="txtBairro" name="txtBairro" maxlength="40" required="true" style="margin-bottom: 20px">
-		
-		<label for="txtComplemento">Complemento:</label>
-		<input type="text" id="txtComplemento" name="txtComplemento" maxlength="40" required="true" style="margin-bottom: 20px">
-		
-		</div>
-		<div class="form-group" align="center">
-		<label for="txtTpRes">Tipo de Residência:</label>
-		<input type="text" id="txtTpRes" name="txtTpRes" maxlength="40" required="true" style="margin-bottom: 20px">
-		
-		<label for="txtCidade">Cidade:</label>
-		<input type="text" id="txtCidade" name="txtCidade" maxlength="40" required="true" style="margin-bottom: 20px">
-		
-		<label for="txtEstado">Estado:</label>
-		<input type="text" id="txtEstado" name="txtEstado" maxlength="40" required="true" style="margin-bottom: 20px">
-		
-		<label for="txtPais">Pais:</label>
-		<input type="text" id="txtPais" name="txtPais" maxlength="40" required="true" style="margin-bottom: 20px">
-			
-		</div>
-			
-			<div align="center">
-						<a href="#CadastroEndereco" style="font-color: red; font-size: 15px"><button class="btn btn-danger">Cadastrar novo endereço</button></a>
-					</div>
-
-				</div>
-
-			</div>
-			</form>
-		</div>
-	</div>
-	</div>
-	</div>
-	
+]
 	
 	
 </html>

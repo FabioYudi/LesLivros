@@ -28,9 +28,9 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		openConnection();
 		PreparedStatement pst = null;
 		Cliente cliente = (Cliente) entidade;
-		Telefone tel = cliente.getTelefone();
-		Endereco end = cliente.getEndereco();
-		Cartao car = cliente.getCartao();
+		//Telefone tel = cliente.getTelefone();
+		//Endereco end = cliente.getEndereco();
+		//Cartao car = cliente.getCartao();
 		try {
 			connection.setAutoCommit(false);
 
@@ -45,25 +45,45 @@ public class ClienteDAO extends AbstractJdbcDAO {
 			pst.setString(4, cliente.getCpf());
 			pst.setString(5, cliente.getEmail());
 			pst.setString(6, cliente.getSenha());
-			pst.setBoolean(7, cliente.getStatus());
+			pst.setBoolean(7, true);
 
 			pst.executeUpdate();
+			
 
 			ResultSet rs = pst.getGeneratedKeys();
+			for (int i = 0; i < cliente.getEndereco().size(); i++) {
+				Endereco e = cliente.getEndereco().get(i);
+				pst = connection.prepareStatement(
+						"INSERT INTO endereco(logradouro, bairro, cep, numero, complemento, nome, tipo_residencia, "
+								+ "tipo_logradouro, cidade, estado, pais, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+				pst.setString(1, e.getLogradouro());
+				pst.setString(2, e.getBairro());
+				pst.setString(3, e.getCep());
+				pst.setString(4, e.getNumero());
+				pst.setString(5, e.getComplemento());
+				pst.setString(6, e.getNome());
+				pst.setString(7, e.getTipoResidencia());
+				pst.setString(8, e.getTipoLogradouro());
+				pst.setString(9, e.getCidade().getNome());
+				pst.setString(10, e.getCidade().getEstado().getNome());
+				pst.setString(11, e.getCidade().getEstado().getPais().getNome());
+				pst.setInt(12, cliente.getId());
+				pst.executeUpdate();
+			}
 			int id = 0;
 			if (rs.next())
 				id = rs.getInt(1);
-			tel.setId(id);
-			end.setId(id);
-			car.setId(id);
+		//	tel.setId(id);
+		//	end.setId(id);
+		//	car.setId(id);
 			TelefoneDAO telDAO = new TelefoneDAO();
 			EnderecoDAO endDAO = new EnderecoDAO();
 			CartaoDAO carDAO = new CartaoDAO();
 
 			connection.commit();
-			telDAO.salvar(tel);
-			endDAO.salvar(end);
-			carDAO.salvar(car);
+		//	telDAO.salvar(tel);
+		//	endDAO.salvar(end);
+		//	carDAO.salvar(car);
 		} catch (SQLException e) {
 			try {
 				connection.rollback();

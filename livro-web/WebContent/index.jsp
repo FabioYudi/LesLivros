@@ -19,7 +19,7 @@
     <link type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link type="text/css"  href="css/shop-homepage.css" rel="stylesheet">
+    
 
   </head>
 

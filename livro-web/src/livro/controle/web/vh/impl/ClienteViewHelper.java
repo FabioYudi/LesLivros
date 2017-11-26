@@ -198,7 +198,6 @@ public class ClienteViewHelper implements IViewHelper {
 				if(request.getParameter("username").trim().equals(c.getEmail().trim()))
 				{
 					
-					System.out.println("Usuario correto");
 
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("username",request.getParameter("username"));

@@ -18,56 +18,38 @@ public class EnderecoDAO extends AbstractJdbcDAO {
 		super("endereco", "id");
 	}
 
-	public void salvar(EntidadeDominio entidade) {
-		openConnection();
-		PreparedStatement pst = null;
-		Endereco endereco = (Endereco) entidade;
-		Cliente cliente = endereco.getCliente();
-
-		try {
-			connection.setAutoCommit(false);
-			//ClienteDAO cliDAO = new ClienteDAO();
-			//cliDAO.connection = connection;
-			//cliDAO.ctrlTransaction = false;
-			//cliDAO.salvar(cliente);		
-
-			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO endereco(logradouro, bairro, cep, numero, complemento, nome, "
-					+ "tipo_residencia, tipo_logradouro, cidade, estado, pais, id_cliente) "
-					+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
-
-			pst = connection.prepareStatement(sql.toString());
-
-			pst.setString(1, endereco.getLogradouro());
-			pst.setString(2, endereco.getBairro());
-			pst.setString(3, endereco.getCep());
-			pst.setString(4, endereco.getNumero());
-			pst.setString(5, endereco.getComplemento());
-			pst.setString(6, endereco.getNome());
-			pst.setString(7, endereco.getTipoResidencia());
-			pst.setString(8, endereco.getTipoLogradouro());
-			pst.setString(9, endereco.getCidade().getNome());
-			pst.setString(10, endereco.getCidade().getEstado().getNome());
-			pst.setString(11, endereco.getCidade().getEstado().getPais().getNome());
-			pst.setInt(12, endereco.getId());
-			
-			pst.executeUpdate();
-			connection.commit();
-		} catch (SQLException e) {
-			try {
-				connection.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		} finally {
-			try {
-				pst.close();
-				connection.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	public void salvar(EntidadeDominio entidade) throws SQLException {
+		// TODO Auto-generated method stub
+				PreparedStatement pst = null;
+				openConnection();
+				Endereco endereco = (Endereco) entidade;
+				StringBuilder sql = new StringBuilder();
+				sql.append("INSERT INTO endereco (logradouro, bairro, cep, numero, complemento, nome, tipo_residencia, tipo_logradouro, cidade, estado, pais, id_cliente)" + 
+						"    VALUES (?, ?, ?, ?, ?, ?, ?," + 
+						"            ?, ?, ?, ?, ?);");
+				try {
+					pst = connection.prepareStatement(sql.toString());
+					connection.setAutoCommit(false);
+					pst.setString(1, endereco.getLogradouro());
+					pst.setString(2, endereco.getBairro());
+					pst.setString(3, endereco.getCep());
+					pst.setString(4, endereco.getNumero());
+					pst.setString(5, endereco.getComplemento());
+					pst.setString(6, endereco.getNome());
+					pst.setString(7, endereco.getTipoResidencia());
+					pst.setString(8, endereco.getTipoLogradouro());
+					pst.setString(9, endereco.getCidade().getNome());
+					pst.setString(10, endereco.getCidade().getEstado().getNome());
+					pst.setString(11, endereco.getCidade().getEstado().getPais().getNome());
+					pst.setInt(12, endereco.getId());
+					pst.executeUpdate();
+					connection.commit();
+				}catch(SQLException ex) {
+					connection.rollback();
+					ex.printStackTrace();
+				}finally {
+					connection.close();
+				}
 
 	}
 	
