@@ -9,6 +9,8 @@ public class Pedido extends EntidadeDominio {
 	private Date dtPedido;
 	private String status;
 	private Pessoa usuario;
+	private double frete;
+	private List<Endereco> entrega;
 	private double precoTotal;
 	public List<Item> getItem() {
 		return item;
@@ -39,6 +41,18 @@ public class Pedido extends EntidadeDominio {
 	}
 	public void setUsuario(Pessoa usuario) {
 		this.usuario = usuario;
+	}
+	public List<Endereco> getEntrega() {
+		return entrega;
+	}
+	public void setEntrega(List<Endereco> entrega) {
+		this.entrega = entrega;
+	}
+	public double getFrete() {
+		return frete;
+	}
+	public void setFrete(double frete) {
+		this.frete = frete;
 	}
 
 }

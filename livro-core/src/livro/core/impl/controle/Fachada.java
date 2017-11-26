@@ -105,7 +105,7 @@ public class Fachada implements IFachada {
 	public Resultado logar(EntidadeDominio entidade) {
 		
 		
-	return resultado;
+		return resultado;
 		
 	}
 	
@@ -202,13 +202,11 @@ public class Fachada implements IFachada {
 	}
 	
 	public Resultado comprar(EntidadeDominio entidade) {
-		System.out.println("OI LUMAS");
 		Resultado resultado = new Resultado();
 		Item itemCarrinho = (Item)entidade;
 		Livros livroCarrinho = itemCarrinho.getLivro();
 		if(livroCarrinho != null)
 		{
-			System.out.println("OI LUMAS to no fi");
 
 			LivroDAO dao = new LivroDAO();
 			List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);

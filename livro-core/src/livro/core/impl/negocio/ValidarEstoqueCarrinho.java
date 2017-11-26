@@ -12,7 +12,6 @@ public class ValidarEstoqueCarrinho implements IStrategy {
 		// TODO Auto-generated method stub
 		Item itemCarrinho = (Item)entidade;
 		Livros l = itemCarrinho.getLivro();
-		System.out.println("OI LUMAS TO NO STRATEGY");
 		if(l.getEstoque() == 0)
 		{
 			return "Este livro não está disponível no momento";

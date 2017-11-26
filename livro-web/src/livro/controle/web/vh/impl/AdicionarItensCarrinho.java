@@ -34,7 +34,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 			request.getSession().setAttribute("usuariodeslogado", true);
 			stringId = "0";
 		}
-			
+		
 		
 
 		if (mapaUsuarios == null) {
@@ -103,6 +103,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 				request.getSession().removeAttribute("usuariodeslogado");
 				request.getSession().setAttribute("mapaUsuarios", mapaUsuarios);
 				
+				
 			}
 		}
 
@@ -116,7 +117,6 @@ public class AdicionarItensCarrinho implements IViewHelper {
 			}
 			String msg1 = "Nao ha mais livros restantes no estoque";
 			msg1.trim();
-			System.out.println("to no setview comprar");
 			
 			if (resultado.getMsg() == null || resultado.getMsg().trim().equals(msg1)) {
 				if (mapaUsuarios.containsKey(id)) // se o usuário já existe
@@ -281,6 +281,12 @@ public class AdicionarItensCarrinho implements IViewHelper {
 			request.getSession().setAttribute("resultadoLivro", resultado);
 			d = request.getRequestDispatcher("Carrinho.jsp");
 
+		}
+		
+		if(operacao.equals("SELECIONAR")) {
+			request.getSession().setAttribute("selecionado", "true");
+			request.getSession().setAttribute("i", request.getParameter("txtIndice"));
+			d = request.getRequestDispatcher("Carrinho.jsp");
 		}
 
 		d.forward(request, response);

@@ -259,7 +259,7 @@
             </div>
             <div class="modal-body">
                 
-                <form  action="Login" method="post" style="padding-left:20%">
+	<form  action="Login" method="post" style="padding-left:20%">
 		
 		<div class="form-group" >
 		<label for="username" >Usuario:</label>
@@ -272,17 +272,17 @@
 		</div>
 					<input  type='submit' id='operacao' name='operacao' value='LOGAR' class='btn btn-primary' style="margin-left:110px"/>
 		
-		</div>
+		
 		
 	
 		
-</form>
+	</form>
+	</div>
                 <p class="bg-info" align="center"><small>Não possui cadastro? Cadastre-se <a href="FormCliente.jsp" style="color:red; font-size:15px">AQUI</a></small></p>
             </div>
             
         </div>
     </div>
-</div>
 
 
 <!-- Modal HTML -->

@@ -73,8 +73,8 @@ public class ClienteViewHelper implements IViewHelper {
 
 			if (id != null && !id.trim().equals("")) {
 				cliente.setId(Integer.parseInt(id));
-				cliente.getTelefone().setId(Integer.parseInt(idTel));
-				cliente.getCartao().setId(Integer.parseInt(idCartao));
+				//cliente.getTelefone().setId(Integer.parseInt(idTel));
+				//cliente.getCartao().setId(Integer.parseInt(idCartao));
 			}
 			
 
@@ -106,12 +106,12 @@ public class ClienteViewHelper implements IViewHelper {
 			}
 			if(tipoTel !=null && !tipoTel.trim().equals("")) {
 				if(tipoTel.equals("1")) {
-					cliente.setTelefone(t);
-					cliente.getTelefone().setTp(1);
+				//	cliente.setTelefone(t);
+					//cliente.getTelefone().setTp(1);
 
 				}
 				else {
-					cliente.getTelefone().setTp(0);
+					//cliente.getTelefone().setTp(0);
 					
 				}
 				
@@ -123,7 +123,7 @@ public class ClienteViewHelper implements IViewHelper {
 				
 				
 				
-			
+			/*
 				cliente.setEndereco(e);
 				cliente.getEndereco().setCidade(ci);
 				cliente.getEndereco().getCidade().setEstado(es);
@@ -142,7 +142,7 @@ public class ClienteViewHelper implements IViewHelper {
 				cliente.getCartao().setCodigo(codigoCar);
 				cliente.getCartao().setBandeira(bandeira);
 				cliente.getCartao().setValidade(validade);
-			
+			*/
 
 		} else {
 			HttpSession session = request.getSession();
@@ -181,43 +181,34 @@ public class ClienteViewHelper implements IViewHelper {
 		request.getSession().setAttribute("cartao", resultado);
 		String operacao = request.getParameter("operacao");
 		
-		
-		if(resultado.getMsg() == null && operacao.equals("SAIR")){
-			request.getSession().removeAttribute("username");
-			d = request.getRequestDispatcher("index.jsp");
-
-			
-		}
-		if (resultado.getMsg() == null) {
-			if (operacao.equals("SALVAR")) {
-				resultado.setMsg("Cliente cadastrado com sucesso!");
+		if (operacao.equals("SALVAR")) {
+			if(resultado.getMsg() == null) {
+			resultado.setMsg("Cliente cadastrado com sucesso!");
 			}
-
-			request.getSession().setAttribute("resultado", resultado);
-			d = request.getRequestDispatcher("FormConsultaCliente.jsp");
-		}
+		request.getSession().setAttribute("resultado", resultado);
+		d = request.getRequestDispatcher("FormConsultaCliente.jsp");
+	}
 		
 		if(operacao.equals("LOGAR")) {
 			List<EntidadeDominio> entidades = resultado.getEntidades();
+			
 			for (int i = 0; i < entidades.size(); i++) {
 				Cliente c = (Cliente) entidades.get(i);
-				
 
 				if(request.getParameter("username").trim().equals(c.getEmail().trim()))
 				{
 					
+					System.out.println("Usuario correto");
 
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("username",request.getParameter("username"));
 					sessao.setAttribute("usuarioID", c.getId().toString());
 					sessao.setAttribute("cli", c);
 
-					
 					d = request.getRequestDispatcher("index.jsp");
 					break;
 				}else {
-					System.out.println("Usuario incorreto");
-					d = request.getRequestDispatcher("Login.jsp");
+					d = request.getRequestDispatcher("index.jsp");
 
 
 				}
@@ -238,6 +229,8 @@ public class ClienteViewHelper implements IViewHelper {
 			request.setAttribute("cliente", resultado.getEntidades().get(0));
 			d = request.getRequestDispatcher("FormCliente.jsp");
 		}
+		
+		
 		
 
 

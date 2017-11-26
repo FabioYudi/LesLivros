@@ -182,7 +182,6 @@ public class LivroDAO extends AbstractJdbcDAO {
 		
 			
 		
-			System.out.println(sql.toString());
 		try {
 			openConnection();
 			pst = connection.prepareStatement(sql.toString());

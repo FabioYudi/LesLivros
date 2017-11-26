@@ -1,13 +1,17 @@
 package livro.dominio;
 
+import java.util.List;
+
 public class Cliente extends Pessoa {
 	private String cpf;
 	private String email;
 	private String senha;
 	private Boolean status;
-	private Telefone telefone;
-	private Endereco endereco;
-	private Cartao cartao;
+	
+	private List<Endereco> endereco;
+	private List<Telefone> telefone;
+	private List<Cartao> cartao;
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -40,29 +44,31 @@ public class Cliente extends Pessoa {
 		this.status = status;
 	}
 
-	public Telefone getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(Telefone telefone) {
-		this.telefone = telefone;
-	}
-
-	public Endereco getEndereco() {
+	public List<Endereco> getEndereco() {
 		return endereco;
 	}
 
-	public void setEndereco(Endereco endereco) {
+	public void setEndereco(List<Endereco> endereco) {
 		this.endereco = endereco;
 	}
 
-	public Cartao getCartao() {
+	public List<Telefone> getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(List<Telefone> telefone) {
+		this.telefone = telefone;
+	}
+
+	public List<Cartao> getCartao() {
 		return cartao;
 	}
 
-	public void setCartao(Cartao cartao) {
+	public void setCartao(List<Cartao> cartao) {
 		this.cartao = cartao;
 	}
+
+	
 	
 	
 

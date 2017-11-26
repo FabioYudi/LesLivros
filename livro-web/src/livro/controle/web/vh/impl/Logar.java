@@ -38,6 +38,11 @@ public class Logar implements IViewHelper {
 			
 		if(operacao.equals("SAIR")){
 			request.getSession().removeAttribute("username");
+			request.getSession().removeAttribute("selecionado");
+			request.getSession().removeAttribute("indice");
+			request.getSession().removeAttribute("mapaUsuarios");
+			request.getSession().removeAttribute("usuarioID");
+
 			d = request.getRequestDispatcher("index.jsp");
 
 			

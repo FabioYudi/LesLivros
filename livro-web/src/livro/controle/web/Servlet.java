@@ -65,6 +65,7 @@ public class Servlet extends HttpServlet {
     	commands.put("CALCULAR", new ComprarCommand());
     	commands.put("SAIR", new LogarCommand());
     	commands.put("CONSULTARENDERECO", new ConsultarCommand());
+    	commands.put("SELECIONAR", new ComprarCommand());
 
 
     	
