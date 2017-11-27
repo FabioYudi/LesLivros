@@ -19,7 +19,8 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <!-- Bootstrap core CSS -->
 <link type="text/css" href="vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -32,7 +33,7 @@
 
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
 <div class="container">
 	<a class="navbar-brand" href="index.jsp">LES LIVROS</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -45,6 +46,7 @@
 			<li class="nav-item active"><a class="nav-link" href="index.jsp">Home
 					<span class="sr-only">(current)</span>
 			</a></li>
+			
 
 			<%
 				if (request.getSession().getAttribute("username") == null) {
@@ -68,7 +70,8 @@
 
 				}
 			%>
-
+			<li class="nav-item"><a class="nav-link" href="Carrinho.jsp"><i class="material-icons">local_grocery_store</i></a>
+			</li>
 
 		</ul>
 	</div>

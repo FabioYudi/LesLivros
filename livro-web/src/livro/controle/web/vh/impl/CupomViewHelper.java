@@ -16,6 +16,7 @@ import livro.dominio.Cliente;
 import livro.dominio.CupomDesconto;
 import livro.dominio.Endereco;
 import livro.dominio.EntidadeDominio;
+import livro.dominio.Pedido;
 
 public class CupomViewHelper implements IViewHelper {
 
@@ -40,7 +41,6 @@ public class CupomViewHelper implements IViewHelper {
 		if(operacao.equals("APLICAR")) {
 			String codigo = request.getParameter("txtCup");
 			CupomDesconto c = new CupomDesconto();
-			System.out.println(request.getParameter("txtCup"));
 			c.setCupom(codigo);
 			return c;
 		}
@@ -61,21 +61,20 @@ public class CupomViewHelper implements IViewHelper {
 			
 		}
 		if(operacao.equals("APLICAR")) {
+
+			
 			List<EntidadeDominio> entidades = resultado.getEntidades();
 			for (int i = 0; i < entidades.size(); i++) {
 				CupomDesconto cupom = (CupomDesconto) entidades.get(i);
-
-				if(resultado.getMsg() == null && request.getParameter("txtCup").trim().equals(cupom.getCupom()))
+				if(request.getParameter("txtCup").trim().equals(cupom.getCupom()))
 				{
-
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("cupom", cupom);
-					request.getSession().setAttribute("resultadoCupom", resultado);
+					request.getSession().setAttribute("resultado", resultado);
 					d = request.getRequestDispatcher("Carrinho.jsp");
 					break;
 				}else {
-					resultado.setMsg("Cupom inválido");
-					request.getSession().setAttribute("resultadoCupom", resultado);
+					request.getSession().setAttribute("resultado", resultado);
 					d = request.getRequestDispatcher("Carrinho.jsp");
 
 

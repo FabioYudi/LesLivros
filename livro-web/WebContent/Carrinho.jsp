@@ -60,7 +60,7 @@
 
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
 <div class="container">
 	<a class="navbar-brand" href="index.jsp">LES LIVROS</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -73,6 +73,7 @@
 			<li class="nav-item active"><a class="nav-link" href="index.jsp">Home
 					<span class="sr-only">(current)</span>
 			</a></li>
+			
 
 			<%
 				if (request.getSession().getAttribute("username") == null) {
@@ -96,7 +97,8 @@
 
 				}
 			%>
-
+			<li class="nav-item"><a class="nav-link" href="Carrinho.jsp"><i class="material-icons">local_grocery_store</i></a>
+			</li>
 
 		</ul>
 	</div>
@@ -249,8 +251,9 @@
 								
 								<%
 									
+
 									String txtId = (String) request.getSession().getAttribute("usuarioID");
-									int id = Integer.parseInt(txtId);
+									int id = Integer.parseInt(stringId);
 									Pedido p = map.get(id);
 									item = p.getItem();
 									if (usuario == null) {
@@ -276,6 +279,9 @@
 											}else
 											{											
 												p.setPrecoTotal(precoTotal + p.getFrete());
+											}
+											if(p.getPrecoTotal() < 0){
+												p.setPrecoTotal(0);
 											}
 											out.print("<tr>");
 											out.print("<td>");

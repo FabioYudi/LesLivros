@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import livro.controle.web.command.ICommand;
 import livro.controle.web.command.impl.AlterarCommand;
+import livro.controle.web.command.impl.AplicarCommand;
 import livro.controle.web.command.impl.ComprarCommand;
 import livro.controle.web.command.impl.ConsultarCommand;
 import livro.controle.web.command.impl.ExcluirCommand;
@@ -67,7 +68,7 @@ public class Servlet extends HttpServlet {
     	commands.put("SAIR", new LogarCommand());
     	commands.put("CONSULTARENDERECO", new ConsultarCommand());
     	commands.put("SELECIONAR", new ComprarCommand());
-    	commands.put("APLICAR", new ConsultarCommand());
+    	commands.put("APLICAR", new AplicarCommand());
 
 
     	

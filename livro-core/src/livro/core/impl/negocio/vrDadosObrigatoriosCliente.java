@@ -16,9 +16,9 @@ public class vrDadosObrigatoriosCliente implements IStrategy {
 			String genero = cliente.getGenero();
 			String nome = cliente.getNome();
 			String nascimento = cliente.getNascimento();
-			String numTel = cliente.getTelefone().getNumero();
-			String ddd = cliente.getTelefone().getCodArea();
-			int tipoTel = cliente.getTelefone().getTp();
+			//String numTel = cliente.getTelefone().getNumero();
+			//String ddd = cliente.getTelefone().getCodArea();
+			//int tipoTel = cliente.getTelefone().getTp();
 			String email = cliente.getEmail();
 			String senha = cliente.getSenha();
 			

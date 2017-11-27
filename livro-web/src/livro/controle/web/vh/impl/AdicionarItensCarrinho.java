@@ -200,8 +200,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 
 		if (operacao.equals("SOMAR") || operacao.equals("SUBTRAIR")) {
 			Map<Integer, Pedido> mapaUsuarios = (HashMap<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
-			// mapaResultado = (Map<Integer,
-			// Resultado>)request.getSession().getAttribute("mapaResultado");
+			
 			String txtIdLivro = (String) request.getParameter("txtId");
 			Integer idLivro = Integer.parseInt(txtIdLivro);
 			String txtIdUsuario = (String) request.getSession().getAttribute("usuarioID");

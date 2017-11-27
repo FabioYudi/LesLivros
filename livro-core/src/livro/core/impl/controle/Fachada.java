@@ -163,6 +163,7 @@ public class Fachada implements IFachada {
 		String msg = executarRegras(entidade, "CONSULTAR");
 		
 		
+		
 		if(msg == null){
 			IDAO dao = daos.get(nmClasse);
 			try {
@@ -232,7 +233,6 @@ public class Fachada implements IFachada {
 			List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);
 			
 			Livros l = (Livros)entidadeLivro.get(0);
-			System.out.println(l.getId());
 			itemCarrinho.setLivro(l);
 			
 			List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
@@ -283,6 +283,32 @@ public class Fachada implements IFachada {
 	public Resultado excluir(EntidadeDominio entidade) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	
+	@Override
+	public Resultado aplicar(EntidadeDominio entidade) {
+		resultado = new Resultado();
+		String nmClasse = entidade.getClass().getName();	
+		
+		String msg = executarRegras(entidade, "APLICAR");
+		
+		
+		if(msg == null){
+			IDAO dao = daos.get(nmClasse);
+			try {
+				
+				resultado.setEntidades(dao.consultar(entidade));
+			} catch (SQLException e) {
+				e.printStackTrace();
+				
+			}
+		}else{
+			resultado.setMsg(msg);
+			
+		}
+		
+		return resultado;
 	}
 
 }

@@ -6,26 +6,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
-  <script language="JavaScript" src="resources/js/teste.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Les Livros</title>
-
-    <!-- Bootstrap core CSS -->
-    <link type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    
-
-  </head>
-
-  <body>
-
-    	<%
+<%
   		Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaLivro");
     		String usuario = (String)request.getSession().getAttribute("username");
     		StringBuilder sb = new StringBuilder();
@@ -41,55 +23,78 @@
   		
   		
   		%>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+  <script language="JavaScript" src="resources/js/teste.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+   <title>Home</title>
+
+<!-- Bootstrap core CSS -->
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="css/shop-item.css" rel="stylesheet">
 
 
-	
-	
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="index.jsp">LES LIVROS</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="index.jsp">Home
-                <span class="sr-only">(current)</span>
-              </a>
-            </li>                  
-           
-          <%
-            	if(request.getSession().getAttribute("username") == null){
-            		out.print("<li class='nav-item'>");
-            		out.print(" <a class='nav-link' href='FormCliente.jsp'>Cadastre-se</a>");
-            		out.print(" </li>");
-            		out.print("<li class='nav-item'>");
-            		out.print(" <a class='nav-link' data-toggle='modal' href='#myModal'>Login</a>");
-            		out.print(" </li>");
-            	}else{
-            		out.print("<li class='nav-item'>");
-            		out.print(" <a class='nav-link' href='Painel.jsp'>Área do Cliente</a>");
-            		out.print(" </li>");
-            		out.print("<li class='nav-item'>");
-            		out.print(" <a class='nav-link' href='Sair?operacao=SAIR'>Sair</a>");
-            		out.print(" </li>");
-            		out.print("<li class='nav-item' style='padding-left:50px; padding-top:10px'>");
-            		out.print("<h6 style='color:white'> Olá, ");
-            		out.print(" " + usuario + "</h6>");
-            		out.print("</li>");
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
+<div class="container">
+	<a class="navbar-brand" href="index.jsp">LES LIVROS</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarResponsive" aria-controls="navbarResponsive"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarResponsive">
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active"><a class="nav-link" href="index.jsp">Home
+					<span class="sr-only">(current)</span>
+			</a></li>
+			
 
-            	}
-            %>
-              
-           
-          </ul>
-        </div>
-      </div>
-    </nav>
-     <!-- Navigation -->
+			<%
+				if (request.getSession().getAttribute("username") == null) {
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='FormCliente.jsp'>Cadastre-se</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' data-toggle='modal' href='#myModal'>Login</a>");
+					out.print(" </li>");
+				} else {
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='Painel.jsp'>Área do Cliente</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='Sair?operacao=SAIR'>Sair</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item' style='padding-left:50px; padding-top:10px'>");
+					out.print("<h6 style='color:white'> Olá, ");
+					out.print(" " + usuario + "</h6>");
+					out.print("</li>");
+
+				}
+			%>
+			<li class="nav-item"><a class="nav-link" href="Carrinho.jsp"><i class="material-icons">local_grocery_store</i></a>
+			</li>
+
+		</ul>
+	</div>
+</div>
+</nav>
+</head>
+
+  <body>
+
+
 
     <!-- Page Content -->
  
@@ -100,27 +105,18 @@
 
       <div class="row">
 
-        <div class="col-lg-3">
-
-          <h1 class="my-4">Les Livros</h1>
-          <div class="list-group">
-            <a href="#" class="list-group-item">Category 1</a>
-            <a href="#" class="list-group-item">Category 2</a>
-            <a href="#" class="list-group-item">Category 3</a>
-          </div>
-
-        </div>
+        
         <!-- /.col-lg-3 -->
 
-        <div class="col-lg-9">
+        <div class="col-lg-12">
 
-          <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+          <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel" align="center">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
-            <div class="carousel-inner" role="listbox">
+            <div class="carousel-inner" role="listbox" >
               <div class="carousel-item active">
                 <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
               </div>
@@ -173,13 +169,16 @@
 				
 				if(l.getStatus() == true){
 					sbRegistro.append(sbLink.toString());				
-					sbRegistro.append("<div class='col-lg-4 col-md-6 mb-4'>");
+					sbRegistro.append("<div class='col-lg-3 col-md-6 mb-6'>");
+					
 					sbRegistro.append("<div class='card h-100'>");	
+					sbRegistro.append("<br>");
+
 					sbRegistro.append("<img class='card-img-top'"); 
 					sbRegistro.append("src='https://images-submarino.b2w.io/produtos/01/00/item/123806/5/123806573_1GG.jpg'");
 					sbRegistro.append("alt=''>");
 					sbRegistro.append("<div class='card-body'>");
-					sbRegistro.append("<h4 class='card-title'>");
+					sbRegistro.append("<h4 class='card-title'align='center'>");
 					sbRegistro.append(l.getTitulo());
 					sbRegistro.append("</a>");	
 					sbRegistro.append("</h4>");
@@ -187,12 +186,11 @@
 					sbRegistro.append("R$" + String.format("%.2f", l.getValor()));
 					sbRegistro.append("</h5>");
 					sbRegistro.append("<p class='card-text'></p>");
-					sbRegistro.append("<form  action='Compra' method='post' align='left'>");
-					sbRegistro.append("	<input  type='submit' id='operacao' name='operacao' value='MOSTRAR' class='btn btn-primary'/>");
-					sbRegistro.append("</form>");
 					sbRegistro.append("</div>");
 					sbRegistro.append("<div class='card-footer'>");
-					sbRegistro.append("<small class='text-muted'>&#9733; &#9733; &#9733; &#9733; &#9734;</small>");
+					sbRegistro.append("<small class='text-muted'></small>");
+				
+
 					sbRegistro.append("</div>");
 					sbRegistro.append("</div>");
 					sbRegistro.append("</div>");
