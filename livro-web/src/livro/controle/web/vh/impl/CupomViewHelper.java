@@ -65,16 +65,17 @@ public class CupomViewHelper implements IViewHelper {
 			for (int i = 0; i < entidades.size(); i++) {
 				CupomDesconto cupom = (CupomDesconto) entidades.get(i);
 
-				if(request.getParameter("txtCup").trim().equals(cupom.getCupom()))
+				if(resultado.getMsg() == null && request.getParameter("txtCup").trim().equals(cupom.getCupom()))
 				{
 
 					HttpSession sessao = request.getSession();
 					sessao.setAttribute("cupom", cupom);
-
+					request.getSession().setAttribute("resultadoCupom", resultado);
 					d = request.getRequestDispatcher("Carrinho.jsp");
 					break;
 				}else {
 					resultado.setMsg("Cupom inválido");
+					request.getSession().setAttribute("resultadoCupom", resultado);
 					d = request.getRequestDispatcher("Carrinho.jsp");
 
 

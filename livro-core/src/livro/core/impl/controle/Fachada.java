@@ -20,12 +20,14 @@ import livro.core.impl.dao.LivroDAO;
 import livro.core.impl.dao.TelefoneDAO;
 import livro.core.impl.negocio.ValidarEstoqueCarrinho;
 import livro.core.impl.negocio.vrDadosObrigatoriosLivro;
+import livro.core.impl.negocio.vrQuantidadeCupom;
 import livro.dominio.Cliente;
 import livro.dominio.CupomDesconto;
 import livro.dominio.Endereco;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.Item;
 import livro.dominio.Livros;
+import livro.dominio.Pedido;
 import livro.dominio.Telefone;
 
 
@@ -71,6 +73,7 @@ public class Fachada implements IFachada {
 		/* Criando instâncias de regras de negócio a serem utilizados*/
 		vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();
 		ValidarEstoqueCarrinho vQtdeEstoque = new ValidarEstoqueCarrinho();
+		vrQuantidadeCupom vrQuantidadeCupom = new vrQuantidadeCupom();
 		
 		/* Criando uma lista para conter as regras de negócio de livros
 		 * quando a operação for salvar
@@ -78,11 +81,15 @@ public class Fachada implements IFachada {
 		List<IStrategy> rnsSalvarLivro = new ArrayList<IStrategy>();
 		List<IStrategy> rnsSalvarCliente = new ArrayList<IStrategy>();
 		List<IStrategy> rnsValidarCarrinho = new ArrayList<IStrategy>();
+		List<IStrategy> rnsValidarQtdeCupom = new ArrayList<IStrategy>();
 		/* Adicionando as regras a serem utilizadas na operação salvar do fornecedor*/
 		rnsSalvarLivro.add(vrDadosObrigatorioLivro);
 		
 		/* Adicionando as regras a serem utilizadas na operação de validar quantidade carrinho */
 		rnsValidarCarrinho.add(vQtdeEstoque);
+		
+		/* Adicionando as regras a serem utilizadas na operação de validar quantidade de cupons no pedido */
+		rnsValidarQtdeCupom.add(vrQuantidadeCupom);
 
 		/* Cria o mapa que poderá conter todas as listas de regras de negócio específica 
 		 * por operação  do livro
@@ -91,6 +98,7 @@ public class Fachada implements IFachada {
 		Map<String, List<IStrategy>> rnsLivro = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCliente = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCarrinho= new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsCupom = new HashMap<String, List<IStrategy>>();
 
 		/*
 		 * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista criada na linha 70)
@@ -98,6 +106,7 @@ public class Fachada implements IFachada {
 		rnsLivro.put("SALVAR", rnsSalvarLivro);	
 		rnsCliente.put("SALVAR", rnsSalvarCliente);
 		rnsCarrinho.put("COMPRAR", rnsValidarCarrinho);	
+		rnsCupom.put("APLICAR", rnsValidarQtdeCupom);
 
 		
 		/*
@@ -110,6 +119,7 @@ public class Fachada implements IFachada {
 		 */
 		rns.put(Livros.class.getName(), rnsLivro);
 		rns.put(Item.class.getName(),rnsCarrinho);
+		rns.put(Pedido.class.getName(), rnsCupom);
 	}
 	public Resultado logar(EntidadeDominio entidade) {
 		
