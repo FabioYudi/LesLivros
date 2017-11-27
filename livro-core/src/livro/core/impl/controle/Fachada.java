@@ -14,12 +14,14 @@ import livro.core.IFachada;
 import livro.core.IStrategy;
 import livro.core.aplicacao.Resultado;
 import livro.core.impl.dao.ClienteDAO;
+import livro.core.impl.dao.CupomDAO;
 import livro.core.impl.dao.EnderecoDAO;
 import livro.core.impl.dao.LivroDAO;
 import livro.core.impl.dao.TelefoneDAO;
 import livro.core.impl.negocio.ValidarEstoqueCarrinho;
 import livro.core.impl.negocio.vrDadosObrigatoriosLivro;
 import livro.dominio.Cliente;
+import livro.dominio.CupomDesconto;
 import livro.dominio.Endereco;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.Item;
@@ -54,6 +56,7 @@ public class Fachada implements IFachada {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		TelefoneDAO telDAO = new TelefoneDAO();
 		EnderecoDAO	endDAO = new EnderecoDAO();
+		CupomDAO   cupomDAO = new CupomDAO();
 		
 		
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
@@ -61,6 +64,7 @@ public class Fachada implements IFachada {
 		daos.put(Cliente.class.getName(), clienteDAO);
 		daos.put(Telefone.class.getName(), telDAO);
 		daos.put(Endereco.class.getName(), endDAO);
+		daos.put(CupomDesconto.class.getName(), cupomDAO);
 
 		
 		

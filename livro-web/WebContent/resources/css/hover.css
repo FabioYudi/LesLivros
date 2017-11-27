@@ -1,0 +1,21 @@
+@charset "ISO-8859-1";
+
+
+
+	.box
+	{
+		width: 150px;
+		border: 2px solid #000000;
+		padding: 10px;
+		margin-top: 10%;
+		margin-left: 70%;
+		position: absolute;
+	}
+	.box:hover
+	{
+		-moz-box-shadow: 0 0 50px #ccc;
+		-webkit-box-shadow: 0 0 50px #ccc;
+		box-shadow: 0 0 50px #ccc;
+	}
+	
+	

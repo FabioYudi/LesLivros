@@ -9,6 +9,7 @@ public class Pedido extends EntidadeDominio {
 	private Date dtPedido;
 	private String status;
 	private Pessoa usuario;
+	private CupomDesconto cupom;
 	private double frete;
 	private List<Endereco> entrega;
 	private double precoTotal;
@@ -53,6 +54,12 @@ public class Pedido extends EntidadeDominio {
 	}
 	public void setFrete(double frete) {
 		this.frete = frete;
+	}
+	public CupomDesconto getCupom() {
+		return cupom;
+	}
+	public void setCupom(CupomDesconto cupom) {
+		this.cupom = cupom;
 	}
 
 }

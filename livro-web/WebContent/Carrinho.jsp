@@ -8,6 +8,7 @@
 
 <%
 	Cliente c = (Cliente) request.getSession().getAttribute("cli");
+	CupomDesconto cup = (CupomDesconto) request.getSession().getAttribute("cupom");
 
 	String stringId = (String) request.getSession().getAttribute("usuarioID");
 	if (stringId != null) {
@@ -199,7 +200,8 @@
 											
 											sb.append("<td  id='subtotal" + i + "'>");
 											subTotal = qtdeLivro * preco;
-											precoTotal = precoTotal + qtdeLivro * preco;
+											precoTotal = precoTotal + subTotal;
+											p.setPrecoTotal(precoTotal);
 											sb.append("R$" + String.format("%.2f", subTotal));
 
 											sb.append("<script>$('#subtotal" + i + "').html('" + String.format("%.2f", subTotal)
@@ -216,7 +218,7 @@
 
 
 										request.getSession().setAttribute("mapaCarrinho", map);
-										precoTotal = precoTotal + precoFrete;
+										
 									}
 								}
 								if (map == null || map.size() == 0 || item.size() == 0) {
@@ -227,14 +229,26 @@
 
 						</tbody>
 					</table>
+					<div style="float:right">
+					<form action="SalvarCupom" method="post">
+					<h6>Cupom de desconto</h6> <input type="text" id="txtCup" name="txtCup"style="margin-right: 10px">
+
+					<button type='submit' name='operacao' value='APLICAR' class='btn btn-danger' style='margin-left: 30px'>Aplicar</button>
+					</form>
+					</div>
+					
 					<div class="table-responsive">
 						<table class="table table-striped">
 							<thead>
 								<th><h5>Endereço de entrega</h5></th>
 							</thead>
 							<tbody>
+
+
+
 								
 								<%
+									
 									String txtId = (String) request.getSession().getAttribute("usuarioID");
 									int id = Integer.parseInt(txtId);
 									Pedido p = map.get(id);
@@ -255,6 +269,14 @@
 											String cep = c.getEndereco().get(j).getCep().substring(c.getEndereco().get(j).getCep().length() -2);
 											double numCep = Double.parseDouble(cep);
 											p.setFrete(p.getFrete() + numCep);
+											p.setPrecoTotal(precoTotal + p.getFrete());
+											if(cup != null){
+												double cupo = cup.getValor();
+												p.setPrecoTotal(p.getPrecoTotal() - cupo);
+											}else
+											{											
+												p.setPrecoTotal(precoTotal + p.getFrete());
+											}
 											out.print("<tr>");
 											out.print("<td>");
 											out.print("<h5><address>");
@@ -273,8 +295,13 @@
 											out.print("<button class='btn btn-danger'>Selecionar outro endereço</button></a>");
 											out.print("</td>");
 											out.print("<td>");
-											out.print("<h6 style='color:red; padding-right:200px;'>Frete= "+"R$" + String.format("%.2f", p.getFrete()) +" </h6>");
-											out.print("</td></tr>");
+											out.print("<h6 style='color:red; padding-right:100px;'>Frete= "+"R$" + String.format("%.2f", p.getFrete()) +" </h6>");
+											out.print("</td>");
+											out.print("<td>");
+											out.print("<h6 style='color:red; padding-right:100px;'>Total= "+"R$" + String.format("%.2f", p.getPrecoTotal()) +" </h6>");
+											out.print("</td>");
+											out.print("</tr>");
+											
 										}
 									
 								%>
