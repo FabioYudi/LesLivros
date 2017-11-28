@@ -1,0 +1,18 @@
+@charset "ISO-8859-1";
+
+.input-class {
+	width: 250px;
+	text-transform: uppercase;
+	border: 1px solid #6db5f1;
+	-webkit-transition: all 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
+	height: 45px;
+	text-align: center;
+	font-size: 16px;
+}
+
+.input-class::-webkit-input-placeholder { /* Chrome, Safari, Opera */
+	color: red;
+	font-style: italic;
+	text-align: center;
+}

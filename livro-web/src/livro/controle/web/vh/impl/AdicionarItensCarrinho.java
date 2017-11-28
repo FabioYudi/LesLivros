@@ -215,6 +215,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 							qtde = p.getItem().get(i).getQuantidade() - 1;
 						} else {
 							qtde = p.getItem().get(i).getQuantidade() + 1;
+
 						}
 
 						p.getItem().get(i).setQuantidade(qtde);

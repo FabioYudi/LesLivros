@@ -6,6 +6,7 @@ import java.util.List;
 public class Pedido extends EntidadeDominio {
 	
 	private List<Item> item;
+	private int qtdItens;
 	private Date dtPedido;
 	private String status;
 	private Pessoa usuario;
@@ -60,6 +61,12 @@ public class Pedido extends EntidadeDominio {
 	}
 	public void setCupom(CupomDesconto cupom) {
 		this.cupom = cupom;
+	}
+	public int getQtdItens() {
+		return qtdItens;
+	}
+	public void setQtdItens(int qtdItens) {
+		this.qtdItens = qtdItens;
 	}
 
 }
