@@ -49,14 +49,14 @@ public class EnderecoViewHelper implements IViewHelper {
 			String id = request.getParameter("txtId");
 			endereco = new Endereco();
 			cliente = new Cliente();
-			 cidade = new Cidade();
-			 estado = new Estado();
-			 pais = new Pais();
-			 endereco.setCidade(cidade);
-			 endereco.getCidade().setEstado(estado);
-			 endereco.getCidade().getEstado().setPais(pais);
-			 cliente.setEndereco(enderecos);
-			
+			cidade = new Cidade();
+			estado = new Estado();
+			pais = new Pais();
+			endereco.setCidade(cidade);
+			endereco.getCidade().setEstado(estado);
+			endereco.getCidade().getEstado().setPais(pais);
+			cliente.setEndereco(enderecos);
+
 			endereco.setLogradouro(logradouro);
 			endereco.setBairro(bairro);
 			endereco.setCep(cep);
@@ -70,21 +70,17 @@ public class EnderecoViewHelper implements IViewHelper {
 			endereco.getCidade().getEstado().getPais().setNome(paisNome);
 			endereco.setId(Integer.parseInt(stringId));
 			enderecos.add(endereco);
-			
 
-				//cliente.getEndereco().setId(Integer.parseInt(idRua));
-				cliente.setEndereco(enderecos);
-				
-				
-				
-				Cliente c = (Cliente) request.getSession().getAttribute("cli");
+			// cliente.getEndereco().setId(Integer.parseInt(idRua));
+			cliente.setEndereco(enderecos);
 
-				c.getEndereco().add(endereco);
-			
+			Cliente c = (Cliente) request.getSession().getAttribute("cli");
+
+			c.getEndereco().add(endereco);
+
 			return endereco;
 
-			
-		} 
+		}
 		return null;
 	}
 
@@ -95,24 +91,20 @@ public class EnderecoViewHelper implements IViewHelper {
 		Cliente c = (Cliente) request.getSession().getAttribute("cli");
 
 		String stringId = (String) request.getSession().getAttribute("usuarioID");
-		
-RequestDispatcher d=null;
-		
+
+		RequestDispatcher d = null;
+
 		String operacao = request.getParameter("operacao");
 
-		if(operacao.equals("SALVAR"))
-		{
-				
-				request.getSession().setAttribute("resultado", resultado);
-				
-				d = request.getRequestDispatcher("Carrinho.jsp"); 							
-			
+		if (operacao.equals("SALVAR")) {
+
+			request.getSession().setAttribute("resultado", resultado);
+
+			d = request.getRequestDispatcher("Carrinho.jsp");
 
 		}
-		
-		d.forward(request,response);
+
+		d.forward(request, response);
 	}
 
-	}
-
-
+}

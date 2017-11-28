@@ -176,10 +176,10 @@
 													"<img style='width:80px;' src='https://images-submarino.b2w.io/produtos/01/00/item/123806/5/123806573_1GG.jpg' class='img-thumbnail' ");
 											sb.append("</div>");
 											sb.append("</td>");
-											sb.append("<td style='padding-right: 15%'>");
+											sb.append("<td style='padding-right: 35%'; position: absolute>");
 											sb.append(l.getTitulo());
 											sb.append("</td>");
-											sb.append("<td style='padding-right: 5%'>");
+											sb.append("<td style='padding-right: 11%'; position: absolute>");
 											sb.append("R$" + String.format("%.2f", l.getValor()));
 											sb.append("</td>");
 
@@ -312,9 +312,11 @@
 
 
 											} else {
+												
 												out.print("<td style='padding-left:80%'><h4>Total:</h4> " + "<h2 style='color:red'>" + "R$"
 														+ String.format("%.2f", p.getPrecoTotal()) + "</h2>");
-												out.print("<button class='btn btn-warning' value='FINALIZAR'>Finalizar Compra</button></td>");
+												out.print("<button class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button></td>");
+												out.print("<tr><td><h6 align='center'>Selecione um endereço para finalizar a compra</p></h6></tr>");
 
 
 											}
@@ -345,9 +347,10 @@
 														+ String.format("%.2f", p.getPrecoTotal()) + "</h2></strike>");
 
 											} else {
+												
 												out.print("<h4>Total:</h4> " + "<strike><h2 style='color:red'>" + "R$"
 														+ String.format("%.2f", p.getPrecoTotal()) + "</h2></strike>");
-
+												
 											}
 											p.setPrecoTotal(p.getPrecoTotal() - p.getCupom().getValor());
 											if (p.getPrecoTotal() < 0) {
@@ -357,11 +360,24 @@
 													+ "</h2>");
 											out.print("________________________ " + "<h2 style='color:red'>" + "R$"
 													+ String.format("%.2f", p.getPrecoTotal()) + "</h2>");
-											out.print("<button class='btn btn-warning' value='FINALIZAR'>Finalizar Compra</button>");
+											if(usuario != null){
+												if (request.getSession().getAttribute("selecionado") != null) {
+												out.print("<button class='btn btn-warning' value='FINALIZAR'>Finalizar Compra</button>");
+												}
+												else{
+													out.print("<button class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button>");
+													out.print("<tr><td><h4 align='center'>Selecione um endereço para finalizar a compra</p></h4></tr>");
+												}
+											}else{
+												out.print("<button class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button>");
+												out.print("<tr><td><h4 align='center'>Selecione um endereço para finalizar a compra</p></h4></tr>");
 
-										} else {
 
-										}
+											}
+
+									} else {
+
+									}
 										out.print("</div>");
 
 									}
