@@ -1,5 +1,6 @@
 package livro.core.impl.dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,11 +36,13 @@ public class CupomDAO extends AbstractJdbcDAO {
 			StringBuilder sql = new StringBuilder();
 			
 			
-			sql.append("INSERT INTO cupom_desconto (num_cupom, valor)" + 
-					"    VALUES (?, ?);");
+			sql.append("INSERT INTO cupom_desconto (num_cupom, valor, data_expiracao)" + 
+					"    VALUES (?, ?, ?);");
+			Date date = new Date(cupom.getDtExpiracao().getTime());
 			pst = connection.prepareStatement(sql.toString());
 			pst.setString(1, cupom.getCupom());
 			pst.setDouble(2, cupom.getValor());
+			pst.setDate(3, date);
 			pst.executeUpdate();
 			connection.commit();
 		}catch(SQLException ex) {
@@ -82,6 +85,7 @@ public class CupomDAO extends AbstractJdbcDAO {
 			c.setId(rs.getInt("id_cupom"));
 				c.setCupom(rs.getString("num_cupom"));
 				c.setValor(rs.getDouble("valor"));
+				c.setDtExpiracao(rs.getDate("data_expiracao"));
 				
 				cupons.add(c);
 

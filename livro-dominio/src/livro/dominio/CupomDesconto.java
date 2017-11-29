@@ -1,8 +1,11 @@
 package livro.dominio;
 
+import java.util.Date;
+
 public class CupomDesconto extends EntidadeDominio {
 	private String cupom;
 	private double valor;
+	private Date dtExpiracao;
 	public String getCupom() {
 		return cupom;
 	}
@@ -14,6 +17,12 @@ public class CupomDesconto extends EntidadeDominio {
 	}
 	public void setValor(double valor) {
 		this.valor = valor;
+	}
+	public Date getDtExpiracao() {
+		return dtExpiracao;
+	}
+	public void setDtExpiracao(Date dtExpiracao) {
+		this.dtExpiracao = dtExpiracao;
 	}
 
 }

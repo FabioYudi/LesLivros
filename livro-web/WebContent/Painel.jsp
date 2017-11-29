@@ -95,8 +95,10 @@
 
 
 
+	<script src="resources/js/Mascara.js"></script>
 
 	<!-- Bootstrap core JavaScript -->
+	
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -172,6 +174,11 @@
 						<label for="txtValor" style="padding-left: 11px">Valor:</label> <input
 							size="21" type="text" id="txtValor" name="txtValor" required="true"
 							style="margin-right: 10px" />
+					</div>
+					<div class="form-group">
+						<label for="txtData" style="padding-left: 11px">Data de Expiração:</label> 
+						<input size="21" type="text" id="txtData" name="txtData" required="true" maxlenght="9"
+							style="margin-right: 10px" onkeypress="mascaraData(this, event)">
 					</div>
 					<input type='submit' id='operacao' name='operacao' value='SALVAR'
 						class='btn btn-primary' style="margin-left: 110px" />

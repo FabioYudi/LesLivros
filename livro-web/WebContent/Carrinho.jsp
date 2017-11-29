@@ -51,7 +51,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Meu Carrinho</title>
+<title>Finalizar Compra</title>
 
 <!-- Bootstrap core CSS -->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -233,6 +233,8 @@
 										request.getSession().setAttribute("mapaCarrinho", map);
 
 									}
+									request.getSession().setAttribute("pe", p);
+
 								}
 								if (map == null || map.size() == 0 || item.size() == 0) {
 									out.print("<tr><td>Não há itens no seu carrinho</td></tr>");

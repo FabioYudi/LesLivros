@@ -1,7 +1,10 @@
 package livro.controle.web.vh.impl;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -29,8 +32,17 @@ public class CupomViewHelper implements IViewHelper {
 		if (operacao.equals("SALVAR")) {
 			String numCupom = request.getParameter("txtNumCupom");
 			String valor = request.getParameter("txtValor");
+			String data = request.getParameter("txtData");
+			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			Date dataExpiracao = null;
+			try {
+				dataExpiracao = formato.parse(data);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			cupom = new CupomDesconto();
-			
+			cupom.setDtExpiracao(dataExpiracao);
 			cupom.setCupom(numCupom);
 			cupom.setValor(Double.parseDouble(valor));
 			return cupom;
@@ -40,9 +52,12 @@ public class CupomViewHelper implements IViewHelper {
 		
 		if(operacao.equals("APLICAR")) {
 			String codigo = request.getParameter("txtCup");
+			System.out.println(codigo);
+			Pedido p = new Pedido();
 			CupomDesconto c = new CupomDesconto();
+			p.setCupom(cupom);
 			c.setCupom(codigo);
-			return c;
+			return p;
 		}
 		return null;
 	}

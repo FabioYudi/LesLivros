@@ -7,7 +7,7 @@ public class Cliente extends Pessoa {
 	private String email;
 	private String senha;
 	private Boolean status;
-	
+	private List<Pedido> pedido;
 	private List<Endereco> endereco;
 	private List<Telefone> telefone;
 	private List<Cartao> cartao;
@@ -66,6 +66,14 @@ public class Cliente extends Pessoa {
 
 	public void setCartao(List<Cartao> cartao) {
 		this.cartao = cartao;
+	}
+
+	public List<Pedido> getPedido() {
+		return pedido;
+	}
+
+	public void setPedido(List<Pedido> pedido) {
+		this.pedido = pedido;
 	}
 
 	

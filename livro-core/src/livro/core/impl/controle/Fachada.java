@@ -19,6 +19,7 @@ import livro.core.impl.dao.EnderecoDAO;
 import livro.core.impl.dao.LivroDAO;
 import livro.core.impl.dao.TelefoneDAO;
 import livro.core.impl.negocio.ValidarEstoqueCarrinho;
+import livro.core.impl.negocio.VrDataCupomDesconto;
 import livro.core.impl.negocio.vrDadosObrigatoriosLivro;
 import livro.core.impl.negocio.vrQuantidadeCupom;
 import livro.dominio.Cliente;
@@ -61,6 +62,7 @@ public class Fachada implements IFachada {
 		CupomDAO   cupomDAO = new CupomDAO();
 		
 		
+		
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		daos.put(Livros.class.getName(), livroDAO);
 		daos.put(Cliente.class.getName(), clienteDAO);
@@ -74,6 +76,7 @@ public class Fachada implements IFachada {
 		vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();
 		ValidarEstoqueCarrinho vQtdeEstoque = new ValidarEstoqueCarrinho();
 		vrQuantidadeCupom vrQuantidadeCupom = new vrQuantidadeCupom();
+		VrDataCupomDesconto vrDataCupom = new VrDataCupomDesconto();
 		
 		/* Criando uma lista para conter as regras de negócio de livros
 		 * quando a operação for salvar
@@ -82,6 +85,7 @@ public class Fachada implements IFachada {
 		List<IStrategy> rnsSalvarCliente = new ArrayList<IStrategy>();
 		List<IStrategy> rnsValidarCarrinho = new ArrayList<IStrategy>();
 		List<IStrategy> rnsValidarQtdeCupom = new ArrayList<IStrategy>();
+		List<IStrategy> rnsValidarDataCupom = new ArrayList<IStrategy>();
 		/* Adicionando as regras a serem utilizadas na operação salvar do fornecedor*/
 		rnsSalvarLivro.add(vrDadosObrigatorioLivro);
 		
@@ -90,6 +94,10 @@ public class Fachada implements IFachada {
 		
 		/* Adicionando as regras a serem utilizadas na operação de validar quantidade de cupons no pedido */
 		rnsValidarQtdeCupom.add(vrQuantidadeCupom);
+		
+		/* Adicionando as regras a serem utilizadas na operação de validar a data de cupons no pedido */
+		rnsValidarDataCupom.add(vrDataCupom);
+
 
 		/* Cria o mapa que poderá conter todas as listas de regras de negócio específica 
 		 * por operação  do livro
@@ -107,6 +115,7 @@ public class Fachada implements IFachada {
 		rnsCliente.put("SALVAR", rnsSalvarCliente);
 		rnsCarrinho.put("COMPRAR", rnsValidarCarrinho);	
 		rnsCupom.put("APLICAR", rnsValidarQtdeCupom);
+		rnsCupom.put("APLICAR", rnsValidarDataCupom);
 
 		
 		/*
@@ -120,6 +129,7 @@ public class Fachada implements IFachada {
 		rns.put(Livros.class.getName(), rnsLivro);
 		rns.put(Item.class.getName(),rnsCarrinho);
 		rns.put(Pedido.class.getName(), rnsCupom);
+		
 	}
 	public Resultado logar(EntidadeDominio entidade) {
 		
@@ -289,24 +299,41 @@ public class Fachada implements IFachada {
 	@Override
 	public Resultado aplicar(EntidadeDominio entidade) {
 		resultado = new Resultado();
-		String nmClasse = entidade.getClass().getName();	
-		
-		String msg = executarRegras(entidade, "APLICAR");
-		
-		
-		if(msg == null){
-			IDAO dao = daos.get(nmClasse);
+		Resultado resultado = new Resultado();
+		Pedido pedido = (Pedido)entidade;
+		CupomDesconto cupomPedido = pedido.getCupom();
+		System.out.println("to na fachada");
+		if(pedido.getCupom() != null) {
+			System.out.println("to no fi ");
+			CupomDAO cupDAO = new CupomDAO();
+			List<EntidadeDominio> entidadeCupom = null;
 			try {
-				
-				resultado.setEntidades(dao.consultar(entidade));
+				entidadeCupom = cupDAO.consultar(cupomPedido);
+				System.out.println(entidadeCupom.size());
+				System.out.println("to no try");
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-				
+				System.out.println("catch");
 			}
-		}else{
-			resultado.setMsg(msg);
 			
+			CupomDesconto c = (CupomDesconto)entidadeCupom.get(0);
+			pedido.setCupom(c);
+			
+			List<EntidadeDominio> cupons = new ArrayList<EntidadeDominio>();
+			cupons.add(cupomPedido);
+			
+			resultado.setEntidades(cupons);
+			
+			String msg = executarRegras(cupomPedido, "APLICAR");
+			
+			resultado.setMsg(msg);
+			if(resultado.getMsg() != null)
+			{
+				resultado.setMsg(msg);
+			}			
 		}
+		
 		
 		return resultado;
 	}
