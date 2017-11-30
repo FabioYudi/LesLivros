@@ -22,6 +22,7 @@ import livro.core.impl.negocio.ValidarEstoqueCarrinho;
 import livro.core.impl.negocio.VrDataCupomDesconto;
 import livro.core.impl.negocio.vrDadosObrigatoriosLivro;
 import livro.core.impl.negocio.vrQuantidadeCupom;
+import livro.core.util.ConverteDate;
 import livro.dominio.Cliente;
 import livro.dominio.CupomDesconto;
 import livro.dominio.Endereco;
@@ -31,38 +32,34 @@ import livro.dominio.Livros;
 import livro.dominio.Pedido;
 import livro.dominio.Telefone;
 
-
 public class Fachada implements IFachada {
-	/** 
-	 * Mapa de DAOS, será indexado pelo nome da entidade 
-	 * O valor é uma instância do DAO para uma dada entidade; 
+	/**
+	 * Mapa de DAOS, será indexado pelo nome da entidade O valor é uma instância do
+	 * DAO para uma dada entidade;
 	 */
 	private Map<String, IDAO> daos;
-	
+
 	/**
-	 * Mapa para conter as regras de negócio de todas operações por entidade;
-	 * O valor é um mapa que de regras de negócio indexado pela operação
+	 * Mapa para conter as regras de negócio de todas operações por entidade; O
+	 * valor é um mapa que de regras de negócio indexado pela operação
 	 */
 	private Map<String, Map<String, List<IStrategy>>> rns;
-	
+
 	private Resultado resultado;
-	
-	
-	public Fachada(){
+
+	public Fachada() {
 		/* Intânciando o Map de DAOS */
 		daos = new HashMap<String, IDAO>();
 		/* Intânciando o Map de Regras de Negócio */
 		rns = new HashMap<String, Map<String, List<IStrategy>>>();
-		
-		/* Criando instâncias dos DAOs a serem utilizados*/
+
+		/* Criando instâncias dos DAOs a serem utilizados */
 		LivroDAO livroDAO = new LivroDAO();
 		ClienteDAO clienteDAO = new ClienteDAO();
 		TelefoneDAO telDAO = new TelefoneDAO();
-		EnderecoDAO	endDAO = new EnderecoDAO();
-		CupomDAO   cupomDAO = new CupomDAO();
-		
-		
-		
+		EnderecoDAO endDAO = new EnderecoDAO();
+		CupomDAO cupomDAO = new CupomDAO();
+
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		daos.put(Livros.class.getName(), livroDAO);
 		daos.put(Cliente.class.getName(), clienteDAO);
@@ -70,86 +67,93 @@ public class Fachada implements IFachada {
 		daos.put(Endereco.class.getName(), endDAO);
 		daos.put(CupomDesconto.class.getName(), cupomDAO);
 
-		
-		
-		/* Criando instâncias de regras de negócio a serem utilizados*/
+		/* Criando instâncias de regras de negócio a serem utilizados */
 		vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();
 		ValidarEstoqueCarrinho vQtdeEstoque = new ValidarEstoqueCarrinho();
 		vrQuantidadeCupom vrQuantidadeCupom = new vrQuantidadeCupom();
 		VrDataCupomDesconto vrDataCupom = new VrDataCupomDesconto();
-		
-		/* Criando uma lista para conter as regras de negócio de livros
-		 * quando a operação for salvar
+
+		/*
+		 * Criando uma lista para conter as regras de negócio de livros quando a
+		 * operação for salvar
 		 */
 		List<IStrategy> rnsSalvarLivro = new ArrayList<IStrategy>();
 		List<IStrategy> rnsSalvarCliente = new ArrayList<IStrategy>();
 		List<IStrategy> rnsValidarCarrinho = new ArrayList<IStrategy>();
-		List<IStrategy> rnsValidarQtdeCupom = new ArrayList<IStrategy>();
-		List<IStrategy> rnsValidarDataCupom = new ArrayList<IStrategy>();
-		/* Adicionando as regras a serem utilizadas na operação salvar do fornecedor*/
+		List<IStrategy> rnsValidarCupom = new ArrayList<IStrategy>();
+		/* Adicionando as regras a serem utilizadas na operação salvar do fornecedor */
 		rnsSalvarLivro.add(vrDadosObrigatorioLivro);
-		
-		/* Adicionando as regras a serem utilizadas na operação de validar quantidade carrinho */
-		rnsValidarCarrinho.add(vQtdeEstoque);
-		
-		/* Adicionando as regras a serem utilizadas na operação de validar quantidade de cupons no pedido */
-		rnsValidarQtdeCupom.add(vrQuantidadeCupom);
-		
-		/* Adicionando as regras a serem utilizadas na operação de validar a data de cupons no pedido */
-		rnsValidarDataCupom.add(vrDataCupom);
 
-
-		/* Cria o mapa que poderá conter todas as listas de regras de negócio específica 
-		 * por operação  do livro
+		/*
+		 * Adicionando as regras a serem utilizadas na operação de validar quantidade
+		 * carrinho
 		 */
-		
+		rnsValidarCarrinho.add(vQtdeEstoque);
+
+		/*
+		 * Adicionando as regras a serem utilizadas na operação de validar quantidade de
+		 * cupons no pedido
+		 */
+		rnsValidarCupom.add(vrQuantidadeCupom);
+
+		/*
+		 * Adicionando as regras a serem utilizadas na operação de validar a data de
+		 * cupons no pedido
+		 */
+		rnsValidarCupom.add(vrDataCupom);
+
+		/*
+		 * Cria o mapa que poderá conter todas as listas de regras de negócio específica
+		 * por operação do livro
+		 */
+
 		Map<String, List<IStrategy>> rnsLivro = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCliente = new HashMap<String, List<IStrategy>>();
-		Map<String, List<IStrategy>> rnsCarrinho= new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsCarrinho = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCupom = new HashMap<String, List<IStrategy>>();
 
 		/*
-		 * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista criada na linha 70)
+		 * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista
+		 * criada na linha 70)
 		 */
-		rnsLivro.put("SALVAR", rnsSalvarLivro);	
+		rnsLivro.put("SALVAR", rnsSalvarLivro);
 		rnsCliente.put("SALVAR", rnsSalvarCliente);
-		rnsCarrinho.put("COMPRAR", rnsValidarCarrinho);	
-		rnsCupom.put("APLICAR", rnsValidarQtdeCupom);
-		rnsCupom.put("APLICAR", rnsValidarDataCupom);
+		rnsCarrinho.put("COMPRAR", rnsValidarCarrinho);
+		rnsCupom.put("APLICAR", rnsValidarCupom);
 
-		
 		/*
-		 * Adiciona a listra de regras na operação Alterar no mapa do livro (lista criada na linha 70)
+		 * Adiciona a listra de regras na operação Alterar no mapa do livro (lista
+		 * criada na linha 70)
 		 */
-		rnsLivro.put("ALTERAR", rnsSalvarLivro);	
-		
-		/* Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações no mapa geral indexado 
-		 * pelo nome da entidade
+		rnsLivro.put("ALTERAR", rnsSalvarLivro);
+
+		/*
+		 * Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações
+		 * no mapa geral indexado pelo nome da entidade
 		 */
 		rns.put(Livros.class.getName(), rnsLivro);
-		rns.put(Item.class.getName(),rnsCarrinho);
-		rns.put(Pedido.class.getName(), rnsCupom);
-		
+		rns.put(Item.class.getName(), rnsCarrinho);
+		rns.put(CupomDesconto.class.getName(), rnsCupom);
+
 	}
+
 	public Resultado logar(EntidadeDominio entidade) {
-		
-		
+
 		return resultado;
-		
+
 	}
-	
+
 	@Override
 	public Resultado salvar(EntidadeDominio entidade) {
 		resultado = new Resultado();
-		String nmClasse = entidade.getClass().getName();	
-		
+		String nmClasse = entidade.getClass().getName();
+
 		String msg = executarRegras(entidade, "SALVAR");
-		
-		
-		if(msg == null){
+
+		if (msg == null) {
 			IDAO dao = daos.get(nmClasse);
 			try {
-				;
+
 				dao.salvar(entidade);
 				List<EntidadeDominio> entidades = new ArrayList<EntidadeDominio>();
 				entidades.add(entidade);
@@ -157,9 +161,9 @@ public class Fachada implements IFachada {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				resultado.setMsg("Não foi possível realizar o registro!");
-				
+
 			}
-		}else{
+		} else {
 			resultado.setMsg(msg);
 		}
 		return resultado;
@@ -168,174 +172,141 @@ public class Fachada implements IFachada {
 	@Override
 	public Resultado consultar(EntidadeDominio entidade) {
 		resultado = new Resultado();
-		String nmClasse = entidade.getClass().getName();	
-		
+		String nmClasse = entidade.getClass().getName();
+
 		String msg = executarRegras(entidade, "CONSULTAR");
-		
-		
-		
-		if(msg == null){
+
+		if (msg == null) {
 			IDAO dao = daos.get(nmClasse);
 			try {
-				
+
 				resultado.setEntidades(dao.consultar(entidade));
 			} catch (SQLException e) {
 				e.printStackTrace();
 				resultado.setMsg("Não foi possível realizar a consulta!");
-				
+
 			}
-		}else{
+		} else {
 			resultado.setMsg(msg);
-			
+
 		}
-		
+
 		return resultado;
 
 	}
-	
+
 	@Override
 	public Resultado visualizar(EntidadeDominio entidade) {
 		resultado = new Resultado();
 		resultado.setEntidades(new ArrayList<EntidadeDominio>(1));
-		resultado.getEntidades().add(entidade);		
+		resultado.getEntidades().add(entidade);
 		return resultado;
 
 	}
 
-	
-	private String executarRegras(EntidadeDominio entidade, String operacao){
-		String nmClasse = entidade.getClass().getName();		
+	private String executarRegras(EntidadeDominio entidade, String operacao) {
+		String nmClasse = entidade.getClass().getName();
 		StringBuilder msg = new StringBuilder();
-		
+
 		Map<String, List<IStrategy>> regrasOperacao = rns.get(nmClasse);
-		
-		
-		if(regrasOperacao != null){
+
+		if (regrasOperacao != null) {
 			List<IStrategy> regras = regrasOperacao.get(operacao);
-			
-			if(regras != null){
-				for(IStrategy s: regras){			
-					String m = s.processar(entidade);			
-					
-					if(m != null){
+
+			if (regras != null) {
+				for (IStrategy s : regras) {
+					String m = s.processar(entidade);
+
+					if (m != null) {
 						msg.append(m);
 						msg.append("\n");
-					}			
-				}	
-			}			
-			
+					}
+				}
+			}
+
 		}
-		
-		if(msg.length()>0)
+
+		if (msg.length() > 0)
 			return msg.toString();
 		else
 			return null;
 	}
-	
+
 	public Resultado comprar(EntidadeDominio entidade) {
 		Resultado resultado = new Resultado();
-		Item itemCarrinho = (Item)entidade;
+		Item itemCarrinho = (Item) entidade;
 		Livros livroCarrinho = itemCarrinho.getLivro();
-		if(livroCarrinho != null)
-		{
+		if (livroCarrinho != null) {
 
 			LivroDAO dao = new LivroDAO();
 			List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);
-			
-			Livros l = (Livros)entidadeLivro.get(0);
+
+			Livros l = (Livros) entidadeLivro.get(0);
 			itemCarrinho.setLivro(l);
-			
+
 			List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
 			itens.add(itemCarrinho);
-			
+
 			resultado.setEntidades(itens);
-			
+
 			String msg = executarRegras(itemCarrinho, "COMPRAR");
-			
+
 			resultado.setMsg(msg);
-			if(resultado.getMsg() != null)
-			{
+			if (resultado.getMsg() != null) {
 				itemCarrinho.setQuantidade(l.getEstoque());
-			}			
-		}	
+			}
+		}
 		return resultado;
 	}
-	
 
 	@Override
 	public Resultado alterar(EntidadeDominio entidade) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
-				resultado = new Resultado();
-				String nmClass = entidade.getClass().getName();
-				String msg = executarRegras(entidade, "ALTERAR");
+		resultado = new Resultado();
+		String nmClass = entidade.getClass().getName();
+		String msg = executarRegras(entidade, "ALTERAR");
 
-				if (msg == null) {
-					IDAO dao = daos.get(nmClass);
-					try {
-						dao.alterar(entidade);
-						List<EntidadeDominio> entidades = new ArrayList<>();
-						entidades.add(entidade);
-						resultado.setEntidades(entidades);
-					} catch (SQLException e) {
-						e.printStackTrace();
-						resultado.setMsg("Nao foi possivel realizar o registro!");
-					}
-				} else {
-					resultado.setMsg(msg);
-				}
-				return resultado;
-	
+		if (msg == null) {
+			IDAO dao = daos.get(nmClass);
+			try {
+				dao.alterar(entidade);
+				List<EntidadeDominio> entidades = new ArrayList<>();
+				entidades.add(entidade);
+				resultado.setEntidades(entidades);
+			} catch (SQLException e) {
+				e.printStackTrace();
+				resultado.setMsg("Nao foi possivel realizar o registro!");
+			}
+		} else {
+			resultado.setMsg(msg);
+		}
+		return resultado;
+
 	}
-	
-	
+
 	@Override
 	public Resultado excluir(EntidadeDominio entidade) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
 	@Override
 	public Resultado aplicar(EntidadeDominio entidade) {
 		resultado = new Resultado();
-		Resultado resultado = new Resultado();
-		Pedido pedido = (Pedido)entidade;
-		CupomDesconto cupomPedido = pedido.getCupom();
-		System.out.println("to na fachada");
-		if(pedido.getCupom() != null) {
-			System.out.println("to no fi ");
-			CupomDAO cupDAO = new CupomDAO();
-			List<EntidadeDominio> entidadeCupom = null;
-			try {
-				entidadeCupom = cupDAO.consultar(cupomPedido);
-				System.out.println(entidadeCupom.size());
-				System.out.println("to no try");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("catch");
+		CupomDesconto cupom = (CupomDesconto) entidade;
+		String msg = executarRegras(cupom, "APLICAR");
+			if(msg == null) {
+				return resultado;
+			}else {
+				
 			}
-			
-			CupomDesconto c = (CupomDesconto)entidadeCupom.get(0);
-			pedido.setCupom(c);
-			
-			List<EntidadeDominio> cupons = new ArrayList<EntidadeDominio>();
-			cupons.add(cupomPedido);
-			
-			resultado.setEntidades(cupons);
-			
-			String msg = executarRegras(cupomPedido, "APLICAR");
-			
-			resultado.setMsg(msg);
-			if(resultado.getMsg() != null)
-			{
-				resultado.setMsg(msg);
-			}			
-		}
-		
+
+			System.out.println("Mensagem: " + resultado.getMsg());
+			if (resultado.getMsg() != null) {
+				return resultado;
+			}
 		
 		return resultado;
 	}
-
 }

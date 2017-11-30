@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import livro.core.util.ConverteDate;
 import livro.dominio.Cliente;
 import livro.dominio.CupomDesconto;
 import livro.dominio.EntidadeDominio;
@@ -70,7 +71,7 @@ public class CupomDAO extends AbstractJdbcDAO {
 		
 		CupomDesconto cupom = (CupomDesconto) entidade;
 		if (cupom.getId() != null) {
-			sql.append(" and a.id=" + cupom.getId());
+			sql.append(" and id_cupom =" + cupom.getId());
 		}
 		try {
 			openConnection();
@@ -86,6 +87,8 @@ public class CupomDAO extends AbstractJdbcDAO {
 				c.setCupom(rs.getString("num_cupom"));
 				c.setValor(rs.getDouble("valor"));
 				c.setDtExpiracao(rs.getDate("data_expiracao"));
+				
+				
 				
 				cupons.add(c);
 
