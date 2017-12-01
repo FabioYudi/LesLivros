@@ -21,7 +21,8 @@ import livro.core.impl.dao.TelefoneDAO;
 import livro.core.impl.negocio.ValidarEstoqueCarrinho;
 import livro.core.impl.negocio.VrDataCupomDesconto;
 import livro.core.impl.negocio.vrDadosObrigatoriosLivro;
-import livro.core.impl.negocio.vrQuantidadeCupom;
+import livro.core.impl.negocio.vrQuantidadeCupomPedido;
+import livro.core.util.ConsultaEntidades;
 import livro.core.util.ConverteDate;
 import livro.dominio.Cliente;
 import livro.dominio.CupomDesconto;
@@ -70,7 +71,7 @@ public class Fachada implements IFachada {
 		/* Criando instâncias de regras de negócio a serem utilizados */
 		vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();
 		ValidarEstoqueCarrinho vQtdeEstoque = new ValidarEstoqueCarrinho();
-		vrQuantidadeCupom vrQuantidadeCupom = new vrQuantidadeCupom();
+		vrQuantidadeCupomPedido vrQuantidadeCupom = new vrQuantidadeCupomPedido();
 		VrDataCupomDesconto vrDataCupom = new VrDataCupomDesconto();
 
 		/*
@@ -94,7 +95,6 @@ public class Fachada implements IFachada {
 		 * Adicionando as regras a serem utilizadas na operação de validar quantidade de
 		 * cupons no pedido
 		 */
-		rnsValidarCupom.add(vrQuantidadeCupom);
 
 		/*
 		 * Adicionando as regras a serem utilizadas na operação de validar a data de
@@ -188,7 +188,12 @@ public class Fachada implements IFachada {
 			}
 		} else {
 			resultado.setMsg(msg);
-
+		}
+		if (entidade instanceof CupomDesconto) {
+			ConsultaEntidades.VerificaCupom(entidade);
+			msg = executarRegras(entidade, "APLICAR");
+			resultado.setMsg(msg);
+			return resultado;
 		}
 
 		return resultado;
@@ -296,17 +301,17 @@ public class Fachada implements IFachada {
 		resultado = new Resultado();
 		CupomDesconto cupom = (CupomDesconto) entidade;
 		String msg = executarRegras(cupom, "APLICAR");
-			if(msg == null) {
-				return resultado;
-			}else {
-				
-			}
+		if (msg == null) {
+			return resultado;
+		} else {
 
-			System.out.println("Mensagem: " + resultado.getMsg());
-			if (resultado.getMsg() != null) {
-				return resultado;
-			}
-		
+		}
+
+		System.out.println("Mensagem: " + resultado.getMsg());
+		if (resultado.getMsg() != null) {
+			return resultado;
+		}
+
 		return resultado;
 	}
 }

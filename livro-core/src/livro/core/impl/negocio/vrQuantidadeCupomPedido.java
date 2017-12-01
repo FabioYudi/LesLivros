@@ -5,7 +5,7 @@ import livro.dominio.CupomDesconto;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.Pedido;
 
-public class vrQuantidadeCupom implements IStrategy {
+public class vrQuantidadeCupomPedido implements IStrategy {
 
 	@Override
 	public String processar(EntidadeDominio entidade) {

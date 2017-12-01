@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import livro.controle.web.vh.IViewHelper;
 import livro.core.aplicacao.Resultado;
+import livro.core.util.ConsultaEntidades;
 import livro.core.util.ConverteDate;
 import livro.dominio.Cliente;
 import livro.dominio.CupomDesconto;
@@ -35,20 +36,16 @@ public class CupomViewHelper implements IViewHelper {
 			String numCupom = request.getParameter("txtNumCupom");
 			String valor = request.getParameter("txtValor");
 			String data = request.getParameter("txtData");
-			
-			
-			
-			
+
 			cupom = new CupomDesconto();
 			cupom.setDtExpiracao(ConverteDate.converteStringDate(data));
 			cupom.setCupom(numCupom);
 			cupom.setValor(Double.parseDouble(valor));
 			return cupom;
-			
-			
+
 		}
-		
-		if(operacao.equals("APLICAR")) {
+
+		if (operacao.equals("APLICAR")) {
 			String codigo = request.getParameter("txtCup");
 			CupomDesconto c = new CupomDesconto();
 			c.setCupom(codigo);
@@ -62,33 +59,29 @@ public class CupomViewHelper implements IViewHelper {
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		RequestDispatcher d = null;
-		
+
 		String operacao = request.getParameter("operacao");
-		if(operacao.equals("SALVAR")) {
-			
+		if (operacao.equals("SALVAR")) {
+
 			request.getSession().setAttribute("resultadoCupom", resultado);
 			d = request.getRequestDispatcher("Painel.jsp");
-			
+
 		}
-		if(operacao.equals("APLICAR")) {
+		if (operacao.equals("APLICAR")) {
 
-			
-			if(resultado.getMsg() == null)
-			{
-				
-				System.out.println("mensagem na view do if" + resultado.getMsg());
-
+			if (resultado.getMsg() == null) {
+				CupomDesconto cupom = ConsultaEntidades.getCupom();
+				request.getSession().setAttribute("cupom", cupom);
 				request.getSession().setAttribute("resultadoCupom", resultado);
 				d = request.getRequestDispatcher("Carrinho.jsp");
-				
+
 			}
-			}else {
-				System.out.println("mensagem na view " + resultado.getMsg());
-				request.getSession().setAttribute("resultadoCupom", resultado);
-				d = request.getRequestDispatcher("Carrinho.jsp");
-			}
-			
-		
+		}
+		if (resultado.getMsg() != null) {
+			request.getSession().removeAttribute("cupom");
+			request.getSession().setAttribute("resultadoCupom", resultado);
+			d = request.getRequestDispatcher("Carrinho.jsp");
+		}
 
 		d.forward(request, response);
 	}

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import livro.core.util.ConsultaEntidades;
 import livro.core.util.ConverteDate;
 import livro.dominio.Cliente;
 import livro.dominio.CupomDesconto;
@@ -93,6 +94,7 @@ public class CupomDAO extends AbstractJdbcDAO {
 				cupons.add(c);
 
 			}
+			ConsultaEntidades.setEntidades(cupons);
 			return cupons;
 		} catch (SQLException e) {
 			e.printStackTrace();

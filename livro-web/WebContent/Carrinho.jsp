@@ -10,6 +10,7 @@
 <%
 	Cliente c = (Cliente) request.getSession().getAttribute("cli");
 	CupomDesconto cup = (CupomDesconto) request.getSession().getAttribute("cupom");
+	
 
 	String stringId = (String) request.getSession().getAttribute("usuarioID");
 	if (stringId == null) {
@@ -137,6 +138,14 @@
 											out.print("");
 										} else
 											out.print("<h5 class='text-warning'>" + res.getMsg() + "</h5>");
+									}
+								
+									if(cupom != null){
+										if(cupom.getMsg() == null){
+											out.print("");
+										}else
+											out.print("<h5 class='text-warning'>" + cupom.getMsg() + "</h5>");
+										
 									}
 								%>
 
