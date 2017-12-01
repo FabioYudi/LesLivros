@@ -26,6 +26,7 @@ import livro.controle.web.vh.impl.AdicionarItensCarrinho;
 import livro.controle.web.vh.impl.ClienteViewHelper;
 import livro.controle.web.vh.impl.CupomViewHelper;
 import livro.controle.web.vh.impl.EnderecoViewHelper;
+import livro.controle.web.vh.impl.FinalizarViewHelper;
 import livro.controle.web.vh.impl.LivroViewHelper;
 import livro.controle.web.vh.impl.Logar;
 import livro.core.aplicacao.Resultado;
@@ -69,6 +70,8 @@ public class Servlet extends HttpServlet {
     	commands.put("CONSULTARENDERECO", new ConsultarCommand());
     	commands.put("SELECIONAR", new ComprarCommand());
     	commands.put("APLICAR", new ConsultarCommand());
+    	commands.put("FINALIZAR", new SalvarCommand());
+
 
 
     	
@@ -90,6 +93,7 @@ public class Servlet extends HttpServlet {
     	vhs.put("/livro-web/Livro", new LivroViewHelper());
     	vhs.put("/livro-web/Carrinho", new AdicionarItensCarrinho());
     	vhs.put("/livro-web/SalvarCupom", new CupomViewHelper());
+    	vhs.put("/livro-web/Finalizar", new FinalizarViewHelper());
 
     	
 

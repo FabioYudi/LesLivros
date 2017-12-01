@@ -364,6 +364,7 @@
 												
 											}
 											p.setPrecoTotal(p.getPrecoTotal() - p.getCupom().getValor());
+											p.setCupom(cup);
 											if (p.getPrecoTotal() < 0) {
 												p.setPrecoTotal(0);
 											}
@@ -387,6 +388,7 @@
 											}
 
 									} else {
+										p.setCupom(null);
 
 									}
 										out.print("</div>");
@@ -432,6 +434,7 @@
 										} else if (usuario != null && request.getSession().getAttribute("selecionado").equals("true")) {
 											String indice = (String) request.getSession().getAttribute("i");
 											int j = Integer.parseInt(indice);
+											p.setEntrega(c.getEndereco().get(j));
 
 											out.print("<tr>");
 											out.print("<td>");

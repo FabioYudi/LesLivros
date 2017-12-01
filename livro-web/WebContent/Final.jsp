@@ -39,6 +39,8 @@
 			String txtId = (String) request.getSession().getAttribute("usuarioID");
 			int id = Integer.parseInt(txtId);
 			Pedido p = map.get(id);
+			List<Item> item = new ArrayList<Item>();
+
 
 
 
@@ -101,6 +103,14 @@
 <div class="col" >
 <div class="resumo">
 Resumo do Pedido
+<div class="rouw">
+Produtos:
+<%
+
+%>
+
+</div>
+
 </div>
 </div>
 </div>

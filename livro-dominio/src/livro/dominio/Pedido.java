@@ -9,11 +9,11 @@ public class Pedido extends EntidadeDominio {
 	private int qtdItens;
 	private Date dtPedido;
 	private String status;
-	private Pessoa usuario;
 	private CupomDesconto cupom;
 	private double frete;
-	private List<Endereco> entrega;
+	private Endereco entrega;
 	private double precoTotal;
+	private List<Cartao> cartao;
 	public List<Item> getItem() {
 		return item;
 	}
@@ -38,18 +38,8 @@ public class Pedido extends EntidadeDominio {
 	public void setPrecoTotal(double precoTotal) {
 		this.precoTotal = precoTotal;
 	}
-	public Pessoa getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(Pessoa usuario) {
-		this.usuario = usuario;
-	}
-	public List<Endereco> getEntrega() {
-		return entrega;
-	}
-	public void setEntrega(List<Endereco> entrega) {
-		this.entrega = entrega;
-	}
+	
+	
 	public double getFrete() {
 		return frete;
 	}
@@ -67,6 +57,18 @@ public class Pedido extends EntidadeDominio {
 	}
 	public void setQtdItens(int qtdItens) {
 		this.qtdItens = qtdItens;
+	}
+	public Endereco getEntrega() {
+		return entrega;
+	}
+	public void setEntrega(Endereco entrega) {
+		this.entrega = entrega;
+	}
+	public List<Cartao> getCartao() {
+		return cartao;
+	}
+	public void setCartao(List<Cartao> cartao) {
+		this.cartao = cartao;
 	}
 
 }

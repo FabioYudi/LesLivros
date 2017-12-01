@@ -39,7 +39,7 @@ public class CupomViewHelper implements IViewHelper {
 
 			cupom = new CupomDesconto();
 			cupom.setDtExpiracao(ConverteDate.converteStringDate(data));
-			cupom.setCupom(numCupom);
+			cupom.setCupom(numCupom.toUpperCase());
 			cupom.setValor(Double.parseDouble(valor));
 			return cupom;
 
@@ -48,7 +48,7 @@ public class CupomViewHelper implements IViewHelper {
 		if (operacao.equals("APLICAR")) {
 			String codigo = request.getParameter("txtCup");
 			CupomDesconto c = new CupomDesconto();
-			c.setCupom(codigo);
+			c.setCupom(codigo.toUpperCase());
 			return c;
 		}
 		return null;

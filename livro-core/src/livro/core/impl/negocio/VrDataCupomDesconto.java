@@ -20,7 +20,6 @@ public class VrDataCupomDesconto implements IStrategy {
 	@Override
 	public String processar(EntidadeDominio entidade) {
 		// TODO Auto-generated method stub
-		System.out.println("teste");
 		
 		CupomDesconto  cupom =  (CupomDesconto) ConsultaEntidades.consultar();
 		if(cupom == null) {

@@ -38,8 +38,6 @@ public class ConsultaEntidades {
 	
 		for(EntidadeDominio lista : entidades) {
 			CupomDesconto cupom = (CupomDesconto) lista;
-			System.out.println("cupom do dao " + cupom.getCupom());
-			System.out.println("cupom digitado: " + cup.getCupom());
 			if(cupom.getCupom().trim().equals(cup.getCupom())) {
 				return cupom;
 				

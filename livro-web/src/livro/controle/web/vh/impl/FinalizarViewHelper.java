@@ -19,9 +19,12 @@ public class FinalizarViewHelper  implements IViewHelper {
 	@Override
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		Map<Integer, Pedido> mapaUsuarios = (HashMap<Integer, Pedido>)request.getSession().getAttribute("mapaUsuarios");
+		Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
+		String txtId = (String) request.getSession().getAttribute("usuarioID");
+		int id = Integer.parseInt(txtId);
+		Pedido p = map.get(id);
 
-		return null;
+		return p;
 	}
 
 	@Override
@@ -37,6 +40,7 @@ public class FinalizarViewHelper  implements IViewHelper {
 		
 		if(operacao.equals("FINALIZAR")) {
 			if(usuario != null) {
+				
 				
 			}else {
 				System.out.println("Faça login para finalizar a compra ");
