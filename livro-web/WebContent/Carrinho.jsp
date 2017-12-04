@@ -171,13 +171,16 @@
 									StringBuilder sb = new StringBuilder();
 									Pedido p = map.get(id);
 									item = p.getItem();
-
+									int qt = 0;
 									if (item.size() != 0) {
 
 										for (int i = 0; i < item.size(); i++) {
+											
+											
 											sb.setLength(0);
 											Item it = item.get(i);
 											Livros l = it.getLivro();
+											qt += it.getQuantidade();
 											sb.append("<tr>");
 											sb.append("<td class='col-xs-6 col-md-3'>");
 											sb.append("<div>");
@@ -214,12 +217,12 @@
 											sb.append("</div>");
 											sb.append("</td>");
 											//quantidade
-
+											
 											int qtdeLivro = it.getQuantidade();
 											double preco = it.getLivro().getValor();
 											double frete = 0;
 											frete += (item.get(i).getLivro().getAltura() + item.get(i).getLivro().getLargura()
-													+ item.get(i).getLivro().getProfundidade());
+													+ item.get(i).getLivro().getProfundidade()) * qt;
 											p.setFrete(frete);
 
 											sb.append("<td  id='subtotal" + i + "'>");
@@ -236,9 +239,13 @@
 											sb.append("</td>");
 											sb.append("</tr>");
 											out.print(sb.toString());
+											
+											
+
 
 										}
-
+										System.out.println(qt);
+										p.setQtdItens(qt);
 										request.getSession().setAttribute("mapaCarrinho", map);
 
 									}
@@ -319,14 +326,14 @@
 												}
 												out.print("<td style='padding-left:80%'><h4>Total:</h4> " + "<h2 style='color:red'>" + "R$"
 														+ String.format("%.2f", p.getPrecoTotal()) + "</h2>");
-												out.print("<button class='btn btn-warning' value='FINALIZAR'>Finalizar Compra</button></td>");
+												out.print("<form action='Finalizar' method='POST'><button type='submit' name='operacao' class='btn btn-warning' value='FINALIZAR'>Finalizar Compra</button></td></form>");
 
 
 											} else {
 												
 												out.print("<td style='padding-left:80%'><h4>Total:</h4> " + "<h2 style='color:red'>" + "R$"
 														+ String.format("%.2f", p.getPrecoTotal()) + "</h2>");
-												out.print("<button class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button></td>");
+												out.print("<form action='Finalizar' method='POST'><button type='submit' name='operacao' class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button></td></form>");
 												out.print("<tr><td><h6 align='center'>Selecione um endereço para finalizar a compra</p></h6></tr>");
 
 
@@ -374,14 +381,14 @@
 													+ String.format("%.2f", p.getPrecoTotal()) + "</h2>");
 											if(usuario != null){
 												if (request.getSession().getAttribute("selecionado") != null) {
-												out.print("<button class='btn btn-warning' value='FINALIZAR'>Finalizar Compra</button>");
+												out.print("<form action='Finalizar' method='POST'><button type='submit' name='operacao' class='btn btn-warning'  value='FINALIZAR'>Finalizar Compra</button></form>");
 												}
 												else{
-													out.print("<button class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button>");
+													out.print("<form action='Finalizar' method='POST'><button type='submit' name='operacao' class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button></form>");
 													out.print("<tr><td><h4 align='center'>Selecione um endereço para finalizar a compra</p></h4></tr>");
 												}
 											}else{
-												out.print("<button class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button>");
+												out.print("<form action='Finalizar' method='POST'><button type='submit' name='operacao' class='btn btn-warning' disabled='true' value='FINALIZAR'>Finalizar Compra</button></form>");
 												out.print("<tr><td><h4 align='center'>Selecione um endereço para finalizar a compra</p></h4></tr>");
 
 
@@ -389,6 +396,7 @@
 
 									} else {
 										p.setCupom(null);
+										
 
 									}
 										out.print("</div>");
@@ -424,7 +432,7 @@
 											out.print("<td><h5 style='color:red'>Faça login para calcular o frete e finalizar a compra</h5>");
 											out.print("<a class='nav-link' data-toggle='modal' href='#myModal'>Fazer Login</a></td>");
 										} else if (usuario != null && request.getSession().getAttribute("selecionado") == null) {
-
+											
 											out.print("<tr><td>");
 											out.print("<a  class='nav-link' data-toggle='modal' href='#endereco'>");
 											out.print(
@@ -435,7 +443,7 @@
 											String indice = (String) request.getSession().getAttribute("i");
 											int j = Integer.parseInt(indice);
 											p.setEntrega(c.getEndereco().get(j));
-
+											p.setIdCliente(id);
 											out.print("<tr>");
 											out.print("<td>");
 											out.print("<h5><address>");

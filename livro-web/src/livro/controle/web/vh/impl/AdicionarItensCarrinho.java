@@ -151,6 +151,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 						{	
 							
 							p.getItem().add(item); 
+
 						}
 						else {
 							if(p.getItem().get(indice).getQuantidade() ==  estoque) {
@@ -158,6 +159,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 								
 							}else {
 								p.getItem().get(indice).setQuantidade(p.getItem().get(indice).getQuantidade() + 1);
+
 							}
 						}
 						mapaUsuarios.replace(id, p);  
@@ -213,6 +215,7 @@ public class AdicionarItensCarrinho implements IViewHelper {
 						Integer qtde;
 						if (operacao.equals("SUBTRAIR")) {
 							qtde = p.getItem().get(i).getQuantidade() - 1;
+							
 						} else {
 							qtde = p.getItem().get(i).getQuantidade() + 1;
 
@@ -267,6 +270,8 @@ public class AdicionarItensCarrinho implements IViewHelper {
 			String txtIdUsuario = (String) request.getSession().getAttribute("usuarioID");
 			Integer idUsuario = Integer.parseInt(txtIdUsuario);
 			Pedido p = mapaUsuarios.get(idUsuario);
+			
+
 
 			for (int i = 0; i < p.getItem().size(); i++) {
 				Livros l = p.getItem().get(i).getLivro();

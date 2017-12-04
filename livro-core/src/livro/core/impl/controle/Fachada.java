@@ -17,6 +17,7 @@ import livro.core.impl.dao.ClienteDAO;
 import livro.core.impl.dao.CupomDAO;
 import livro.core.impl.dao.EnderecoDAO;
 import livro.core.impl.dao.LivroDAO;
+import livro.core.impl.dao.PedidoDAO;
 import livro.core.impl.dao.TelefoneDAO;
 import livro.core.impl.negocio.ValidarEstoqueCarrinho;
 import livro.core.impl.negocio.VrDataCupomDesconto;
@@ -60,6 +61,7 @@ public class Fachada implements IFachada {
 		TelefoneDAO telDAO = new TelefoneDAO();
 		EnderecoDAO endDAO = new EnderecoDAO();
 		CupomDAO cupomDAO = new CupomDAO();
+		PedidoDAO pedidoDAO = new PedidoDAO();
 
 		/* Adicionando cada dao no MAP indexando pelo nome da classe */
 		daos.put(Livros.class.getName(), livroDAO);
@@ -67,6 +69,7 @@ public class Fachada implements IFachada {
 		daos.put(Telefone.class.getName(), telDAO);
 		daos.put(Endereco.class.getName(), endDAO);
 		daos.put(CupomDesconto.class.getName(), cupomDAO);
+		daos.put(Pedido.class.getName(), pedidoDAO);
 
 		/* Criando instâncias de regras de negócio a serem utilizados */
 		vrDadosObrigatoriosLivro vrDadosObrigatorioLivro = new vrDadosObrigatoriosLivro();

@@ -14,6 +14,7 @@ public class Pedido extends EntidadeDominio {
 	private Endereco entrega;
 	private double precoTotal;
 	private List<Cartao> cartao;
+	private Integer idCliente;
 	public List<Item> getItem() {
 		return item;
 	}
@@ -69,6 +70,12 @@ public class Pedido extends EntidadeDominio {
 	}
 	public void setCartao(List<Cartao> cartao) {
 		this.cartao = cartao;
+	}
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
 	}
 
 }

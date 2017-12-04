@@ -1,6 +1,8 @@
 package livro.controle.web.vh.impl;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,12 +21,20 @@ public class FinalizarViewHelper  implements IViewHelper {
 	@Override
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		// TODO Auto-generated method stub
+		String operacao = request.getParameter("operacao");
 		Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 		String txtId = (String) request.getSession().getAttribute("usuarioID");
 		int id = Integer.parseInt(txtId);
+		
 		Pedido p = map.get(id);
-
+		Calendar ca = Calendar.getInstance();
+		Date dt = ca.getTime();
+		p.setDtPedido(dt);
+		p.setStatus("EM PROCESSO");
+		
 		return p;
+		
+		
 	}
 
 	@Override
@@ -40,7 +50,9 @@ public class FinalizarViewHelper  implements IViewHelper {
 		
 		if(operacao.equals("FINALIZAR")) {
 			if(usuario != null) {
-				
+				System.out.println("finalizado");
+				d = request.getRequestDispatcher("Carrinho.jsp");
+
 				
 			}else {
 				System.out.println("Faça login para finalizar a compra ");
@@ -48,7 +60,8 @@ public class FinalizarViewHelper  implements IViewHelper {
 			}
 			
 		}
-		
+		d.forward(request, response);
+
 	}
 
 }
