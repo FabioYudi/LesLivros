@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import livro.controle.web.vh.IViewHelper;
 import livro.core.aplicacao.Resultado;
+import livro.dominio.Cliente;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.Pedido;
 
@@ -22,6 +23,7 @@ public class FinalizarViewHelper  implements IViewHelper {
 	public EntidadeDominio getEntidade(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String operacao = request.getParameter("operacao");
+		Cliente c = (Cliente) request.getSession().getAttribute("cli");
 		Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 		String txtId = (String) request.getSession().getAttribute("usuarioID");
 		int id = Integer.parseInt(txtId);
@@ -31,6 +33,8 @@ public class FinalizarViewHelper  implements IViewHelper {
 		Date dt = ca.getTime();
 		p.setDtPedido(dt);
 		p.setStatus("EM PROCESSO");
+		c.getPedido().add(p);
+		
 		
 		return p;
 		
@@ -50,13 +54,18 @@ public class FinalizarViewHelper  implements IViewHelper {
 		
 		if(operacao.equals("FINALIZAR")) {
 			if(usuario != null) {
+				
 				System.out.println("finalizado");
-				d = request.getRequestDispatcher("Carrinho.jsp");
+				d = request.getRequestDispatcher("Final.jsp");
 
 				
 			}else {
 				System.out.println("Faça login para finalizar a compra ");
 				d = request.getRequestDispatcher("Carrinho.jsp");
+			}
+			
+			if(operacao.equals("CONSULTAR")) {
+				
 			}
 			
 		}

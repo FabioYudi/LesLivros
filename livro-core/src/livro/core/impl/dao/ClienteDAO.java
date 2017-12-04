@@ -14,8 +14,10 @@ import livro.dominio.Cliente;
 import livro.dominio.Endereco;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.Estado;
+import livro.dominio.Item;
 import livro.dominio.Livros;
 import livro.dominio.Pais;
+import livro.dominio.Pedido;
 import livro.dominio.Telefone;
 
 public class ClienteDAO extends AbstractJdbcDAO {
@@ -234,10 +236,75 @@ public class ClienteDAO extends AbstractJdbcDAO {
 					enderecos.add(e);
 				}
 				rsEnd.close();
+				pst = connection.prepareStatement("SELECT * FROM pedidos pe"
+						+ " INNER JOIN endereco e on e.id = id_endereco " 
+						+ " INNER JOIN itens i on i.id_pedido = pe.id_pedido"
+						+ " INNER JOIN livros l on l.id = i.id_livro"
+						+ " WHERE pe.id_cliente = ?");
+				pst.setInt(1, c.getId());
+				ResultSet rsPedido = pst.executeQuery();
+				List<Pedido> pedidos = new ArrayList<>();
+				List<Item> itens = new ArrayList<>();
+				while (rsPedido.next()) {
+					Endereco en = new Endereco();
+					Pedido p = new Pedido();
+					Item i = new Item();
+					Livros l = new Livros();
+					
+					System.out.println(pst);
+					i.setId(rsPedido.getInt("id"));
+					l.setCodigoLivro(rsPedido.getString("codigo_livro"));
+					l.setAutor(rsPedido.getString("autor"));
+					l.setAno(rsPedido.getString("ano"));
+					l.setStatus(rsPedido.getBoolean("status"));
+					l.setTitulo(rsPedido.getString("titulo"));
+					l.setEditora(rsPedido.getString("editora"));
+					l.setEdicao(rsPedido.getString("edicao"));
+					l.setIsbn(rsPedido.getString("isbn"));
+					l.setNumPg(rsPedido.getString("num_paginas"));
+					l.setSinopse(rsPedido.getString("sinopse"));
+					l.setAltura(rsPedido.getDouble("altura"));
+					l.setPeso(rsPedido.getDouble("peso"));
+					l.setProfundidade(rsPedido.getDouble("profundidade"));
+					l.setValor(rsPedido.getDouble("valor"));
+					l.setEstoque(rsPedido.getInt("estoque"));
+					l.setLargura(rsPedido.getDouble("largura"));
+					i.setLivro(l);
+					itens.add(i);
+					p.setItem(itens);
+					en.setLogradouro(rsPedido.getString("logradouro"));
+					en.setBairro(rsPedido.getString("bairro"));
+					en.setCep(rsPedido.getString("cep"));
+					en.setNumero(rsPedido.getString("numero"));
+					en.setComplemento(rsPedido.getString("complemento"));
+					en.setNome(rsPedido.getString("nome"));
+					en.setTipoLogradouro(rsPedido.getString("tipo_residencia"));
+					en.setTipoLogradouro(rsPedido.getString("tipo_logradouro"));
+					Cidade cidade = new Cidade();
+					cidade.setNome(rsPedido.getString("cidade"));
+					Estado estado = new Estado();
+					estado.setNome(rsPedido.getString("estado"));
+					Pais pais = new Pais();
+					pais.setNome(rsPedido.getString("pais"));
+					estado.setPais(pais);
+					cidade.setEstado(estado);
+					en.setCidade(cidade);
+					p.setId(rsPedido.getInt("id_pedido"));
+					p.setQtdItens(rsPedido.getInt("qtde_itens"));
+					p.setDtPedido(rsPedido.getDate("dtpedido"));
+					p.setStatus(rsPedido.getString("status"));
+					p.setIdCliente(rsPedido.getInt("id_cliente"));
+					p.setEntrega(en);
+					p.setPrecoTotal(rsPedido.getDouble("total"));
+					pedidos.add(p);
+				}
+				rsCard.close();
 				c.setCartao(cartoes);
-				;
+				
 				c.setEndereco(enderecos);
-				;
+				
+				c.setPedido(pedidos);
+				
 				clientes.add(c);
 			}
 			return clientes;

@@ -33,7 +33,8 @@
 <%
 
 		//declarações de sessão
-		
+			Cliente c = (Cliente) request.getSession().getAttribute("cli");
+
 			String usuario = (String) request.getSession().getAttribute("username");
 			Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 			String txtId = (String) request.getSession().getAttribute("usuarioID");
@@ -105,7 +106,31 @@
 Resumo do Pedido
 <div class="rouw">
 Produtos:
+
 <%
+int tam = c.getPedido().size();
+int i =  c.getPedido().size() - 1;
+	out.print("<tr>");
+	out.print("<td>");
+	out.print("<address>");
+	out.print(c.getNome() + "<br>");
+	out.print(c.getPedido().get(i).getPrecoTotal() + " "
+			+ c.getPedido().get(i).getStatus() + ", "  
+			+ "<br>");
+	
+	
+
+	out.print("</address>");
+	out.print("</td>");
+	out.print("<td>");
+	out.print("<form action='Carrinho' method='post' style='margin-left:30%; padding-top:20%' >");
+	out.print("<input type='hidden' name='txtIndice' value='" + i + "' >");
+	out.print(
+			"<button name='operacao' type='submit' class='btn btn-warning' value='SELECIONAR'>Selecionar</button>");
+	out.print("</form>");
+	out.print("</td>");
+	out.print("</tr>");
+
 
 %>
 
