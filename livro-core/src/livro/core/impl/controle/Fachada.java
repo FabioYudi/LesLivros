@@ -140,11 +140,7 @@ public class Fachada implements IFachada {
 
 	}
 
-	public Resultado logar(EntidadeDominio entidade) {
-
-		return resultado;
-
-	}
+	
 
 	@Override
 	public Resultado salvar(EntidadeDominio entidade) {
@@ -177,26 +173,52 @@ public class Fachada implements IFachada {
 		resultado = new Resultado();
 		String nmClasse = entidade.getClass().getName();
 
-		String msg = executarRegras(entidade, "CONSULTAR");
+		if (entidade instanceof Item) {
+			Item itemCarrinho = (Item) entidade;
+			Livros livroCarrinho = itemCarrinho.getLivro();
+			if (livroCarrinho != null) {
 
-		if (msg == null) {
-			IDAO dao = daos.get(nmClasse);
-			try {
+				LivroDAO dao = new LivroDAO();
+				List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);
 
-				resultado.setEntidades(dao.consultar(entidade));
-			} catch (SQLException e) {
-				e.printStackTrace();
-				resultado.setMsg("Não foi possível realizar a consulta!");
+				Livros l = (Livros) entidadeLivro.get(0);
+				itemCarrinho.setLivro(l);
 
+				List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
+				itens.add(itemCarrinho);
+
+				resultado.setEntidades(itens);
+
+				String msg = executarRegras(itemCarrinho, "COMPRAR");
+
+				resultado.setMsg(msg);
+				if (resultado.getMsg() != null) {
+					itemCarrinho.setQuantidade(l.getEstoque());
+				}
 			}
 		} else {
-			resultado.setMsg(msg);
-		}
-		if (entidade instanceof CupomDesconto) {
-			ConsultaEntidades.VerificaCupom(entidade);
-			msg = executarRegras(entidade, "APLICAR");
-			resultado.setMsg(msg);
-			return resultado;
+
+			String msg = executarRegras(entidade, "CONSULTAR");
+
+			if (msg == null) {
+				IDAO dao = daos.get(nmClasse);
+				try {
+
+					resultado.setEntidades(dao.consultar(entidade));
+				} catch (SQLException e) {
+					e.printStackTrace();
+					resultado.setMsg("Não foi possível realizar a consulta!");
+
+				}
+			} else {
+				resultado.setMsg(msg);
+			}
+			if (entidade instanceof CupomDesconto) {
+				ConsultaEntidades.VerificaCupom(entidade);
+				msg = executarRegras(entidade, "APLICAR");
+				resultado.setMsg(msg);
+				return resultado;
+			}
 		}
 
 		return resultado;
@@ -240,33 +262,7 @@ public class Fachada implements IFachada {
 			return null;
 	}
 
-	public Resultado comprar(EntidadeDominio entidade) {
-		Resultado resultado = new Resultado();
-		Item itemCarrinho = (Item) entidade;
-		Livros livroCarrinho = itemCarrinho.getLivro();
-		if (livroCarrinho != null) {
-
-			LivroDAO dao = new LivroDAO();
-			List<EntidadeDominio> entidadeLivro = dao.consultar(livroCarrinho);
-
-			Livros l = (Livros) entidadeLivro.get(0);
-			itemCarrinho.setLivro(l);
-
-			List<EntidadeDominio> itens = new ArrayList<EntidadeDominio>();
-			itens.add(itemCarrinho);
-
-			resultado.setEntidades(itens);
-
-			String msg = executarRegras(itemCarrinho, "COMPRAR");
-
-			resultado.setMsg(msg);
-			if (resultado.getMsg() != null) {
-				itemCarrinho.setQuantidade(l.getEstoque());
-			}
-		}
-		return resultado;
-	}
-
+	
 	@Override
 	public Resultado alterar(EntidadeDominio entidade) {
 		// TODO Auto-generated method stub
@@ -299,22 +295,5 @@ public class Fachada implements IFachada {
 		return null;
 	}
 
-	@Override
-	public Resultado aplicar(EntidadeDominio entidade) {
-		resultado = new Resultado();
-		CupomDesconto cupom = (CupomDesconto) entidade;
-		String msg = executarRegras(cupom, "APLICAR");
-		if (msg == null) {
-			return resultado;
-		} else {
-
-		}
-
-		System.out.println("Mensagem: " + resultado.getMsg());
-		if (resultado.getMsg() != null) {
-			return resultado;
-		}
-
-		return resultado;
-	}
+	
 }

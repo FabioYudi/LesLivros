@@ -14,11 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import livro.controle.web.command.ICommand;
 import livro.controle.web.command.impl.AlterarCommand;
-import livro.controle.web.command.impl.AplicarCommand;
-import livro.controle.web.command.impl.ComprarCommand;
+
 import livro.controle.web.command.impl.ConsultarCommand;
 import livro.controle.web.command.impl.ExcluirCommand;
-import livro.controle.web.command.impl.LogarCommand;
 import livro.controle.web.command.impl.SalvarCommand;
 import livro.controle.web.command.impl.VisualizarCommand;
 import livro.controle.web.vh.IViewHelper;
@@ -61,16 +59,17 @@ public class Servlet extends HttpServlet {
     	commands.put("MOSTRAR", new ConsultarCommand());
     	commands.put("VISUALIZARC", new VisualizarCommand());
     	commands.put("CONSULTARLIVRO", new ConsultarCommand());
-    	commands.put("COMPRAR", new ComprarCommand());
-    	commands.put("SOMAR", new ComprarCommand());
-    	commands.put("SUBTRAIR", new ComprarCommand());
-    	commands.put("REMOVER", new ComprarCommand());
-    	commands.put("CALCULAR", new ComprarCommand());
-    	commands.put("SAIR", new LogarCommand());
+    	commands.put("COMPRAR", new ConsultarCommand());
+    	commands.put("SOMAR", new ConsultarCommand());
+    	commands.put("SUBTRAIR", new ConsultarCommand());
+    	commands.put("REMOVER", new ConsultarCommand());
+    	commands.put("CALCULAR", new ConsultarCommand());
     	commands.put("CONSULTARENDERECO", new ConsultarCommand());
-    	commands.put("SELECIONAR", new ComprarCommand());
+    	commands.put("SELECIONAR", new ConsultarCommand());
     	commands.put("APLICAR", new ConsultarCommand());
     	commands.put("FINALIZAR", new SalvarCommand());
+    	commands.put("SAIR", new ExcluirCommand());
+
 
 
 

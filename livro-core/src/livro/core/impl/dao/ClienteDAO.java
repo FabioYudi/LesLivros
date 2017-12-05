@@ -251,7 +251,6 @@ public class ClienteDAO extends AbstractJdbcDAO {
 					Item i = new Item();
 					Livros l = new Livros();
 					
-					System.out.println(pst);
 					i.setId(rsPedido.getInt("id"));
 					l.setCodigoLivro(rsPedido.getString("codigo_livro"));
 					l.setAutor(rsPedido.getString("autor"));
@@ -299,6 +298,8 @@ public class ClienteDAO extends AbstractJdbcDAO {
 					pedidos.add(p);
 				}
 				rsCard.close();
+				
+				
 				c.setCartao(cartoes);
 				
 				c.setEndereco(enderecos);

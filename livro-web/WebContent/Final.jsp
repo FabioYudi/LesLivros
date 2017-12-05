@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-    
-     <%@ page
+	pageEncoding="ISO-8859-1"%>
+
+<%@ page
 	import="livro.core.aplicacao.Resultado, livro.dominio.*, java.util.*"%>
-    
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,20 +31,15 @@
 <!-- Navigation -->
 
 <%
+	//declarações de sessão
+	Cliente c = (Cliente) request.getSession().getAttribute("cli");
 
-		//declarações de sessão
-			Cliente c = (Cliente) request.getSession().getAttribute("cli");
-
-			String usuario = (String) request.getSession().getAttribute("username");
-			Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
-			String txtId = (String) request.getSession().getAttribute("usuarioID");
-			int id = Integer.parseInt(txtId);
-			Pedido p = map.get(id);
-			List<Item> item = new ArrayList<Item>();
-
-
-
-
+	String usuario = (String) request.getSession().getAttribute("username");
+	Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
+	String txtId = (String) request.getSession().getAttribute("usuarioID");
+	int id = Integer.parseInt(txtId);
+	Pedido p = map.get(id);
+	List<Item> item = new ArrayList<Item>();
 %>
 
 
@@ -96,51 +91,79 @@
 <title>Finalização</title>
 </head>
 <body>
-<div class="container" >
-<div class="row" >
-<br><br>
-</div>
-<div class="row" >
-<div class="col" >
-<div class="resumo">
-Resumo do Pedido
-<div class="rouw">
-Produtos:
+	<div class="container">
+		<table class="table table-striped " style='height:100px; width:400px'>
+  		<thead class='bg-inverse'>
+  		<th style="color:red">Resumo do Pedido</th>
+   			 <tr>
+      <th>PRODUTOS</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      
+     
+		
+					
+						
 
-<%
-int tam = c.getPedido().size();
-int i =  c.getPedido().size() - 1;
-	out.print("<tr>");
-	out.print("<td>");
-	out.print("<address>");
-	out.print(c.getNome() + "<br>");
-	out.print(c.getPedido().get(i).getPrecoTotal() + " "
-			+ c.getPedido().get(i).getStatus() + ", "  
-			+ "<br>");
-	
-	
+						<%
+					int tam = c.getPedido().size();
+					int i = c.getPedido().size() - 1;
+					
+					
+					
+				
+					
+					
+					for (int j = 0; j < c.getPedido().get(i).getItem().size(); j++){
+					out.print("<tr'>");
+					out.print("<td class='bg-warning text-black' >");
+					out.print("<h6>" + c.getPedido().get(i).getItem().get(j).getLivro().getTitulo() + " x " + c.getPedido().get(i).getItem().get(j).getQuantidade() +"</h6>");
+					out.print("</td>");
+					out.print("<td class='bg-warning text-black' >");
+					out.print("<h6>R$" + String.format("%.2f", c.getPedido().get(i).getItem().get(j).getLivro().getValor()) + "</h6>");
+					out.print("</td>");
+				
+					out.print("</tr>");	
+					}
+					out.print("<tr'>");
+					
+					out.print("<td class='bg-faded' >");
+					if(c.getPedido().get(i).getCupom() == null){
+					out.print("Não foi utilizado cupom");
+					
+					}else{
+					out.print("<h6>Cupom Utilizado:  "+c.getPedido().get(i).getCupom().getCupom() +
+							"<br> Valor: R$"+String.format("%.2f", c.getPedido().get(i).getCupom().getValor()) + "</h6>");
+					}
+					out.print("</td>");
+				
+					out.print("</tr>");	
+					out.print("<tr>");
+					out.print("<td class='bg-info text-white'>");
+					out.print("Frete: R$" + String.format("%.2f", c.getPedido().get(i).getFrete())); 
+					out.print("<td class='bg-danger text-white'>Total: R$"+ String.format("%.2f", c.getPedido().get(i).getPrecoTotal()) + "</td></td>");
+					out.print("</tr>");
 
-	out.print("</address>");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("<form action='Carrinho' method='post' style='margin-left:30%; padding-top:20%' >");
-	out.print("<input type='hidden' name='txtIndice' value='" + i + "' >");
-	out.print(
-			"<button name='operacao' type='submit' class='btn btn-warning' value='SELECIONAR'>Selecionar</button>");
-	out.print("</form>");
-	out.print("</td>");
-	out.print("</tr>");
+					out.print("<address>");
 
+					out.print("</address>");
+					out.print("<tr>");
+					out.print("<form action='Carrinho' method='post' style='margin-left:30%; padding-top:20%' >");
+					out.print("<input type='hidden' name='txtIndice' value='" + i + "' >");
+					out.print(
+							"<button name='operacao' type='submit' class='btn btn-warning' value='SELECIONAR'>Selecionar</button>");
+					out.print("</form>");
+					out.print("</tr>");
+				%>
+</tbody>
+</table>
 
-%>
+					</div>
 
-</div>
-
-</div>
-</div>
-</div>
-</div>
-
+			
 
 
 </body>

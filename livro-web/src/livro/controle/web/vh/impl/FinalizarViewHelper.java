@@ -55,12 +55,10 @@ public class FinalizarViewHelper  implements IViewHelper {
 		if(operacao.equals("FINALIZAR")) {
 			if(usuario != null) {
 				
-				System.out.println("finalizado");
 				d = request.getRequestDispatcher("Final.jsp");
 
 				
 			}else {
-				System.out.println("Faça login para finalizar a compra ");
 				d = request.getRequestDispatcher("Carrinho.jsp");
 			}
 			

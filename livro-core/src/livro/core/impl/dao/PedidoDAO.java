@@ -18,7 +18,7 @@ import livro.dominio.Pedido;
 public class PedidoDAO extends AbstractJdbcDAO {
 	public PedidoDAO() {
 		// TODO Auto-generated constructor stub
-		super("Pedidos","id_pedido");
+		super("pedidos","id_pedido");
 	}
 
 	@Override
