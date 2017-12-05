@@ -92,79 +92,162 @@
 </head>
 <body>
 	<div class="container">
-		<table class="table table-striped " style='height:100px; width:400px'>
-  		<thead class='bg-inverse'>
-  		<th style="color:red">Resumo do Pedido</th>
-   			 <tr>
-      <th>PRODUTOS</th>
-      <th>Valor</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-      
-     
-		
-					
-						
+		<table class="table table-striped "
+			style="height: 100px; width: 400px">
+			<thead class="bg-inverse">
+				<th  style="color: red"><h4 align="right">Resumo do Pedido</h4></th>
+				<tr>
+					<th>PRODUTOS</th>
+					<th>Valor</th>
 
-						<%
+				</tr>
+			</thead>
+			<tbody>
+
+
+				<div style="height: 100px; width: 400px; float: right">
+					<h2 align="center" style="color: red">Pagamento</h2>
+					<div align="center">
+					<h5>Selecione a forma de pagamento</h5>
+					<a  data-toggle="modal" href="#car">
+					<button align="center" class="btn btn-danger">
+						Selecionar cartões
+					</button>
+					</a>
+					<button align="center" class="btn btn-danger">
+						Selecionar Cupons de troca
+					</button>
+					</div>
+				</div>
+
+
+
+
+
+
+				<%
 					int tam = c.getPedido().size();
 					int i = c.getPedido().size() - 1;
-					
-					
-					
-				
-					
-					
-					for (int j = 0; j < c.getPedido().get(i).getItem().size(); j++){
-					out.print("<tr'>");
-					out.print("<td class='bg-warning text-black' >");
-					out.print("<h6>" + c.getPedido().get(i).getItem().get(j).getLivro().getTitulo() + " x " + c.getPedido().get(i).getItem().get(j).getQuantidade() +"</h6>");
-					out.print("</td>");
-					out.print("<td class='bg-warning text-black' >");
-					out.print("<h6>R$" + String.format("%.2f", c.getPedido().get(i).getItem().get(j).getLivro().getValor()) + "</h6>");
-					out.print("</td>");
-				
-					out.print("</tr>");	
+
+					for (int j = 0; j < c.getPedido().get(i).getItem().size(); j++) {
+						out.print("<tr'>");
+						out.print("<td class='bg-warning text-black' >");
+						out.print("<h6>" + c.getPedido().get(i).getItem().get(j).getLivro().getTitulo() + " x "
+								+ c.getPedido().get(i).getItem().get(j).getQuantidade() + "</h6>");
+						out.print("</td>");
+						out.print("<td class='bg-warning text-black' >");
+						out.print("<h6>R$" + String.format("%.2f", c.getPedido().get(i).getItem().get(j).getLivro().getValor())
+								+ "</h6>");
+						out.print("</td>");
+
+						out.print("</tr>");
 					}
 					out.print("<tr'>");
-					
+
 					out.print("<td class='bg-faded' >");
-					if(c.getPedido().get(i).getCupom() == null){
-					out.print("Não foi utilizado cupom");
-					
-					}else{
-					out.print("<h6>Cupom Utilizado:  "+c.getPedido().get(i).getCupom().getCupom() +
-							"<br> Valor: R$"+String.format("%.2f", c.getPedido().get(i).getCupom().getValor()) + "</h6>");
+					if (c.getPedido().get(i).getCupom() == null) {
+						out.print("Não foi utilizado cupom");
+
+					} else {
+						out.print("<h6>Cupom Utilizado:  " + c.getPedido().get(i).getCupom().getCupom() + "<br> Valor: R$"
+								+ String.format("%.2f", c.getPedido().get(i).getCupom().getValor()) + "</h6>");
 					}
 					out.print("</td>");
-				
-					out.print("</tr>");	
+
+					out.print("</tr>");
 					out.print("<tr>");
 					out.print("<td class='bg-info text-white'>");
-					out.print("Frete: R$" + String.format("%.2f", c.getPedido().get(i).getFrete())); 
-					out.print("<td class='bg-danger text-white'>Total: R$"+ String.format("%.2f", c.getPedido().get(i).getPrecoTotal()) + "</td></td>");
+					out.print("Frete: R$" + String.format("%.2f", c.getPedido().get(i).getFrete()));
+					out.print("<td class='bg-danger text-white'>Total: R$"
+							+ String.format("%.2f", c.getPedido().get(i).getPrecoTotal()) + "</td></td>");
 					out.print("</tr>");
 
 					out.print("<address>");
 
 					out.print("</address>");
 					out.print("<tr>");
-					out.print("<form action='Carrinho' method='post' style='margin-left:30%; padding-top:20%' >");
-					out.print("<input type='hidden' name='txtIndice' value='" + i + "' >");
-					out.print(
-							"<button name='operacao' type='submit' class='btn btn-warning' value='SELECIONAR'>Selecionar</button>");
-					out.print("</form>");
+
 					out.print("</tr>");
 				%>
-</tbody>
-</table>
 
-					</div>
 
-			
+			</tbody>
+		</table>
 
+	</div>
+
+
+	<!-- Bootstrap core JavaScript -->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
+<!-- MODAL DE CARTÕES DO CLIENTE  -->
+<div id="car" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 style="padding-right: 30px">Cartões</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+
+			</div>
+			<div class="modal-body">
+				<div class="container">
+
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+
+							</tr>
+						</thead>
+						<tbody>
+
+							<%
+								for (int k = 0; k < c.getCartao().size(); k++) {
+									out.print("<tr>");
+									out.print("<td>");
+									
+									out.print("<strong>Titular:</strong> " + c.getCartao().get(k).getTitular() + "<br>");
+									out.print("<strong>Número:</strong> " + c.getCartao().get(k).getNumero() + "<br>");
+									out.print("<strong>Validade:</strong> " + c.getCartao().get(k).getValidade());
+									out.print(" <strong> CV:</strong> " + c.getCartao().get(k).getCodigo());
+
+									
+
+									out.print("</td>");
+									out.print("<td>");
+									out.print("<form action='Carrinho' method='post' style='margin-left:30%; padding-top:20%' >");
+									out.print("<input type='hidden' name='txtIndice' value='" + i + "' >");
+									out.print(
+											"<button name='operacao' type='submit' class='btn btn-warning' value='SELECIONAR'>Selecionar</button>");
+									out.print("</form>");
+									out.print("</td>");
+									out.print("</tr>");
+								}
+							%>
+						</tbody>
+
+
+					</table>
+					<div align="center">
+						<a href="FormEndereco.jsp"><button class="btn btn-danger">Cadastrar
+								novo cartão</button></a>
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
 </html>

@@ -6,7 +6,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
+<script>
+	$("a").click(function() {
+		$("div").removeClass('in');
+	});
+</script>
+
 <link type="text/css" href="resources/css/hover.css" rel="stylesheet">
+<link type="text/css" href="resources/css/navlateral.css"
+	rel="stylesheet">
 
 
 <%
@@ -46,7 +55,7 @@
 			<li class="nav-item active"><a class="nav-link" href="index.jsp">Home
 					<span class="sr-only">(current)</span>
 			</a></li>
-			
+
 
 			<%
 				if (request.getSession().getAttribute("username") == null) {
@@ -70,8 +79,8 @@
 
 				}
 			%>
-			<li class="nav-item"><a class="nav-link" href="Carrinho.jsp"><i class="material-icons">local_grocery_store</i></a>
-			</li>
+			<li class="nav-item"><a class="nav-link" href="Carrinho.jsp"><i
+					class="material-icons">local_grocery_store</i></a></li>
 
 		</ul>
 	</div>
@@ -79,17 +88,95 @@
 </nav>
 <!-- Navigation -->
 
+<!-- LEFT NAVBAR -->
+
+
+
+
+
+
+
+		
+	
 </head>
 <body>
-	
-				<div>
-							<a data-toggle='modal' href='#ModalCupom'> <img class="box"
-								src="https://cuponomia-a.akamaihd.net/blog/wp-content/uploads/2016/02/icone-desconto.png">
-							</a>
-							
-						
+	<ul class="nav nav-tabs" role="tablist" style="background-color:#F0E68C">
+  			<li class="nav-item">
+    			<a class="nav-link active" data-toggle="tab" href="#home" role="tab"><i class="material-icons">notifications</i>Home</a>
+  			</li>
+  			<li class="nav-item">
+   				 <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><i class="material-icons">person</i>Perfil</a>
+ 			</li>
+ 			<li class="nav-item">
+   				 <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><i class="material-icons">card_giftcard</i>Cupom</a>
+ 			</li>
+ 			<li class="nav-item">
+   				 <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="material-icons">add_shopping_cart</i>Pedidos</a>
+ 			</li>
+  		</ul>
 
-				</div>
+
+		
+<div class="tab-content">
+  <div class="tab-pane active" id="home" role="tabpanel">LUCAAAS</div>
+  <div class="tab-pane" id="profile" role="tabpanel">mensagem </div>
+  
+  
+  
+  
+  <!--CUPOM-->
+  <div class="tab-content">
+  <div class="tab-pane" id="messages" role="tabpanel">
+  <nav class="nav nav-tabs">
+  
+  	<ul class="nav nav-tabs" role="tablist" style="background-color:#red">
+  		<li class="nav-item">
+    		<a class="nav-link active" data-toggle="tab" href="#cadastroCupom" role="tab">Cadastrar cupom promocional</a>
+  		</li>
+  	</ul>
+  </nav>
+  </div>
+  
+  <div class="tab-pane" id="cadastroCupom" role="tabpanel">
+  <form action="Login" method="post" style="padding-left: 20%">
+
+					<div class="form-group">
+						<label for="username">Usuario:</label> <input size="21"
+							type="text" id="username" name="username" required="true" />
+					</div>
+
+					<div class="form-group">
+						<label for="senha" style="padding-left: 11px">Senha:</label> 
+						<input size="21" type="password" id="senha" name="senha" required="true"
+							style="margin-right: 10px" />
+					</div>
+					<input type='submit' id='operacao' name='operacao' value='LOGAR'
+						class='btn btn-primary' style="margin-left: 110px" />
+	</form>
+
+  
+  </div>
+
+
+</div>
+
+
+		
+
+  <!-- FIM CUPOM -->
+  
+  
+  
+  
+  <div class="tab-pane" id="settings" role="tabpanel">GAY</div>
+</div>
+	
+
+
+
+
+
+
 
 
 
@@ -98,7 +185,7 @@
 	<script src="resources/js/Mascara.js"></script>
 
 	<!-- Bootstrap core JavaScript -->
-	
+
 	<script src="vendor/jquery/jquery.min.js"></script>
 	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -163,30 +250,7 @@
 			</div>
 			<div class="modal-body">
 
-			<form action="SalvarCupom" method="post" style="padding-left: 20%">
-
-					<div class="form-group">
-						<label for="txtNumCupom">Código:</label> <input size="21"
-							type="text" id="txtNumCupom" name="txtNumCupom" required="true" />
-					</div>
-
-					<div class="form-group">
-						<label for="txtValor" style="padding-left: 11px">Valor:</label> <input
-							size="21" type="text" id="txtValor" name="txtValor" required="true"
-							style="margin-right: 10px" />
-					</div>
-					<div class="form-group">
-						<label for="txtData" style="padding-left: 11px">Data de Expiração:</label> 
-						<input size="21" type="text" id="txtData" name="txtData" required="true" maxlenght="9"
-							style="margin-right: 10px" onkeypress="mascaraData(this, event)">
-					</div>
-					<input type='submit' id='operacao' name='operacao' value='SALVAR'
-						class='btn btn-primary' style="margin-left: 110px" />
-			</div>
-
-
-
-			</form>
+				
 			<p class="bg-info" align="center">
 				<small>Não possui cadastro? Cadastre-se <a
 					href="FormCliente.jsp" style="color: red; font-size: 15px">AQUI</a></small>

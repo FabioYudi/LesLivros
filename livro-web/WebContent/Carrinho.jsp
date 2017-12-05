@@ -522,7 +522,7 @@
 
 	</div>
 </div>
-</div>
+
 
 
 <!-- Modal LOGIN -->
@@ -592,25 +592,7 @@
 									}
 								}
 
-								/*<form action="Login" method="post" style="padding-left: 20%">
 								
-									<div class="form-group">
-										<label for="username">Usuario:</label> <input size="21"
-											type="text" id="username" name="username" required="true" />
-									</div>
-								
-									<div class="form-group">
-										<label for="senha" style="padding-left: 11px">Senha:</label> <input
-											size="21" type="password" id="senha" name="senha" required="true"
-											style="margin-right: 10px" />
-									</div>
-									<input type='submit' id='operacao' name='operacao' value='LOGAR'
-										class='btn btn-primary' style="margin-left: 110px" />
-								</div>
-								
-								
-								
-								</form>*/
 							%>
 						</tbody>
 
@@ -633,5 +615,5 @@
 
 
 
-	]
+	
 </html>

@@ -46,7 +46,7 @@ public class FinalizarViewHelper  implements IViewHelper {
 			throws IOException, ServletException {
 		// TODO Auto-generated method stub
 		Map<Integer, Pedido> mapaUsuarios = (HashMap<Integer, Pedido>)request.getSession().getAttribute("mapaUsuarios");
-
+		
 		RequestDispatcher d = null;
 		String usuario = (String) request.getSession().getAttribute("username");
 
@@ -54,6 +54,11 @@ public class FinalizarViewHelper  implements IViewHelper {
 		
 		if(operacao.equals("FINALIZAR")) {
 			if(usuario != null) {
+				String txtId = (String) request.getSession().getAttribute("usuarioID");
+				int id = Integer.parseInt(txtId);
+				Pedido p = new Pedido();
+				Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
+				
 				
 				d = request.getRequestDispatcher("Final.jsp");
 
