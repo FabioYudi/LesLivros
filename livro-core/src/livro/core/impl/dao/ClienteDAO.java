@@ -155,7 +155,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 		PreparedStatement pst = null;
 
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT a.id, a.nome, a.nascimento, a.genero, a.cpf, a.email, a.senha FROM clientes a ");
+		sb.append("SELECT a.id, a.nome, a.nascimento, a.genero, a.cpf, a.email, a.senha, a.status, a.adm FROM clientes a ");
 		sb.append("WHERE 1=1 ");
 		if (entidade != null) {
 			Cliente cliente = (Cliente) entidade;
@@ -185,7 +185,8 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				c.setNascimento("nascimento");
 				c.setEmail(rs.getString("email"));
 				c.setSenha(rs.getString("senha"));
-
+				c.setStatus(rs.getBoolean("status"));
+				c.setAdm(rs.getBoolean("adm"));
 				/*
 				 * t = new Telefone(); t.setArea(rs.getString("area")); t.setNumero(t.getArea()
 				 * + "" + rs.getString("numero")); List<Telefone> lst = new ArrayList<>();
@@ -269,6 +270,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 					l.setEstoque(rsPedido.getInt("estoque"));
 					l.setLargura(rsPedido.getDouble("largura"));
 					i.setLivro(l);
+					i.setValorItem(rsPedido.getDouble("valor_item"));
 					itens.add(i);
 					p.setItem(itens);
 					en.setLogradouro(rsPedido.getString("logradouro"));

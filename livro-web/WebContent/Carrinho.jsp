@@ -181,6 +181,7 @@
 											Item it = item.get(i);
 											Livros l = it.getLivro();
 											qt += it.getQuantidade();
+											item.get(i).setValorItem(l.getValor());
 											sb.append("<tr>");
 											sb.append("<td class='col-xs-6 col-md-3'>");
 											sb.append("<div>");

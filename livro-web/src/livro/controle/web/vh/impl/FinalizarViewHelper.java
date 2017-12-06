@@ -27,16 +27,18 @@ public class FinalizarViewHelper  implements IViewHelper {
 		Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 		String txtId = (String) request.getSession().getAttribute("usuarioID");
 		int id = Integer.parseInt(txtId);
-		
+		if(operacao.equals("FINALIZAR")) {
 		Pedido p = map.get(id);
 		Calendar ca = Calendar.getInstance();
 		Date dt = ca.getTime();
 		p.setDtPedido(dt);
 		p.setStatus("EM PROCESSO");
 		c.getPedido().add(p);
+			return p;
+		}
+		Pedido pu = new Pedido();
 		
-		
-		return p;
+		return pu;
 		
 		
 	}
@@ -58,22 +60,26 @@ public class FinalizarViewHelper  implements IViewHelper {
 				int id = Integer.parseInt(txtId);
 				Pedido p = new Pedido();
 				Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
+				request.getSession().setAttribute("resultado", resultado);
+				d= request.getRequestDispatcher("Final.jsp");  
 				
-				
-				d = request.getRequestDispatcher("Final.jsp");
-
-				
-			}else {
-				d = request.getRequestDispatcher("Carrinho.jsp");
 			}
+		}
 			
 			if(operacao.equals("CONSULTAR")) {
 				
 			}
 			
+
+			if(operacao.equals("CONSULTARPEDIDO")){
+				System.out.println("to no if certo");
+				request.getSession().setAttribute("resultadoConsultaPedido", resultado);
+				d= request.getRequestDispatcher("Painel.jsp");  
+			}
+			d.forward(request, response);
 		}
-		d.forward(request, response);
+		
 
 	}
 
-}
+

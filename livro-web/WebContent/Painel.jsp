@@ -18,9 +18,25 @@
 	rel="stylesheet">
 
 
-<%
-	String usuario = (String) request.getSession().getAttribute("username");
-%>
+<% 
+String usuario = (String) request.getSession().getAttribute("username");
+	Cliente c = (Cliente) request.getSession().getAttribute("cli");
+
+
+
+
+Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaPedido");
+    		StringBuilder sb = new StringBuilder();
+
+  		if(resultado == null)
+  		{
+  			pageContext.forward("Finalizar?operacao=CONSULTARPEDIDO");
+  			return;
+  		}
+  		
+ 	%>
+	
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <script language="JavaScript" src="resources/js/teste.js"></script>
 <meta name="viewport"
@@ -101,6 +117,7 @@
 </head>
 <body>
 	<ul class="nav nav-tabs" role="tablist" style="background-color:#F0E68C">
+		
   			<li class="nav-item">
     			<a class="nav-link active" data-toggle="tab" href="#home" role="tab"><i class="material-icons">notifications</i>Home</a>
   			</li>
@@ -108,10 +125,10 @@
    				 <a class="nav-link" data-toggle="tab" href="#profile" role="tab"><i class="material-icons">person</i>Perfil</a>
  			</li>
  			<li class="nav-item">
-   				 <a class="nav-link" data-toggle="tab" href="#messages" role="tab"><i class="material-icons">card_giftcard</i>Cupom</a>
+   				 <a class="nav-link" data-toggle="tab" href="#cupom" role="tab"><i class="material-icons">card_giftcard</i>Cupom</a>
  			</li>
  			<li class="nav-item">
-   				 <a class="nav-link" data-toggle="tab" href="#settings" role="tab"><i class="material-icons">add_shopping_cart</i>Pedidos</a>
+   				 <a class="nav-link" data-toggle="tab" href="#pedidos" role="tab"><i class="material-icons">add_shopping_cart</i>Pedidos</a>
  			</li>
   		</ul>
 
@@ -119,46 +136,160 @@
 		
 <div class="tab-content">
   <div class="tab-pane active" id="home" role="tabpanel">LUCAAAS</div>
+  
+  
   <div class="tab-pane" id="profile" role="tabpanel">mensagem </div>
+
   
   
   
+  
+  
+  
+  
+  
+  
+  <!--  cupom  -->
+  <div class="tab-pane" id="cupom" role="tabpanel"> 
+  
+  <ul class="nav nav-tabs" role="tablist" style="background-color:white">
+  <%
+  			if(c.getAdm() == true){
+  				out.print("<li class='nav-item'>");
+    			out.print("<a class='nav-link' data-toggle='tab' href=''#cadCup' role='tab'><i class='material-icons'></i>Cadastrar Cupom Promocional</a>");
+  				out.print("</li>");
+  			}
+  				
+  			
+  			
+  		%>
+  			
+  			<li class="nav-item">
+    			<a class="nav-link" data-toggle="tab" href="#teste" role="tab"><i class="material-icons"></i>Visualizar Cupons de Troca</a>
+  			</li>
+  			
+  		</ul>
+  		<div class="tab-content">
+  		<%
+  			if(c.getAdm() == true){
+  			out.print("<div class='tab-pane active' id='cadCup' role='tabpanel'>");
+  			out.print("cupom");
+  			
+  
+  			out.print("</div>");
+  			}
+  		%>
+ 		
+ 		<div class="tab-pane" id="teste" role="tabpanel">
+  
+  		TESTE
+  
+  
+ 		</div>
+ 		</div>
+  
+  </div>
+  
+  <!-- cupom fim -->
+  
+  
+  
+  <!-- PEDIDOS -->
+  
+  <div class="tab-pane" id="pedidos" role="tabpanel"> 
+  
+    <ul class="nav nav-tabs" role="tablist" style="background-color:white">
+    
+    
+    
+ 	 </ul>
+  <div class="tab-content">
+    <%
+    if(resultado != null){
+    List<EntidadeDominio> entidades = resultado.getEntidades();
+    }
+	StringBuilder sbRegistro = new StringBuilder();
+	StringBuilder sbLink = new StringBuilder();
+	
+	
+	
+    	
+  			if(c.getAdm() == true){
+  				out.print("<h3>PEDIDOS</h3>");
+  				out.print("<div");
+  				out.print("<div id='accordion' role='tablist'>");
+  				out.print("<div class='card'>");
+  				out.print("<div class='card-header' role='tab' id='headingOne'>");
+  				out.print("<h5 class='mb-0'>");
+  				out.print("<a data-toggle='collapse' href='#collapseOne' aria-expanded='true' aria-controls='collapseOne'>");
+  				out.print("Pedidos EM PROCESSO");
+  				out.print("</a>");
+  				out.print("</h5>");
+  				out.print("</div>");
+
+  				out.print("<div id='collapseOne' class='collapse show' role='tabpanel' aria-labelledby='headingOne' data-parent='#accordion'>");
+  				out.print("<div class='card-body'>");
+  				
+  				
+  				out.print("aaaaaaa");
+  				out.print("</div>");
+  				out.print("</div>");
+  				out.print("</div>");
+  				out.print("</div>");
+    			
+  			}else{
+  				out.print("<h3>MEUS PEDIDOS</h3>");
+  				List<Pedido> pedidos = c.getPedido();
+  				if(c.getPedido().size() == 0){
+  					out.print("<h4 style='color:red'> Você não possui pedidos</h4>");
+  				}else{
+  						for(int i = 0; i < c.getPedido().size(); i++){
+  							for (int j = 0; j < c.getPedido().get(i).getItem().size(); j++){
+  								out.print(c.getPedido().get(i).getItem().get(j).getLivro().getTitulo() + " Valor: " + c.getPedido().get(i).getItem().get(j).getValorItem() + "<br>");
+  								
+  								
+  							}
+  							out.print("Total: " + pedidos.get(i).getPrecoTotal() + "<br>");
+  							out.print("--------------<br>");	
+  						
+					  					
+  					}
+  				}
+  			}
+  				
+  			
+  			
+  	%>
+  	<div style='padding-left:50%'>
+  	
+  	teste
+  	</div>
+  
+  </div>
+  
+  </div>
+  
+  <!-- FIM PEDIDOS -->
+  
+ 
+   
+ 
+ 
+  
+   </div>
+   
   
   <!--CUPOM-->
-  <div class="tab-content">
-  <div class="tab-pane" id="messages" role="tabpanel">
-  <nav class="nav nav-tabs">
-  
-  	<ul class="nav nav-tabs" role="tablist" style="background-color:#red">
-  		<li class="nav-item">
-    		<a class="nav-link active" data-toggle="tab" href="#cadastroCupom" role="tab">Cadastrar cupom promocional</a>
-  		</li>
-  	</ul>
-  </nav>
-  </div>
-  
-  <div class="tab-pane" id="cadastroCupom" role="tabpanel">
-  <form action="Login" method="post" style="padding-left: 20%">
-
-					<div class="form-group">
-						<label for="username">Usuario:</label> <input size="21"
-							type="text" id="username" name="username" required="true" />
-					</div>
-
-					<div class="form-group">
-						<label for="senha" style="padding-left: 11px">Senha:</label> 
-						<input size="21" type="password" id="senha" name="senha" required="true"
-							style="margin-right: 10px" />
-					</div>
-					<input type='submit' id='operacao' name='operacao' value='LOGAR'
-						class='btn btn-primary' style="margin-left: 110px" />
-	</form>
 
   
-  </div>
+ 
+
+ 
+  
 
 
-</div>
+
+
 
 
 		
@@ -168,8 +299,7 @@
   
   
   
-  <div class="tab-pane" id="settings" role="tabpanel">GAY</div>
-</div>
+  
 	
 
 
@@ -218,11 +348,12 @@
 					</div>
 					<input type='submit' id='operacao' name='operacao' value='LOGAR'
 						class='btn btn-primary' style="margin-left: 110px" />
-			</div>
+			
 
 
 
 			</form>
+			</div>
 			<p class="bg-info" align="center">
 				<small>Não possui cadastro? Cadastre-se <a
 					href="FormCliente.jsp" style="color: red; font-size: 15px">AQUI</a></small>

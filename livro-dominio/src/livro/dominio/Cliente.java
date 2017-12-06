@@ -7,6 +7,7 @@ public class Cliente extends Pessoa {
 	private String email;
 	private String senha;
 	private Boolean status;
+	private Boolean adm;
 	private List<Pedido> pedido;
 	private List<Endereco> endereco;
 	private List<Telefone> telefone;
@@ -74,6 +75,14 @@ public class Cliente extends Pessoa {
 
 	public void setPedido(List<Pedido> pedido) {
 		this.pedido = pedido;
+	}
+
+	public Boolean getAdm() {
+		return adm;
+	}
+
+	public void setAdm(Boolean adm) {
+		this.adm = adm;
 	}
 
 	

@@ -5,14 +5,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import livro.dominio.Cartao;
+import livro.dominio.Cidade;
 import livro.dominio.Cliente;
 import livro.dominio.Endereco;
 import livro.dominio.EntidadeDominio;
+import livro.dominio.Estado;
 import livro.dominio.Item;
 import livro.dominio.Livros;
+import livro.dominio.Pais;
 import livro.dominio.Pedido;
 
 public class PedidoDAO extends AbstractJdbcDAO {
@@ -39,8 +43,8 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			
 
 			StringBuilder sql = new StringBuilder();
-			sql.append("INSERT INTO pedidos(qtde_itens, dtpedido, status,  id_cliente, id_endereco, total) "
-					+ "VALUES (?,?,?,?,?,?)");
+			sql.append("INSERT INTO pedidos(qtde_itens, dtpedido, status,  id_cliente, id_endereco, total, frete) "
+					+ "VALUES (?,?,?,?,?,?,?)");
 
 			pst = connection.prepareStatement(sql.toString(), Statement.RETURN_GENERATED_KEYS);
 			Date date = new Date(pedido.getDtPedido().getTime());
@@ -51,6 +55,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			pst.setInt(4, pedido.getIdCliente());
 			pst.setInt(5, pedido.getEntrega().getId());
 			pst.setDouble(6, pedido.getPrecoTotal());
+			pst.setDouble(7, pedido.getFrete());
 
 			pst.executeUpdate();
 			
@@ -64,10 +69,11 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				Item item = pedido.getItem().get(i);
 				Livros l = pedido.getItem().get(i).getLivro();
 				pst = connection.prepareStatement(
-						"INSERT INTO itens( id_pedido, quantidade, id_livro) VALUES (?, ?, ?)");
+						"INSERT INTO itens( id_pedido, quantidade, id_livro, valor_item) VALUES (?, ?, ?, ?)");
 				pst.setInt(1, pedido.getId());
 				pst.setInt(2, item.getQuantidade());
 				pst.setInt(3, l.getId());
+				pst.setDouble(4, item.getValorItem());
 				
 				
 				pst.executeUpdate();
@@ -106,6 +112,69 @@ public class PedidoDAO extends AbstractJdbcDAO {
 	@Override
 	public List<EntidadeDominio> consultar(EntidadeDominio entidade) throws SQLException {
 		// TODO Auto-generated method stub
+		try {
+			openConnection();
+			Pedido p = (Pedido)entidade;
+			
+			PreparedStatement pst = null;
+			pst = connection.prepareStatement("SELECT * FROM pedidos "
+					+ "INNER JOIN endereco on (endereco.id = pedidos.id_endereco) WHERE 1=1 ");
+			ResultSet pstPedido = pst.executeQuery();
+			List<EntidadeDominio> pedidos = new ArrayList<EntidadeDominio>();
+			while(pstPedido.next())
+			{
+				Endereco e = new Endereco();
+				Pedido pedido = new Pedido();
+				e.setLogradouro(pstPedido.getString("logradouro"));
+				e.setBairro(pstPedido.getString("bairro"));
+				e.setCep(pstPedido.getString("numero"));
+				Cidade cidade = new Cidade();
+				cidade.setNome(pstPedido.getString("cidade"));
+				Estado estado = new Estado();
+				estado.setNome(pstPedido.getString("estado"));
+				Pais pais = new Pais();
+				pais.setNome(pstPedido.getString("pais"));
+				estado.setPais(pais);
+				cidade.setEstado(estado);
+				e.setCidade(cidade);
+				pedido.setEntrega(e);
+				pedido.setId(pstPedido.getInt("id_pedido"));
+				pedido.setId(pstPedido.getInt("qtde_itens"));
+				pedido.setDtPedido(pstPedido.getDate("dtPedido"));
+				pedido.setStatus(pstPedido.getString("status"));
+				pedido.setIdCliente(pstPedido.getInt("id_cliente"));
+				pedido.setPrecoTotal(pstPedido.getDouble("total"));
+				pedido.setFrete(pstPedido.getDouble("frete"));
+				
+				
+				pst = connection.prepareStatement("SELECT * FROM itens"
+						+ " INNER JOIN livros ON "
+						+ "(itens.id_livro = livros.id) WHERE 1=1");
+				ResultSet itensPedido = pst.executeQuery();
+				List<Item> itens = new ArrayList<Item>();
+				while(itensPedido.next())
+				{
+					Livros l = new Livros();
+					Item i = new Item();
+					i.setQuantidade(itensPedido.getInt("quantidade"));
+					i.setValorItem(itensPedido.getDouble("valor_item"));
+					l.setTitulo(itensPedido.getString("titulo"));
+					l.setValor(itensPedido.getDouble("valor"));
+					i.setLivro(l);
+					itens.add(i);
+				}
+				itensPedido.close();
+				pedido.setItem(itens);
+				pedidos.add(pedido);
+			}
+			pstPedido.close();
+	
+			return pedidos;
+		}catch(SQLException e){
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
 		return null;
 	}
 

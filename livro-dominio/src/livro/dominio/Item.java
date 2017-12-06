@@ -4,6 +4,7 @@ public class Item extends EntidadeDominio{
 	
 	private Livros livro;
 	private int quantidade;
+	private double valorItem;
 
 	public Livros getLivro() {
 		return livro;
@@ -19,6 +20,14 @@ public class Item extends EntidadeDominio{
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public double getValorItem() {
+		return valorItem;
+	}
+
+	public void setValorItem(double valorItem) {
+		this.valorItem = valorItem;
 	}
 
 }

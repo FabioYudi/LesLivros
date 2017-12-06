@@ -137,6 +137,8 @@ public class Fachada implements IFachada {
 		rns.put(Livros.class.getName(), rnsLivro);
 		rns.put(Item.class.getName(), rnsCarrinho);
 		rns.put(CupomDesconto.class.getName(), rnsCupom);
+		
+
 
 	}
 
