@@ -15,7 +15,6 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>Meu Carrinho</title>
 
 <!-- Bootstrap core CSS -->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,14 +25,26 @@
 <!-- Custom styles for this template -->
 <link href="css/shop-item.css" rel="stylesheet">
 
+<style>
 
+.box {
+ width: 50%;
+ float: left;
+ height: 300px;/*Altura da linha*/
+}
+
+.linha-vertical {
+ border-left: 2px solid;/* Adiciona borda esquerda na div como ser fosse uma linha.*/
+ box-sizing: border-box;
+}
+
+</style>
 
 <!-- Navigation -->
 
 <%
 	//declarações de sessão
 	Cliente c = (Cliente) request.getSession().getAttribute("cli");
-
 	String usuario = (String) request.getSession().getAttribute("username");
 	Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 	String txtId = (String) request.getSession().getAttribute("usuarioID");
@@ -92,39 +103,37 @@
 </head>
 <body>
 	<div class="container">
-		<table class="table table-striped "
-			style="height: 100px; width: 400px">
+	
+	<table class="table ">
 			<thead class="bg-inverse">
-				<th  style="color: red"><h4 align="right">Resumo do Pedido</h4></th>
+				
+			
 				<tr>
-					<th>PRODUTOS</th>
-					<th>Valor</th>
-
+					<th></th>
+					<th></th>
+					
 				</tr>
 			</thead>
 			<tbody>
+			
+			
+	<div class="row">
+	<tr>
+	<td>
+		<table class="table table-striped ">
+			<thead class="bg-inverse">
+				<th  style="color: red"><h4 align="right">Resumo do Pedido</h4></th>
+			
+				<tr>
+					<th>PRODUTOS</th>
+					<th>Valor</th>
+					
+				</tr>
+			</thead>
+			
+			<tbody>
 
-
-				<div style="height: 100px; width: 400px; float: right">
-					<h2 align="center" style="color: red">Pagamento</h2>
-					<div align="center">
-					<h5>Selecione a forma de pagamento</h5>
-					<a  data-toggle="modal" href="#car">
-					<button align="center" class="btn btn-danger">
-						Selecionar cartões
-					</button>
-					</a>
-					<button align="center" class="btn btn-danger">
-						Selecionar Cupons de troca
-					</button>
-					</div>
-				</div>
-
-
-
-
-
-
+		
 				<%
 					int tam = c.getPedido().size();
 					int i = c.getPedido().size() - 1;
@@ -152,6 +161,10 @@
 						out.print("<h6>Cupom Utilizado:  " + c.getPedido().get(i).getCupom().getCupom() + "<br> Valor: R$"
 								+ String.format("%.2f", c.getPedido().get(i).getCupom().getValor()) + "</h6>");
 					}
+					
+					
+					
+					
 					out.print("</td>");
 
 					out.print("</tr>");
@@ -160,7 +173,7 @@
 					out.print("Frete: R$" + String.format("%.2f", c.getPedido().get(i).getFrete()));
 					out.print("<td class='bg-danger text-white'>Total: R$"
 							+ String.format("%.2f", c.getPedido().get(i).getPrecoTotal()) + "</td></td>");
-					out.print("</tr>");
+					
 
 					out.print("<address>");
 
@@ -169,11 +182,85 @@
 
 					out.print("</tr>");
 				%>
+				
+					</tbody>
+					
+			</table>
+			<!-- LINHA VERTICAL -->
+			</td>
+				<td>
+					<div class="box">
+					</div>
+						<div class="box linha-vertical">
+					</div>
+				</td>
+				<td>
+				<!--  LINHA VERTICAL  -->
+				<table class="table table-striped ">
+			<thead class="bg-inverse">
+				
+				
+				<div >
+				<h2 align="center" style="color: red">Pagamento</h2>
+					<div align="center">
+					<h5>Selecione a forma de pagamento</h5>
+					<a  data-toggle="modal" href="#car">
+					<button align="center" class="btn btn-danger">
+						Selecionar cartões
+					</button>
+					</a>
+					<button align="center" class="btn btn-danger">
+						Selecionar Cupons de troca
+					</button>
+					
+					
+				</div>
+				</div>
+				
+				
+				
+				<tr align="center">
+					<th >Cartões Selecionados</th>
+					<th>Cupons Selecionados</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				
+					<%
+						if (request.getSession().getAttribute("selecionadoCartao") != null) {
+						
+						System.out.println("Tamanho: " + c.getPedido().get(i).getCartao().size());
+						for(int k = 0; k <  c.getPedido().get(i).getCartao().size(); k++){
+
+								
+								out.print("<tr>");
+								out.print("<td>");
+								out.print("<strong>Titular:</strong> " + c.getCartao().get(k).getTitular() + "<br>");
+								out.print(" <strong>Bandeira:</strong> " + c.getCartao().get(k).getBandeira() + " ");
+								out.print("<strong>Número:</strong> " + c.getCartao().get(k).getNumero() + "<br>");
+								out.print("<strong>Validade:</strong> " + c.getCartao().get(k).getValidade() + "<br>");
+								out.print(" <strong> CV:</strong> " + c.getCartao().get(k).getCodigo());
+								out.print("</tr>");
+								out.print("</td>");
 
 
-			</tbody>
+						}
+						
+						
+					}
+						
+						%>
+	</tbody>
+	</table>
+
+
+		
+		</div>
+		</tbody>
 		</table>
-
+		</td>
+			</tr>
 	</div>
 
 
@@ -202,7 +289,7 @@
 								<th></th>
 								<th></th>
 
-							</tr>
+							
 						</thead>
 						<tbody>
 
@@ -212,16 +299,19 @@
 									out.print("<td>");
 									
 									out.print("<strong>Titular:</strong> " + c.getCartao().get(k).getTitular() + "<br>");
+									out.print(" <strong>Bandeira:</strong> " + c.getCartao().get(k).getBandeira() + " ");
 									out.print("<strong>Número:</strong> " + c.getCartao().get(k).getNumero() + "<br>");
-									out.print("<strong>Validade:</strong> " + c.getCartao().get(k).getValidade());
+									out.print("<strong>Validade:</strong> " + c.getCartao().get(k).getValidade() + "<br>");
 									out.print(" <strong> CV:</strong> " + c.getCartao().get(k).getCodigo());
-
+									
+									
+									
 									
 
 									out.print("</td>");
 									out.print("<td>");
-									out.print("<form action='Carrinho' method='post' style='margin-left:30%; padding-top:20%' >");
-									out.print("<input type='hidden' name='txtIndice' value='" + i + "' >");
+									out.print("<form action='Finalizar' method='post' style='margin-left:30%; padding-top:20%' >");
+									out.print("<input type='hidden' name='txtIndice' value='" + k + "' >");
 									out.print(
 											"<button name='operacao' type='submit' class='btn btn-warning' value='SELECIONAR'>Selecionar</button>");
 									out.print("</form>");
@@ -244,6 +334,7 @@
 			</div>
 		</div>
 	</div>
+
 </div>
 
 

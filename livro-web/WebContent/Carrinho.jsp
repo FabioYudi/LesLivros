@@ -245,7 +245,6 @@
 
 
 										}
-										System.out.println(qt);
 										p.setQtdItens(qt);
 										request.getSession().setAttribute("mapaCarrinho", map);
 

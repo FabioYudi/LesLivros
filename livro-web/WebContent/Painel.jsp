@@ -205,9 +205,7 @@ Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaPedido"
  	 </ul>
   <div class="tab-content">
     <%
-    if(resultado != null){
-    List<EntidadeDominio> entidades = resultado.getEntidades();
-    }
+    
 	StringBuilder sbRegistro = new StringBuilder();
 	StringBuilder sbLink = new StringBuilder();
 	
@@ -229,9 +227,18 @@ Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaPedido"
 
   				out.print("<div id='collapseOne' class='collapse show' role='tabpanel' aria-labelledby='headingOne' data-parent='#accordion'>");
   				out.print("<div class='card-body'>");
+  				if(resultado != null){
+  				    List<EntidadeDominio> entidades = resultado.getEntidades();
+  				    
+  				    for(int i = 0; i < entidades.size(); i++){
+  				    Pedido p = (Pedido) entidades.get(i);
+  				    		out.print("Pedido");
+  				    		out.print(p.getStatus());
+  				    		out.print("<br>");
+  				   		 }
+  				    }
+  			
   				
-  				
-  				out.print("aaaaaaa");
   				out.print("</div>");
   				out.print("</div>");
   				out.print("</div>");
