@@ -1,6 +1,7 @@
 package livro.controle.web.vh.impl;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,9 +14,11 @@ import org.apache.catalina.manager.util.SessionUtils;
 
 import livro.controle.web.vh.IViewHelper;
 import livro.core.aplicacao.Resultado;
+import livro.dominio.Cliente;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.LivroLog;
 import livro.dominio.Livros;
+import livro.dominio.Pedido;
 import livro.dominio.Usuario;
 
 public class LivroViewHelper implements IViewHelper {
@@ -32,7 +35,7 @@ public class LivroViewHelper implements IViewHelper {
 
 		if (!operacao.equals("VISUALIZAR")) {
 			String idLog = request.getParameter("txtIdLog");
-			String id = request.getParameter("txtId");
+			String idLivro = request.getParameter("txtId");
 			String codigoLivro = request.getParameter("txtCodigoLivro");
 			String autor = request.getParameter("txtAutor");
 			String ano = request.getParameter("txtAno");
@@ -128,8 +131,8 @@ public class LivroViewHelper implements IViewHelper {
 				log.setProfundidade(Double.parseDouble(profundidade));
 
 			}
-			if (id != null && !id.trim().equals("")) {
-				livro.setId(Integer.parseInt(id));
+			if (idLivro != null && !idLivro.trim().equals("")) {
+				livro.setId(Integer.parseInt(idLivro));
 				//log.setId(Integer.parseInt(idLog));
 
 			}
@@ -150,10 +153,10 @@ public class LivroViewHelper implements IViewHelper {
 		} else {
 			HttpSession session = request.getSession();
 			Resultado resultado = (Resultado) session.getAttribute("resultado");
-			int txtId = Integer.parseInt(request.getParameter("txtId"));
+			int txtIdLivro = Integer.parseInt(request.getParameter("txtId"));
 
 			for (EntidadeDominio l : resultado.getEntidades()) {
-				if (l.getId() == txtId) {
+				if (l.getId() == txtIdLivro) {
 					livro = (Livros) l;
 				}
 			}

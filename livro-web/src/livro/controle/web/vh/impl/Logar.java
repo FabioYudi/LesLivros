@@ -44,6 +44,8 @@ public class Logar implements IViewHelper {
 			request.getSession().removeAttribute("usuarioID");
 			request.getSession().removeAttribute("cupom");
 			request.getSession().removeAttribute("cliente");
+			request.getSession().removeAttribute("cli");
+			request.getSession().removeAttribute("selecionadoCartao");
 
 
 			d = request.getRequestDispatcher("index.jsp");

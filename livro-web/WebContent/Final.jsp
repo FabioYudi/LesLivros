@@ -181,6 +181,9 @@
 					out.print("<tr>");
 
 					out.print("</tr>");
+					
+					
+					
 				%>
 				
 					</tbody>
@@ -188,15 +191,15 @@
 			</table>
 			<!-- LINHA VERTICAL -->
 			</td>
-				<td>
-					<div class="box">
+				<td >
+					<div class="box" >
 					</div>
 						<div class="box linha-vertical">
 					</div>
 				</td>
 				<td>
 				<!--  LINHA VERTICAL  -->
-				<table class="table table-striped ">
+				<table class="table table-striped " >
 			<thead class="bg-inverse">
 				
 				
@@ -221,6 +224,7 @@
 				
 				<tr align="center">
 					<th >Cartões Selecionados</th>
+					<th>Valor</th>
 					<th>Cupons Selecionados</th>
 					
 				</tr>
@@ -228,21 +232,33 @@
 			<tbody>
 				
 					<%
+					
+					
+					if(request.getSession().getAttribute("selecionadoCartao") == null){
+						
+					}else{
 						if (request.getSession().getAttribute("selecionadoCartao") != null) {
 						
-						System.out.println("Tamanho: " + c.getPedido().get(i).getCartao().size());
-						for(int k = 0; k <  c.getPedido().get(i).getCartao().size(); k++){
+						for(int t = 0; t <  c.getPedido().get(i).getCartao().size() ; t++){
 
 								
 								out.print("<tr>");
 								out.print("<td>");
-								out.print("<strong>Titular:</strong> " + c.getCartao().get(k).getTitular() + "<br>");
-								out.print(" <strong>Bandeira:</strong> " + c.getCartao().get(k).getBandeira() + " ");
-								out.print("<strong>Número:</strong> " + c.getCartao().get(k).getNumero() + "<br>");
-								out.print("<strong>Validade:</strong> " + c.getCartao().get(k).getValidade() + "<br>");
-								out.print(" <strong> CV:</strong> " + c.getCartao().get(k).getCodigo());
-								out.print("</tr>");
+								out.print("<strong>Titular:</strong> " + c.getPedido().get(i).getCartao().get(t).getTitular() + "<br>");
+								out.print(" <strong>Bandeira:</strong> " +  c.getPedido().get(i).getCartao().get(t).getBandeira() + "<br>");
+								out.print("<strong>Número:</strong> " +  c.getPedido().get(i).getCartao().get(t).getNumero() + "<br>");
+								out.print("<strong>Validade:</strong> " + c.getPedido().get(i).getCartao().get(t).getCodigo() + "<br>");
+								out.print(" <strong> CV:</strong> " +  c.getPedido().get(i).getCartao().get(t).getValidade());
+								out.print("<form  align='center' action='Finalizar' method='POST'>");
 								out.print("</td>");
+								out.print("<td>");
+								double valorCompra =  c.getPedido().get(i).getPrecoTotal()/c.getPedido().get(i).getCartao().size();
+								out.print("<input type='hidden' name='txtValor' value='" + valorCompra + "' >");
+								out.print("<div style='color:red'> R$" + String.format("%.2f", + valorCompra) + "</div>");
+								out.print("</td>");
+
+								out.print("</tr>");
+								
 
 
 						}
@@ -250,11 +266,31 @@
 						
 					}
 						
+				}
+						
 						%>
 	</tbody>
 	</table>
 
-
+					<%
+					
+					
+					out.print("<tr>");
+					out.print("<td>");
+					out.print("<td>");
+					if(request.getSession().getAttribute("selecionadoCartao") != null){
+					out.print("<button style='width:200px; height:50px' name='operacao' type='submit' class='btn btn-warning' value='FINALIZARCOMPRA'>Efetuar Pagamento</button>");
+					out.print("</form>");
+					}else{
+						out.print("<button style='width:200px; height:50px' name='operacao' disabled='true' type='submit' class='btn btn-warning' value='FINALIZARCOMPRA'>Efetuar Pagamento</button>");
+					}
+					
+					out.print("</td>");
+					out.print("</td>");
+					out.print("</tr>");
+					
+					
+					%>
 		
 		</div>
 		</tbody>

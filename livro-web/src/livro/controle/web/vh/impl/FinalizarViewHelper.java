@@ -39,6 +39,14 @@ public class FinalizarViewHelper  implements IViewHelper {
 		c.getPedido().add(p);
 			return p;
 		}
+		
+		
+		if(operacao.equals("FINALIZARCOMPRA")) {
+			String valorCartao = request.getParameter("txtValor");
+			Double vlCartao = Double.parseDouble(valorCartao);
+			
+			
+		}
 		Pedido pu = new Pedido();
 		
 		return pu;
@@ -70,27 +78,44 @@ public class FinalizarViewHelper  implements IViewHelper {
 			}
 		}
 			
-			if(operacao.equals("CONSULTAR")) {
+			if(operacao.equals("FINALIZARCOMPRA")) {
+				String valorCartao = request.getParameter("txtValor");
+				Double vlCartao = Double.parseDouble(valorCartao);
+				
 				
 			}
 			
 			if(operacao.equals("SELECIONAR")) {
 				
-				request.getSession().setAttribute("selecionadoCartao", "true");
-				String j = request.getParameter("txtIndice");
-				int indice = Integer.parseInt(j);
-				System.out.println("cartoes "  + c.getCartao().size());
-				ArrayList<Cartao> cartoes = (ArrayList) c.getCartao();
-				int ped = c.getPedido().size() - 1;
-				Cartao cartao = c.getCartao().get(indice);
-				cartoes.add(cartao);
-				c.getPedido().get(ped).setCartao(cartoes);
+					request.getSession().setAttribute("selecionadoCartao", "true");
+					String j = request.getParameter("txtIndice");
+					int indice = Integer.parseInt(j);
+					int ped = c.getPedido().size() - 1;
+					Cartao cartao = new Cartao();
+					cartao = c.getCartao().get(indice);
+					if(c.getPedido().get(ped).getCartao() == null) {
+						ArrayList<Cartao> cartoes = new ArrayList<>();
+						c.getPedido().get(ped).setCartao(cartoes);
+						c.getPedido().get(ped).getCartao().add(cartao);
+						c.getPedido().get(ped).setCartao(c.getPedido().get(ped).getCartao());
+					}else {
+						if(c.getPedido().get(ped).getCartao().size() == c.getCartao().size()) {
+							
+						}else {
+							c.getPedido().get(ped).getCartao().add(cartao);
+							c.getPedido().get(ped).setCartao(c.getPedido().get(ped).getCartao());
+						}
+					
+					}
+
+					
+					
 				
 				
-				indices.add(indice);
 				
-				request.getSession().setAttribute("i", indices);
-				d = request.getRequestDispatcher("Final.jsp");
+				
+					d = request.getRequestDispatcher("Final.jsp");
+				
 			}
 			
 
