@@ -8,6 +8,7 @@ public class Cartao extends EntidadeDominio{
 	private Cliente cliente;
 	private String bandeira;
 	private Integer id_cliente;
+	private double valorCompra;
 	public String getNumero() {
 		return numero;
 	}
@@ -49,6 +50,12 @@ public class Cartao extends EntidadeDominio{
 	}
 	public void setId_cliente(Integer id_cliente) {
 		this.id_cliente = id_cliente;
+	}
+	public double getValorCompra() {
+		return valorCompra;
+	}
+	public void setValorCompra(double valorCompra) {
+		this.valorCompra = valorCompra;
 	}
 
 }

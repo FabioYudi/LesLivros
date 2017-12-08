@@ -30,6 +30,9 @@ public class FinalizarViewHelper  implements IViewHelper {
 		Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 		String txtId = (String) request.getSession().getAttribute("usuarioID");
 		int id = Integer.parseInt(txtId);
+		
+		
+		
 		if(operacao.equals("FINALIZAR")) {
 		Pedido p = map.get(id);
 		Calendar ca = Calendar.getInstance();
@@ -42,10 +45,13 @@ public class FinalizarViewHelper  implements IViewHelper {
 		
 		
 		if(operacao.equals("FINALIZARCOMPRA")) {
-			String valorCartao = request.getParameter("txtValor");
-			Double vlCartao = Double.parseDouble(valorCartao);
 			
 			
+			Pedido p = map.get(id);
+			
+			return p;
+			
+
 		}
 		Pedido pu = new Pedido();
 		
@@ -71,7 +77,6 @@ public class FinalizarViewHelper  implements IViewHelper {
 		
 		if(operacao.equals("FINALIZAR")) {
 			if(usuario != null) {
-				
 				request.getSession().setAttribute("resultado", resultado);
 				d= request.getRequestDispatcher("Final.jsp");  
 				
@@ -108,13 +113,17 @@ public class FinalizarViewHelper  implements IViewHelper {
 					
 					}
 
-					
-					
-				
-				
 				
 				
 					d = request.getRequestDispatcher("Final.jsp");
+				
+			}
+			
+			
+			
+			if(operacao.equals("FINALIZARCOMPRA")) {
+				request.getSession().setAttribute("resultadoConsultaPedido", resultado);
+				d= request.getRequestDispatcher("Final.jsp");  
 				
 			}
 			

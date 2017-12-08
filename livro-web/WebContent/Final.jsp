@@ -45,6 +45,7 @@
 <%
 	//declarações de sessão
 	Cliente c = (Cliente) request.getSession().getAttribute("cli");
+	Resultado resultadoPedido = (Resultado) request.getSession().getAttribute("resultadoConsultaPedido");
 	String usuario = (String) request.getSession().getAttribute("username");
 	Map<Integer, Pedido> map = (Map<Integer, Pedido>) request.getSession().getAttribute("mapaUsuarios");
 	String txtId = (String) request.getSession().getAttribute("usuarioID");
@@ -103,6 +104,17 @@
 </head>
 <body>
 	<div class="container">
+	<%
+			if(resultadoPedido != null){
+				if(resultadoPedido.getMsg() == null){
+						out.print("COMPRA APROVADA");			
+					}else{
+						out.print("COMPRA " + resultadoPedido.getMsg());
+					}
+			}
+	
+	%>
+	
 	
 	<table class="table ">
 			<thead class="bg-inverse">
@@ -253,6 +265,7 @@
 								out.print("</td>");
 								out.print("<td>");
 								double valorCompra =  c.getPedido().get(i).getPrecoTotal()/c.getPedido().get(i).getCartao().size();
+								c.getPedido().get(i).getCartao().get(t).setValorCompra(valorCompra);
 								out.print("<input type='hidden' name='txtValor' value='" + valorCompra + "' >");
 								out.print("<div style='color:red'> R$" + String.format("%.2f", + valorCompra) + "</div>");
 								out.print("</td>");
@@ -279,6 +292,7 @@
 					out.print("<td>");
 					out.print("<td>");
 					if(request.getSession().getAttribute("selecionadoCartao") != null){
+					out.print("<input type='text' id='txtIdPedido' name='txtIdPedido' value="+ i  +" >");
 					out.print("<button style='width:200px; height:50px' name='operacao' type='submit' class='btn btn-warning' value='FINALIZARCOMPRA'>Efetuar Pagamento</button>");
 					out.print("</form>");
 					}else{

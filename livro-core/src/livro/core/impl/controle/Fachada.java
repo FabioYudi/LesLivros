@@ -19,6 +19,7 @@ import livro.core.impl.dao.EnderecoDAO;
 import livro.core.impl.dao.LivroDAO;
 import livro.core.impl.dao.PedidoDAO;
 import livro.core.impl.dao.TelefoneDAO;
+import livro.core.impl.negocio.AlterarStatusCompraPagamento;
 import livro.core.impl.negocio.ValidarEstoqueCarrinho;
 import livro.core.impl.negocio.VrDataCupomDesconto;
 import livro.core.impl.negocio.vrDadosObrigatoriosLivro;
@@ -76,6 +77,7 @@ public class Fachada implements IFachada {
 		ValidarEstoqueCarrinho vQtdeEstoque = new ValidarEstoqueCarrinho();
 		vrQuantidadeCupomPedido vrQuantidadeCupom = new vrQuantidadeCupomPedido();
 		VrDataCupomDesconto vrDataCupom = new VrDataCupomDesconto();
+		AlterarStatusCompraPagamento altStatusPag = new AlterarStatusCompraPagamento();
 
 		/*
 		 * Criando uma lista para conter as regras de negócio de livros quando a
@@ -85,6 +87,7 @@ public class Fachada implements IFachada {
 		List<IStrategy> rnsSalvarCliente = new ArrayList<IStrategy>();
 		List<IStrategy> rnsValidarCarrinho = new ArrayList<IStrategy>();
 		List<IStrategy> rnsValidarCupom = new ArrayList<IStrategy>();
+		List<IStrategy> rnsAlterarStatus = new ArrayList<IStrategy>();
 		/* Adicionando as regras a serem utilizadas na operação salvar do fornecedor */
 		rnsSalvarLivro.add(vrDadosObrigatorioLivro);
 
@@ -95,15 +98,15 @@ public class Fachada implements IFachada {
 		rnsValidarCarrinho.add(vQtdeEstoque);
 
 		/*
-		 * Adicionando as regras a serem utilizadas na operação de validar quantidade de
-		 * cupons no pedido
-		 */
-
-		/*
 		 * Adicionando as regras a serem utilizadas na operação de validar a data de
 		 * cupons no pedido
 		 */
 		rnsValidarCupom.add(vrDataCupom);
+		
+		/*
+		 * Adicionando as regras a serem utilizadas na operação de alterar status pedido conforme pagamento
+		 */
+		 rnsAlterarStatus.add(altStatusPag);
 
 		/*
 		 * Cria o mapa que poderá conter todas as listas de regras de negócio específica
@@ -114,6 +117,8 @@ public class Fachada implements IFachada {
 		Map<String, List<IStrategy>> rnsCliente = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCarrinho = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCupom = new HashMap<String, List<IStrategy>>();
+		Map<String, List<IStrategy>> rnsPedido = new HashMap<String, List<IStrategy>>();
+
 
 		/*
 		 * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista
@@ -121,14 +126,17 @@ public class Fachada implements IFachada {
 		 */
 		rnsLivro.put("SALVAR", rnsSalvarLivro);
 		rnsCliente.put("SALVAR", rnsSalvarCliente);
+		
 		rnsCarrinho.put("COMPRAR", rnsValidarCarrinho);
 		rnsCupom.put("APLICAR", rnsValidarCupom);
+		
 
 		/*
 		 * Adiciona a listra de regras na operação Alterar no mapa do livro (lista
 		 * criada na linha 70)
 		 */
 		rnsLivro.put("ALTERAR", rnsSalvarLivro);
+		rnsPedido.put("ALTERAR", rnsAlterarStatus);
 
 		/*
 		 * Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações
@@ -137,6 +145,7 @@ public class Fachada implements IFachada {
 		rns.put(Livros.class.getName(), rnsLivro);
 		rns.put(Item.class.getName(), rnsCarrinho);
 		rns.put(CupomDesconto.class.getName(), rnsCupom);
+		rns.put(Pedido.class.getName(), rnsPedido);
 		
 
 
@@ -272,6 +281,7 @@ public class Fachada implements IFachada {
 		resultado = new Resultado();
 		String nmClass = entidade.getClass().getName();
 		String msg = executarRegras(entidade, "ALTERAR");
+		
 
 		if (msg == null) {
 			IDAO dao = daos.get(nmClass);

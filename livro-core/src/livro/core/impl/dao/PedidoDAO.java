@@ -11,6 +11,7 @@ import java.util.List;
 import livro.dominio.Cartao;
 import livro.dominio.Cidade;
 import livro.dominio.Cliente;
+import livro.dominio.CupomDesconto;
 import livro.dominio.Endereco;
 import livro.dominio.EntidadeDominio;
 import livro.dominio.Estado;
@@ -106,6 +107,54 @@ public class PedidoDAO extends AbstractJdbcDAO {
 	@Override
 	public void alterar(EntidadeDominio entidade) throws SQLException {
 		// TODO Auto-generated method stub
+		openConnection();
+		PreparedStatement pst = null;
+		Pedido pedido = (Pedido)entidade;
+		int idPedido = pedido.getId();
+		try {
+			connection.setAutoCommit(false);
+
+			pst = connection.prepareStatement("UPDATE pedidos SET status = ? WHERE id_pedido = " + idPedido);
+			pst.setString(1, pedido.getStatus());
+			pst.executeUpdate();
+			if(pedido.getCartao() != null)
+			{
+				for(int i = 0; i < pedido.getCartao().size() ; i ++)
+				{
+					Cartao c = pedido.getCartao().get(i);
+					pst = connection.prepareStatement("INSERT INTO cartao_pedido (id_cartao, id_pedido, valor_compra) VALUES(?,?,?)");
+					pst.setInt(1, c.getId());
+					pst.setInt(2, idPedido);
+					pst.setDouble(3, c.getValorCompra());
+					pst.executeUpdate();
+				}
+			}
+			if(pedido.getCupom() != null)
+			{
+
+				CupomDesconto c = pedido.getCupom();
+				pst = connection.prepareStatement("INSERT INTO cupom_pedido (id_cupom, id_pedido) VALUES(?,?)");
+				pst.setInt(1, c.getId());
+				pst.setInt(2, idPedido);
+				pst.executeUpdate();
+								
+			}		
+			connection.commit();		
+		} catch (SQLException e) {
+			try {
+				pst.close();
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();			
+		}finally{
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 
