@@ -292,7 +292,7 @@
 					out.print("<td>");
 					out.print("<td>");
 					if(request.getSession().getAttribute("selecionadoCartao") != null){
-					out.print("<input type='text' id='txtIdPedido' name='txtIdPedido' value="+ i  +" >");
+					out.print("<input type='hidden' id='txtIdPedido' name='txtIdPedido' value="+ i  +" >");
 					out.print("<button style='width:200px; height:50px' name='operacao' type='submit' class='btn btn-warning' value='FINALIZARCOMPRA'>Efetuar Pagamento</button>");
 					out.print("</form>");
 					}else{

@@ -117,6 +117,10 @@ Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaPedido"
 </head>
 <body>
 	<ul class="nav nav-tabs" role="tablist" style="background-color:#F0E68C">
+	<%
+		
+			
+	%>
 		
   			<li class="nav-item">
     			<a class="nav-link active" data-toggle="tab" href="#home" role="tab"><i class="material-icons">notifications</i>Home</a>
@@ -250,17 +254,42 @@ Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaPedido"
   				if(c.getPedido().size() == 0){
   					out.print("<h4 style='color:red'> Você não possui pedidos</h4>");
   				}else{
-  						for(int i = 0; i < c.getPedido().size(); i++){
-  							for (int j = 0; j < c.getPedido().get(i).getItem().size(); j++){
-  								out.print(c.getPedido().get(i).getItem().get(j).getLivro().getTitulo() + " Valor: " + c.getPedido().get(i).getItem().get(j).getValorItem() + "<br>");
-  								
-  								
-  							}
-  							out.print("Total: " + pedidos.get(i).getPrecoTotal() + "<br>");
-  							out.print("--------------<br>");	
+  					out.print("<div");
+  	  				out.print("<div id='accordion' role='tablist'>");
+  	  				out.print("<div class='card'>");
+  	  				out.print("<div class='card-header' role='tab' id='headingOne'>");
+  	  				out.print("<h5 class='mb-0'>");
+  	  				out.print("<a data-toggle='collapse' href='#collapseOne' aria-expanded='true' aria-controls='collapseOne'>");
+  	  				out.print("Pedidos EM PROCESSO");
+  	  				out.print("</a>");
+  	  				out.print("</h5>");
+  	  				out.print("</div>");
+
+  	  				out.print("<div id='collapseOne' class='collapse ' role='tabpanel' aria-labelledby='headingOne' data-parent='#accordion'>");
+  	  				out.print("<div class='card-body'>");
+  	  				System.out.println(c.getPedido().size());
+  	  			
+  	  				for(int i = 0; i < c.getPedido().size(); i++){
+  	  				if(c.getPedido().get(i).getStatus().trim().equals("EM PROCESSO")){
+						for (int j = 0; j < c.getPedido().get(i).getItem().size(); j++){	
+							
+							out.print(c.getPedido().get(i).getItem().get(j).getLivro().getTitulo() + " Valor: " + c.getPedido().get(i).getItem().get(j).getValorItem() + "<br>");
+							
+
+							
+			  					
+				}
+						
+						out.print("Total: " + pedidos.get(i).getPrecoTotal() + "<br>");
+						out.print("--------------<br>");	
+  	  				
+  	  				}
+  	  			}
+  	  				out.print("</div>");
+  	  				out.print("</div>");
+  	  				out.print("</div>");
+  	  				out.print("</div>");
   						
-					  					
-  					}
   				}
   			}
   				

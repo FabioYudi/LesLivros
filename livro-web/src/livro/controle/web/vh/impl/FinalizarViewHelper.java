@@ -123,7 +123,7 @@ public class FinalizarViewHelper  implements IViewHelper {
 			
 			if(operacao.equals("FINALIZARCOMPRA")) {
 				request.getSession().setAttribute("resultadoConsultaPedido", resultado);
-				d= request.getRequestDispatcher("Final.jsp");  
+				d= request.getRequestDispatcher("Painel.jsp");  
 				
 			}
 			

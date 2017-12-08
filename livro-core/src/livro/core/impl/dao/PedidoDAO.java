@@ -164,10 +164,20 @@ public class PedidoDAO extends AbstractJdbcDAO {
 		try {
 			openConnection();
 			Pedido p = (Pedido)entidade;
-			
+			Integer idPedido = p.getId();
 			PreparedStatement pst = null;
-			pst = connection.prepareStatement("SELECT * FROM pedidos "
-					+ "INNER JOIN endereco on (endereco.id = pedidos.id_endereco) WHERE 1=1 ");
+			
+			
+			
+			
+			
+			
+			if(p.getIdCliente() == null)
+				pst = connection.prepareStatement("SELECT * FROM pedidos WHERE id_pedido = " + idPedido);
+			else
+				pst = connection.prepareStatement("SELECT * FROM pedidos  INNER JOIN endereco e on e.id = pedidos.id_endereco" 
+			+ "  WHERE pedidos.id_cliente = " + p.getIdCliente());
+			
 			ResultSet pstPedido = pst.executeQuery();
 			List<EntidadeDominio> pedidos = new ArrayList<EntidadeDominio>();
 			while(pstPedido.next())
@@ -213,10 +223,16 @@ public class PedidoDAO extends AbstractJdbcDAO {
 					itens.add(i);
 				}
 				itensPedido.close();
+				
 				pedido.setItem(itens);
 				pedidos.add(pedido);
 			}
 			pstPedido.close();
+			
+			
+			
+			
+			
 	
 			return pedidos;
 		}catch(SQLException e){
