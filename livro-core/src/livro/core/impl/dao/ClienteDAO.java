@@ -206,6 +206,26 @@ public class ClienteDAO extends AbstractJdbcDAO {
 					cartoes.add(cc);
 				}
 				rsCard.close();
+				
+				
+				
+				PedidoDAO daoPedido = new PedidoDAO();
+				Pedido pedi = new Pedido();
+				pedi.setIdCliente(c.getId());
+				List<EntidadeDominio> pedidos = daoPedido.consultar(pedi);
+				if(pedidos != null)
+				{
+					List<Pedido> listaPedidos = new ArrayList<Pedido>();
+					for(int i = 0; i < pedidos.size(); i++)
+					{
+						pedi = (Pedido)pedidos.get(i);
+						listaPedidos.add(pedi);
+					}
+					c.setPedido(listaPedidos);
+				
+				}
+				
+				
 				pst = connection.prepareStatement(
 						"SELECT  id, logradouro, bairro, cep, numero, complemento, nome, tipo_residencia,"
 								+ " tipo_logradouro, cidade, estado, pais FROM endereco WHERE id_cliente = ?");
@@ -238,21 +258,7 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				
 				
 				
-				PedidoDAO daoPedido = new PedidoDAO();
-				Pedido pedi = new Pedido();
-				pedi.setIdCliente(c.getId());
-				List<EntidadeDominio> pedidos = daoPedido.consultar(pedi);
-				if(pedidos != null)
-				{
-					List<Pedido> listaPedidos = new ArrayList<Pedido>();
-					for(int i = 0; i < pedidos.size(); i++)
-					{
-						pedi = (Pedido)pedidos.get(i);
-						listaPedidos.add(pedi);
-					}
-					c.setPedido(listaPedidos);
 				
-				}
 				
 				
 				
@@ -267,6 +273,8 @@ public class ClienteDAO extends AbstractJdbcDAO {
 				
 				clientes.add(c);
 			}
+			
+			
 			return clientes;
 		} catch (SQLException ex) {
 			ex.printStackTrace();

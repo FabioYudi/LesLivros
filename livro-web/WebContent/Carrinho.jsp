@@ -465,7 +465,7 @@
 											out.print("</td>");
 
 											out.print("</tr>");
-										
+											c.getPedido().add(p);
 
 										}
 									}

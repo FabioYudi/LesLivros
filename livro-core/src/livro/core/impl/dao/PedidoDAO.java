@@ -111,6 +111,7 @@ public class PedidoDAO extends AbstractJdbcDAO {
 		PreparedStatement pst = null;
 		Pedido pedido = (Pedido)entidade;
 		int idPedido = pedido.getId();
+		System.out.println("Status " + pedido.getStatus());
 		try {
 			connection.setAutoCommit(false);
 
@@ -129,6 +130,8 @@ public class PedidoDAO extends AbstractJdbcDAO {
 					pst.executeUpdate();
 				}
 			}
+			
+			
 			if(pedido.getCupom() != null)
 			{
 
@@ -173,15 +176,18 @@ public class PedidoDAO extends AbstractJdbcDAO {
 			
 			
 			if(p.getIdCliente() == null)
-				pst = connection.prepareStatement("SELECT * FROM pedidos WHERE id_pedido = " + idPedido);
+				pst = connection.prepareStatement("SELECT * FROM pedidos inner join endereco e on e.id = pedidos.id_endereco WHERE 1=1");
 			else
 				pst = connection.prepareStatement("SELECT * FROM pedidos  INNER JOIN endereco e on e.id = pedidos.id_endereco" 
 			+ "  WHERE pedidos.id_cliente = " + p.getIdCliente());
+			
+			
 			
 			ResultSet pstPedido = pst.executeQuery();
 			List<EntidadeDominio> pedidos = new ArrayList<EntidadeDominio>();
 			while(pstPedido.next())
 			{
+				
 				Endereco e = new Endereco();
 				Pedido pedido = new Pedido();
 				e.setLogradouro(pstPedido.getString("logradouro"));
@@ -198,23 +204,27 @@ public class PedidoDAO extends AbstractJdbcDAO {
 				e.setCidade(cidade);
 				pedido.setEntrega(e);
 				pedido.setId(pstPedido.getInt("id_pedido"));
-				pedido.setId(pstPedido.getInt("qtde_itens"));
+				pedido.setQtdItens(pstPedido.getInt("qtde_itens"));
 				pedido.setDtPedido(pstPedido.getDate("dtPedido"));
 				pedido.setStatus(pstPedido.getString("status"));
 				pedido.setIdCliente(pstPedido.getInt("id_cliente"));
 				pedido.setPrecoTotal(pstPedido.getDouble("total"));
 				pedido.setFrete(pstPedido.getDouble("frete"));
+				idPedido = pedido.getId();
 				
 				
 				pst = connection.prepareStatement("SELECT * FROM itens"
 						+ " INNER JOIN livros ON "
-						+ "(itens.id_livro = livros.id) WHERE 1=1");
+						+ "(itens.id_livro = livros.id) WHERE itens.id_pedido =" + idPedido);
 				ResultSet itensPedido = pst.executeQuery();
+				System.out.println(pst);
+
 				List<Item> itens = new ArrayList<Item>();
 				while(itensPedido.next())
 				{
 					Livros l = new Livros();
 					Item i = new Item();
+					l.setId(itensPedido.getInt("id"));
 					i.setQuantidade(itensPedido.getInt("quantidade"));
 					i.setValorItem(itensPedido.getDouble("valor_item"));
 					l.setTitulo(itensPedido.getString("titulo"));

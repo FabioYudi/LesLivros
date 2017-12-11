@@ -9,7 +9,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 <link rel="stylesheet"
+
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
 	integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
 	crossorigin="anonymous">
@@ -25,22 +28,56 @@
 	integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
 	crossorigin="anonymous"></script>
 <meta charset="ISO-8859-1">
-
+<%Resultado resultado = (Resultado) session.getAttribute("resultadoConsultaLivro");
+String usuario = (String)request.getSession().getAttribute("username"); %>
 <title>:::: CADASTRO DE PRODUTO::::</title>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="#">LIVROS</a>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
+<div class="container">
+	<a class="navbar-brand" href="index.jsp">LES LIVROS</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
-		data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+		data-target="#navbarResponsive" aria-controls="navbarResponsive"
 		aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
-	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-		<div class="navbar-nav">
-			<a class="nav-item nav-link active" href="FormLivros.jsp">Cadastrar</a>
-			<a class="nav-item nav-link active" href="FormConsultaLivro.jsp">Consultar</a>
-		</div>
-	</div>
+	<div class="collapse navbar-collapse" id="navbarResponsive">
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active"><a class="nav-link" href="index.jsp">Home
+					<span class="sr-only">(current)</span>
+			</a></li>
+						<li class="nav-item"><a class="nav-link" href="FormConsultaLivro.jsp">Consultar</a></li>
+						<li class="nav-item"><a class="nav-link" href="FormLivros.jsp">Cadastrar</a></li>
+			
+			
+			<%
+				if (request.getSession().getAttribute("username") == null) {
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='FormCliente.jsp'>Cadastre-se</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' data-toggle='modal' href='#myModal'>Login</a>");
+					out.print(" </li>");
+				} else {
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='Painel.jsp'>Área do Cliente</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='Sair?operacao=SAIR'>Sair</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item' style='padding-left:50px; padding-top:10px'>");
+					out.print("<h6 style='color:white'> Olá, ");
+					out.print(" " + usuario + "</h6>");
+					out.print("</li>");
 
+				}
+			%>
+			
+			<li class="nav-item"><a class="nav-link" href="Carrinho.jsp"><i class="material-icons">local_grocery_store</i></a>
+			</li>
+
+		</ul>
+	</div>
+</div>
 </nav>
 </head>
 <body>
@@ -48,13 +85,16 @@
 	<%
 		Livros livro = (Livros) request.getAttribute("livro");
 	%>
-
+<br>
+<br><br>
+<br><br>
+<br>
 
 
 	<form action="SalvarLivro" method="post" align="center">
 		<div class="form-group">
-			<label for="txtcodigoLivro">Codigo do livro:</label> <input
-				type="text" id="txtCodigoLivro" name="txtCodigoLivro"
+			<label for="txtcodigoLivro">Codigo do livro:</label> 
+			<input type="text" id="txtCodigoLivro" name="txtCodigoLivro"
 				required="true"
 				value=<%if (livro != null)
 				out.print("'" + livro.getCodigoLivro() + "'>");
@@ -75,16 +115,28 @@
 			else
 				out.print(">");%></input>
 		</div>
-		<div class="form-group">
-			<div class="form-check">
-				<label class="txtStatus" for="txtStatus">Status:</label> <br> <select
-					id="txtStatus" name="txtStatus" required="true">
-					<option value="true" ${livro.getStatus() == true? 'selected' : ''}>Ativo</option>
-					<option value="false"
-						${livro.getStatus() ==  false ? 'selected' : ''}>Inativo</option>
-				</select>
+		
+	<%
+	if(livro == null){
+	out.print("<div class='form-group'>");
+	out.print("<div class='form-check'>");
+	out.print("<label class='txtStatus' for='txtStatus'>Status:</label> <br> <select id='txtStatus' name='txtStatus' required='true'>");
+	out.print("<option value='true' {livro.getStatus() == true? 'selected' : ''} >Ativo</option>");
+	out.print("<option value='false'${livro.getStatus() ==  false ? 'selected' : ''}>Inativo</option>");
+	out.print("</select>");
 
-			</div>
+	out.print("</div>");
+	}else{
+		out.print("<div class='form-group'>");
+		out.print("<div class='form-check'>");
+		out.print("<label class='txtStatus' for='txtStatus'>Status:</label> <br> <select id='txtStatus' name='txtStatus' required='true'>");
+		out.print("<option value='true' >Ativo</option>");
+		out.print("<option value='false'>Inativo</option>");
+		out.print("</select>");
+
+		out.print("</div>");
+	}
+	%>	
 			<label for="txtTitulo">Titulo:</label> <input type="text"
 				id="txtTitulo" name="txtTitulo" required="true"
 				value=<%if (livro != null)
@@ -122,7 +174,7 @@
 				out.print("'" + livro.getNumPg() + "'>");
 			else
 				out.print(">");%></input>
-				
+				<br><br>
 				<label for="txtEstoque">Qtd Estoque:</label> <input type="text"
 				id="txtEstoque" name="txtEstoque" required="true"
 				value=<%if (livro != null)
@@ -180,6 +232,14 @@
 				out.print("'" + livro.getProfundidade() + "'>");
 			else
 				out.print(">");%></input>
+				
+				
+				<label for="txtProfundidade">Largura:</label>
+				<input type="text" id="txtLargura" name="txtLargura"
+				value=<%if (livro != null)
+				out.print("'" + livro.getLargura() + "'>");
+			else
+				out.print(">");%></input>
 
 			<input type="hidden" id="txtId" name="txtId"
 				value=<%if (livro != null)
@@ -187,11 +247,7 @@
 			else
 				out.print(">");%></input>
 				
-				<input type="hidden" id="txtIdLog" name="txtIdLog"
-				value=<%if (livro != null)
-				out.print("'" + livro.getId() + "'>");
-			else
-				out.print(">");%></input>
+				
 				
 
 

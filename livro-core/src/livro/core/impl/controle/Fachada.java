@@ -20,6 +20,7 @@ import livro.core.impl.dao.LivroDAO;
 import livro.core.impl.dao.PedidoDAO;
 import livro.core.impl.dao.TelefoneDAO;
 import livro.core.impl.negocio.AlterarStatusCompraPagamento;
+import livro.core.impl.negocio.AlterarStatusTransporte;
 import livro.core.impl.negocio.ValidarEstoqueCarrinho;
 import livro.core.impl.negocio.VrDataCupomDesconto;
 import livro.core.impl.negocio.vrDadosObrigatoriosLivro;
@@ -78,7 +79,7 @@ public class Fachada implements IFachada {
 		vrQuantidadeCupomPedido vrQuantidadeCupom = new vrQuantidadeCupomPedido();
 		VrDataCupomDesconto vrDataCupom = new VrDataCupomDesconto();
 		AlterarStatusCompraPagamento altStatusPag = new AlterarStatusCompraPagamento();
-
+		AlterarStatusTransporte altStatusTrans = new AlterarStatusTransporte();
 		/*
 		 * Criando uma lista para conter as regras de negócio de livros quando a
 		 * operação for salvar
@@ -88,6 +89,7 @@ public class Fachada implements IFachada {
 		List<IStrategy> rnsValidarCarrinho = new ArrayList<IStrategy>();
 		List<IStrategy> rnsValidarCupom = new ArrayList<IStrategy>();
 		List<IStrategy> rnsAlterarStatus = new ArrayList<IStrategy>();
+		List<IStrategy> rnsAlterarTrans = new ArrayList<IStrategy>();
 		/* Adicionando as regras a serem utilizadas na operação salvar do fornecedor */
 		rnsSalvarLivro.add(vrDadosObrigatorioLivro);
 
@@ -107,7 +109,7 @@ public class Fachada implements IFachada {
 		 * Adicionando as regras a serem utilizadas na operação de alterar status pedido conforme pagamento
 		 */
 		 rnsAlterarStatus.add(altStatusPag);
-
+		 rnsAlterarTrans.add(altStatusTrans);
 		/*
 		 * Cria o mapa que poderá conter todas as listas de regras de negócio específica
 		 * por operação do livro
@@ -118,7 +120,6 @@ public class Fachada implements IFachada {
 		Map<String, List<IStrategy>> rnsCarrinho = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsCupom = new HashMap<String, List<IStrategy>>();
 		Map<String, List<IStrategy>> rnsPedido = new HashMap<String, List<IStrategy>>();
-
 
 		/*
 		 * Adiciona a listra de regras na operação salvar no mapa do fornecedor (lista
@@ -137,6 +138,7 @@ public class Fachada implements IFachada {
 		 */
 		rnsLivro.put("ALTERAR", rnsSalvarLivro);
 		rnsPedido.put("ALTERAR", rnsAlterarStatus);
+		rnsPedido.put("ALTERA", rnsAlterarTrans);
 
 		/*
 		 * Adiciona o mapa(criado na linha 79) com as regras indexadas pelas operações

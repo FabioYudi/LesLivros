@@ -203,9 +203,15 @@ public class ClienteViewHelper implements IViewHelper {
 					sessao.setAttribute("username",request.getParameter("username"));
 					sessao.setAttribute("usuarioID", c.getId().toString());
 					sessao.setAttribute("cli", c);
+					
+					if(request.getSession().getAttribute("redirecionar") != null) {
 
-					d = request.getRequestDispatcher("index.jsp");
+					d = request.getRequestDispatcher("Painel.jsp");
 					break;
+					}else {
+						d = request.getRequestDispatcher("index.jsp");
+
+					}
 				}else {
 					d = request.getRequestDispatcher("index.jsp");
 

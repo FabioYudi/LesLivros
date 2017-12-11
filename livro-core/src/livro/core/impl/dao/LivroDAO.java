@@ -110,6 +110,7 @@ public class LivroDAO extends AbstractJdbcDAO {
 			pst.setDouble(14, livro.getValor());
 			pst.setInt(15, livro.getEstoque());
 			pst.setDouble(16, livro.getLargura());
+			pst.setInt(17, livro.getId());
 			pst.executeUpdate();
 			
 			connection.commit();
@@ -176,8 +177,41 @@ public class LivroDAO extends AbstractJdbcDAO {
 				"SELECT DISTINCT  a.id, a.codigo_livro, a.autor, a.ano, a.status, a.titulo, a.editora, a.edicao, a.isbn, a.num_paginas, a.sinopse, a.altura,");
 		sql.append(" a.peso, a.profundidade, a.valor, a.estoque, a.largura FROM livros a ");
 		sql.append(" WHERE 1=1 ");
-		if (livro.getId() != null && livro.getId() > 0) {
-			sql.append(" AND a.id = '" + livro.getId() + "'" );
+		if(livro.getId() != null && livro.getId() > 0){
+			sql.append(" AND a.id = " + livro.getId());
+		}
+		
+		if(livro.getTitulo() != null && livro.getTitulo().length() > 0){
+			sql.append(" AND a.titulo ilike '%" + livro.getTitulo() + "%'");
+		}
+		if(livro.getCodigoLivro() != null && livro.getCodigoLivro().length() > 0){
+			sql.append(" AND a.codigo_livro ilike '%" + livro.getCodigoLivro() + "%'");
+		}
+		if(livro.getAutor() != null && livro.getAutor().length() > 0){
+			sql.append(" AND a.autor ilike '%" + livro.getAutor() + "%'");
+		}
+		if(livro.getEdicao() != null && livro.getEdicao().length() > 0){
+			sql.append(" AND a.edicao ilike '%" + livro.getEdicao() + "%'");
+		}
+		if(livro.getIsbn() != null && livro.getIsbn().length() > 0){
+			sql.append(" AND a.isbn ilike '%" + livro.getIsbn() + "%'");
+		}
+		if(livro.getAno() != null && livro.getAno().length() > 0){
+			sql.append(" and a.ano ilike '%" + livro.getAno() + "%'");
+		}
+		if(livro.getNumPg() != null && livro.getNumPg().length() > 0){
+			sql.append(" and a.num_paginas = " + livro.getNumPg());
+		}
+		
+		if(livro.getEditora() != null && livro.getEditora().length() > 0){
+			sql.append(" and a.editora ilike '%" + livro.getEditora() + "%'");
+		}
+		if(livro.getSinopse() != null && livro.getSinopse().length() > 0){
+			sql.append(" and a.sinopse ilike '%" + livro.getSinopse() + "%'");
+		}
+		
+		if(livro.getStatus() != null) {
+			sql.append("and a.status=" + livro.getStatus());
 		}
 		
 			

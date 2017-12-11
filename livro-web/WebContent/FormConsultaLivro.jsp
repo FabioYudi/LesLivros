@@ -7,6 +7,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<!-- Bootstrap core CSS -->
+<link type="text/css" href="vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+
+
+<!-- Custom styles for this template -->
+<link type="text/css" href="css/shop-homepage.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
@@ -15,23 +24,59 @@
 
 <title>:::: CONSULTAR Livro::::</title>
 
+<%String usuario = (String)request.getSession().getAttribute("username"); %>
 
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">LIVROS</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="FormLivros.jsp">Cadastrar</a>
-      <a class="nav-item nav-link active" href="FormConsultaLivro.jsp">Consultar</a>
-    </div>
-    </div>
-  
+ <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-warning fixed-top">
+<div class="container">
+	<a class="navbar-brand" href="index.jsp">LES LIVROS</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarResponsive" aria-controls="navbarResponsive"
+		aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarResponsive">
+		<ul class="navbar-nav ml-auto">
+			<li class="nav-item active"><a class="nav-link" href="index.jsp">Home
+					<span class="sr-only">(current)</span>
+			</a></li>
+						<li class="nav-item"><a class="nav-link" href="FormConsultaLivro.jsp">Consultar</a></li>
+						<li class="nav-item"><a class="nav-link" href="FormLivros.jsp">Cadastrar</a></li>
+			
+			
+			<%
+				if (request.getSession().getAttribute("username") == null) {
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='FormCliente.jsp'>Cadastre-se</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' data-toggle='modal' href='#myModal'>Login</a>");
+					out.print(" </li>");
+				} else {
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='Painel.jsp'>Área do Cliente</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item'>");
+					out.print(" <a class='nav-link' href='Sair?operacao=SAIR'>Sair</a>");
+					out.print(" </li>");
+					out.print("<li class='nav-item' style='padding-left:50px; padding-top:10px'>");
+					out.print("<h6 style='color:white'> Olá, ");
+					out.print(" " + usuario + "</h6>");
+					out.print("</li>");
+
+				}
+			%>
+			
+			<li class="nav-item"><a class="nav-link" href="Carrinho.jsp"><i class="material-icons">local_grocery_store</i></a>
+			</li>
+
+		</ul>
+	</div>
+</div>
 </nav>
 </head>
 <body>
-
+<br>
 	<%
 		Resultado resultado = (Resultado) session.getAttribute("resultado");
 	%>

@@ -104,16 +104,7 @@
 </head>
 <body>
 	<div class="container">
-	<%
-			if(resultadoPedido != null){
-				if(resultadoPedido.getMsg() == null){
-						out.print("COMPRA APROVADA");			
-					}else{
-						out.print("COMPRA " + resultadoPedido.getMsg());
-					}
-			}
 	
-	%>
 	
 	
 	<table class="table ">
@@ -147,9 +138,11 @@
 
 		
 				<%
-					int tam = c.getPedido().size();
-					int i = c.getPedido().size() - 1;
-
+				int i = 0;
+					
+						i = c.getPedido().size() - 1;				
+					
+				
 					for (int j = 0; j < c.getPedido().get(i).getItem().size(); j++) {
 						out.print("<tr'>");
 						out.print("<td class='bg-warning text-black' >");
@@ -267,6 +260,8 @@
 								double valorCompra =  c.getPedido().get(i).getPrecoTotal()/c.getPedido().get(i).getCartao().size();
 								c.getPedido().get(i).getCartao().get(t).setValorCompra(valorCompra);
 								out.print("<input type='hidden' name='txtValor' value='" + valorCompra + "' >");
+								out.print("<input type='hidden' name='txtIndice' value='" + i + "'>");
+								out.print("<input type='hidden' id='txtIdPedido' name='txtIdPedido' value=" + c.getPedido().get(i).getId() +" >");
 								out.print("<div style='color:red'> R$" + String.format("%.2f", + valorCompra) + "</div>");
 								out.print("</td>");
 
@@ -292,12 +287,14 @@
 					out.print("<td>");
 					out.print("<td>");
 					if(request.getSession().getAttribute("selecionadoCartao") != null){
-					out.print("<input type='hidden' id='txtIdPedido' name='txtIdPedido' value="+ i  +" >");
-					out.print("<button style='width:200px; height:50px' name='operacao' type='submit' class='btn btn-warning' value='FINALIZARCOMPRA'>Efetuar Pagamento</button>");
+					out.print("<button style='width:200px; height:50px' id='operacao' name='operacao' type='submit' class='btn btn-warning' value='FINALIZARCOMPRA'>Efetuar Pagamento</button>");
+					out.print("<input type='hidden' id='txtIndice' name='txtIndice' value='" + i + "'>");
 					out.print("</form>");
 					}else{
-						out.print("<button style='width:200px; height:50px' name='operacao' disabled='true' type='submit' class='btn btn-warning' value='FINALIZARCOMPRA'>Efetuar Pagamento</button>");
+						out.print("<button style='width:200px; height:50px' id='operacao' name='operacao' disabled='true' type='submit' class='btn btn-warning' value='FINALIZARCOMPRA'>Efetuar Pagamento</button>");
+						out.print("</form>");
 					}
+					
 					
 					out.print("</td>");
 					out.print("</td>");
@@ -312,7 +309,7 @@
 		</td>
 			</tr>
 	</div>
-
+	
 
 	<!-- Bootstrap core JavaScript -->
 	<script src="vendor/jquery/jquery.min.js"></script>
